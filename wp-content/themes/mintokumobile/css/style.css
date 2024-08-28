@@ -1,0 +1,363 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+}
+
+header,
+footer {
+    background-color: #343a40;
+    /* Màu nền của header và footer */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    display: none;
+}
+
+header {
+    top: 0;
+    padding: 0 10px;
+}
+
+.item h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.item p {
+    margin: 0;
+    font-size: 16px;
+}
+
+footer {
+    bottom: 0;
+}
+
+.container {
+    height: calc(100vh - 70px);
+    /* Chiều cao còn lại sau khi trừ header và footer */
+    position: relative;
+    overflow: hidden;
+    /* Ẩn thanh cuộn */
+    /*background-color: #007BFF;*/
+}
+
+.wrapper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    /* Khởi tạo vị trí */
+    transition: top 0.5s ease-in-out;
+    /* Hiệu ứng chuyển tiếp */
+}
+
+/* .container.dl_show {
+    overflow-y: scroll;
+} */
+
+.item {
+    height: 100vh;
+    /* Chiều cao bằng chiều cao của viewport */
+    width: 100vw;
+    /* Chiều rộng bằng chiều rộng của viewport */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: white;
+    /*background-color: #007BFF;*/
+    /* Màu nền của item */
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.post-content p {
+    color: #000000;
+}
+
+.post-content h2 {
+    color: #000000;
+}
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #007BFF;
+    font-size: 1.5rem;
+    display: none;
+    /* Ẩn thông báo tải theo mặc định */
+}
+
+.hello-container {
+    /* Ẩn trang chi tiết mặc định */
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    overflow: hidden;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    padding: 0;
+    transition: transform 0.5s ease-in-out;
+    /* Hiệu ứng chuyển tiếp */
+    transform: translateX(100%);
+    /* Bắt đầu ngoài màn hình */
+}
+
+.hello-container.visible {
+    transform: translateX(0);
+    padding-top: 10px;
+    /* padding-bottom: 100px; */
+}
+
+.hello-container h2 {
+    margin: 0;
+    font-size: 16px;
+}
+#post-body p {
+    font-size: 15px;
+}
+
+.hello-container p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.hello-container button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    /* background-color: #007BFF; */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 57px;
+    z-index: 9;
+}
+
+.swiper-container {
+    position: relative;
+    width: 90vw;
+    height: 200px;
+}
+div#post-details {
+    padding: 0 10px;
+    height: 286px;
+    overflow: scroll;
+}
+div#page{
+    height: 100%;
+}
+
+.swiper-container>.swiper-slide__content {
+    position: absolute;
+    top: 0;
+}
+
+.swiper-slide {
+    height: 300px;
+    /* display: flex; */
+    background: #eee;
+    align-items: center;
+    justify-content: center;
+    transition: all 200ms linear;
+    transform: scale(0.8) !important;
+}
+
+/*.swiper-slide.swiper-slide-active {*/
+/*    transform: scale(1) !important;*/
+/*    !* background: #fc0; *!*/
+/*    overflow: scroll;*/
+/*}*/
+
+.swiper-slide__content {
+    height: 300px;
+}
+
+.swiper-container {
+    margin-bottom: 50px !important;
+}
+
+header#header_s.dl_show {
+    display: none;
+}
+
+#footer_s.dl_show {
+    display: none;
+}
+
+.box_img {
+    width: 100%;
+}
+
+.box_img img {
+    width: 100%;
+    object-fit: contain;
+    padding: 0;
+}
+
+.container.dl_show {
+    height: 100%;
+}
+
+/* CSS để lùi các tỉnh con */
+.taxonomy-province {
+    margin-left: 20px;
+}
+
+/* CSS cho dropdown năm */
+#filter {
+    margin-bottom: 20px;
+}
+
+#year-dropdown {
+    padding: 5px;
+    font-size: 16px;
+}
+
+/* CSS cho danh sách bài viết */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #0073aa;
+}
+
+ul li a:hover {
+    text-decoration: underline;
+}
+/* CSS cho dropdown năm */
+#filter {
+    margin-bottom: 20px;
+}
+
+#year-dropdown {
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* CSS cho danh sách bài viết */
+.post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.post-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+.post-thumbnail {
+    flex: 0 0 200px;
+}
+
+.post-thumbnail img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.post-info {
+    padding: 15px;
+    flex: 1;
+}
+
+.post-info a {
+    text-decoration: none;
+    color: #0073aa;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.post-info a:hover {
+    text-decoration: underline;
+}
+
+.post-excerpt {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* Responsive layout cho thiết bị di động */
+@media (max-width: 767px) {
+    .post-item {
+        flex-direction: column; /* Đảm bảo các phần tử trong bài viết nằm theo chiều dọc trên thiết bị di động */
+    }
+
+    .post-thumbnail {
+        margin-bottom: 10px; /* Khoảng cách giữa ảnh và tiêu đề */
+        width: 100%;
+    }
+
+    .post-info {
+        text-align: left; /* Căn lề trái cho thông tin bài viết */
+    }
+    .post-thumbnail img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .scroll-container,
+    .scroll-area {
+        max-width: 850px;
+        height: 600px;
+        font-size: 60px;
+    }
+
+    .scroll-container {
+        overflow: auto;
+        scroll-snap-type: y mandatory;
+    }
+
+    .scroll-area {
+        scroll-snap-align: start;
+    }
+
+    .scroll-container,
+    .scroll-area {
+        margin: 0 auto;
+    }
+
+    .scroll-area {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+
+}
+
+
