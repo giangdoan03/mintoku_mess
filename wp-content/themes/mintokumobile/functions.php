@@ -395,163 +395,161 @@ function render_province_meta_box($term) {
 
 // Add meta boxes
 function add_custom_meta_box() {
-    $post_types = array('vietnam', 'laos', 'cambodia'); // List of post types
+    $post_types = array('vietnam', 'laos', 'cambodia');
 
     foreach ($post_types as $post_type) {
         add_meta_box(
-            $post_type . '_salary_meta_box', // ID of meta box
-            'Salary', // Title of meta box
-            'display_custom_salary_meta_box', // Function to display meta box
-            $post_type, // Custom post type
-            'normal', // Context (normal)
-            'high' // Priority
-        );
-
-        add_meta_box(
-            $post_type . '_images_meta_box', // ID of meta box
-            'Images', // Title of meta box
-            'display_custom_images_meta_box', // Function to display meta box
-            $post_type, // Custom post type
-            'normal', // Context (normal)
-            'high' // Priority
-        );
-
-        add_meta_box(
-            $post_type . '_details_meta_box', // ID of meta box
-            'Details', // Title of meta box
-            'display_custom_details_meta_box', // Function to display meta box
-            $post_type, // Custom post type
-            'normal', // Context (normal)
-            'default' // Priority
+            $post_type . '_meta_boxes', // ID của meta box
+            'Job detail', // Tiêu đề của meta box
+            function($post) use ($post_type) {
+                ?>
+                <div class="custom-meta-box-tabs">
+                    <button type="button" data-tab="<?php echo $post_type; ?>-images-meta-box">Images</button>
+                    <button type="button" data-tab="<?php echo $post_type; ?>-details-meta-box">Details</button>
+                    <button type="button" data-tab="<?php echo $post_type; ?>-salary-meta-box">Salary</button>
+                </div>
+                <?php
+                display_custom_images_meta_box($post);
+                display_custom_details_meta_box($post);
+                display_custom_salary_meta_box($post);
+            },
+            $post_type,
+            'normal',
+            'high'
         );
     }
 }
 add_action('add_meta_boxes', 'add_custom_meta_box');
 
 
+// Thêm meta box visa vào các loại bài viết
+function my_custom_meta_box_visa() {
+    $post_types = array('vietnam', 'laos', 'cambodia'); // Các loại bài viết cần thêm meta box
+
+    foreach ($post_types as $post_type) {
+        add_meta_box(
+            'my_meta_box_id',          // ID của meta box
+            'Visa',        // Tiêu đề của meta box
+            'my_meta_box_callback',    // Hàm callback để hiển thị nội dung của meta box
+            $post_type,                // Loại bài viết
+            'normal',                  // Vị trí của meta box ('normal', 'side', 'advanced')
+            'high'                     // Độ ưu tiên của meta box ('default', 'low', 'high')
+        );
+    }
+}
+add_action('add_meta_boxes', 'my_custom_meta_box_visa');
+
+// Hàm callback để hiển thị nội dung của meta box
+function my_meta_box_callback($post) {
+    global $tab1_value, $tab2_value, $tab3_image_ids, $tab3_image_ids_string;
+
+    // Thêm nonce field để bảo mật
+    wp_nonce_field('my_meta_box_nonce_action', 'my_meta_box_nonce_name');
+
+    // Lấy giá trị đã lưu trước đó
+    $tab1_value = get_post_meta($post->ID, '_my_tab1_key', true);
+    $tab2_value = get_post_meta($post->ID, '_my_tab2_key', true);
+    // Lấy dữ liệu từ meta box
+    $tab3_image_ids = get_post_meta($post->ID, '_my_tab3_image_ids', true);
+
+    // Đảm bảo rằng $tab3_image_ids là một mảng
+    if (!is_array($tab3_image_ids)) {
+        $tab3_image_ids = array(); // Khởi tạo như một mảng rỗng nếu không phải mảng
+    }
+
+    // Chuyển đổi mảng thành chuỗi để hiển thị trong trường ẩn
+    $tab3_image_ids_string = implode(',', $tab3_image_ids);
+
+    // Bao gồm file template HTML
+    include plugin_dir_path(__FILE__) . './metabox/meta-box-visa-template.php';
+}
+
+
+
+// Thêm meta box vào các loại bài viết
+function my_additional_info_meta_box() {
+    $post_types = array('vietnam', 'laos', 'cambodia'); // Các loại bài viết cần thêm meta box
+
+    foreach ($post_types as $post_type) {
+        add_meta_box(
+            'my_additional_info_meta_box_id',      // ID của meta box
+            'Additional Info',                    // Tiêu đề của meta box
+            'my_additional_info_meta_box_callback', // Hàm callback để hiển thị nội dung của meta box
+            $post_type,                           // Loại bài viết
+            'normal',                             // Vị trí của meta box ('normal', 'side', 'advanced')
+            'high'                                // Độ ưu tiên của meta box ('default', 'low', 'high')
+        );
+    }
+}
+add_action('add_meta_boxes', 'my_additional_info_meta_box');
+
+// Hàm callback để hiển thị nội dung của meta box
+function my_additional_info_meta_box_callback($post) {
+    // Thêm nonce field để bảo mật
+    wp_nonce_field('my_additional_info_meta_box_nonce_action', 'my_additional_info_meta_box_nonce_name');
+
+    // Lấy giá trị đã lưu trước đó
+    $additional_info = get_post_meta($post->ID, '_my_additional_info_key', true);
+
+    // Hiển thị trình chỉnh sửa văn bản
+    wp_editor($additional_info, 'my_additional_info_editor', array(
+        'textarea_name' => 'my_additional_info_field',
+        'media_buttons' => true, // Hiển thị nút tải lên media
+        'teeny' => false,       // Hiển thị đầy đủ các tùy chọn
+    ));
+}
+
 
 // Display salary meta box
 function display_custom_salary_meta_box($post) {
-    // Get current salary value
     $salary = get_post_meta($post->ID, get_post_type($post->ID) . '_salary', true);
-
-    // Display the input field for salary
     ?>
-    <label for="job_salary">Salary:</label>
-    <input type="text" id="job_salary" name="<?php echo get_post_type($post->ID); ?>_salary" value="<?php echo esc_attr($salary); ?>" />
+    <div class="custom-meta-box-content" id="<?php echo get_post_type($post->ID); ?>-salary-meta-box">
+        <label for="job_salary">Salary:</label>
+        <input type="text" id="job_salary" name="<?php echo get_post_type($post->ID); ?>_salary" value="<?php echo esc_attr($salary); ?>" />
+    </div>
     <?php
 }
 
 
 function display_custom_details_meta_box($post) {
-    // Lấy tên post type
     $post_type = get_post_type($post);
-
-    // Định nghĩa các taxonomy cho các post type khác nhau
-    $taxonomy_map = array(
-        'vietnam' => 'province_vietnam',
-        'laos' => 'province_laos',
-        'cambodia' => 'province_cambodia'
-    );
-
-    // Lấy giá trị hiện tại của custom fields
-    $selected_countries = get_post_meta($post->ID, $post_type . '_countries', true);
-    $selected_provinces = get_post_meta($post->ID, $post_type . '_provinces', true);
     $selected_year = get_post_meta($post->ID, $post_type . '_year', true);
 
-    $selected_countries = !empty($selected_countries) ? (array) $selected_countries : array();
-    $selected_provinces = !empty($selected_provinces) ? (array) $selected_provinces : array();
-
-    // Lấy taxonomy cho tỉnh theo post type
-    $province_taxonomy = isset($taxonomy_map[$post_type]) ? $taxonomy_map[$post_type] : '';
-
-//    if ($province_taxonomy) {
-//        // Hiển thị các tỉnh thuộc taxonomy hiện tại
-//        echo '<label for="job_provinces">Tỉnh:</label><br>';
-//        $all_provinces = get_terms(array(
-//            'taxonomy' => $province_taxonomy,
-//            'hide_empty' => false,
-//        ));
-//        if (!is_wp_error($all_provinces)) {
-//            foreach ($all_provinces as $province) {
-//                if (is_a($province, 'WP_Term')) {
-//                    $checked_province = in_array($province->term_id, $selected_provinces) ? 'checked' : '';
-//                    echo '<input type="checkbox" name="' . $post_type . '_provinces[]" value="' . $province->term_id . '" ' . $checked_province . '> ' . esc_html($province->name) . '<br>';
-//                }
-//            }
-//        }
-//    }
-
-    // Hiển thị lựa chọn năm cố định (2024, 2025)
-    echo '<label for="job_year_fixed">Năm:</label><br>';
-    $fixed_years = array(2024, 2025, 2026, 2027);
-
-    foreach ($fixed_years as $year) {
-        $checked_fixed_year = ($selected_year == $year) ? 'checked' : '';
-        echo '<input type="radio" name="' . $post_type . '_year" value="' . $year . '" ' . $checked_fixed_year . '> ' . esc_html($year) . '<br>';
-    }
-}
-
-
-
-
-function display_custom_images_meta_box($post) {
-    // Lấy tên post type
-    $post_type = get_post_type($post);
-
-    // Lấy giá trị hiện tại của custom field
-    $images = get_post_meta($post->ID, $post_type . '_images', true);
-
-    // Hiển thị giao diện tải lên ảnh
     ?>
-    <div id="<?php echo $post_type; ?>-images-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <div class="custom-meta-box-content" id="<?php echo $post_type; ?>-details-meta-box">
+        <label for="<?php echo $post_type; ?>_year">Năm:</label><br>
         <?php
-        // Hiển thị các ảnh đã tải lên
-        if (!empty($images)) {
-            foreach ($images as $image) {
-                echo '<div class="' . $post_type . '-image-item" style="position: relative; display: inline-block;">';
-                echo '<img src="' . esc_url($image) . '" style="max-width: 150px; height: auto; display: block;" />';
-                echo '<input type="hidden" name="' . $post_type . '_images[]" value="' . esc_url($image) . '" />';
-                echo '<button class="remove-' . $post_type . '-image" style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer;">Remove</button>';
-                echo '</div>';
-            }
+        $fixed_years = array(2024, 2025, 2026, 2027);
+        foreach ($fixed_years as $year) {
+            $checked_fixed_year = ($selected_year == $year) ? 'checked' : '';
+            echo '<input type="radio" name="' . $post_type . '_year" value="' . $year . '" ' . $checked_fixed_year . '> ' . esc_html($year) . '<br>';
         }
         ?>
     </div>
-    <button id="upload-<?php echo $post_type; ?>-image-button" class="button">Upload Images</button>
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            // Upload image button
-            $('#upload-<?php echo $post_type; ?>-image-button').click(function(e) {
-                e.preventDefault();
-                var frame = wp.media({
-                    title: 'Select or Upload Images',
-                    button: {
-                        text: 'Use this image'
-                    },
-                    multiple: true
-                }).on('select', function() {
-                    var attachments = frame.state().get('selection').toJSON();
-                    $.each(attachments, function(index, attachment) {
-                        var imageUrl = attachment.url;
-                        $('#<?php echo $post_type; ?>-images-container').append(
-                            '<div class="' + '<?php echo $post_type; ?>' + '-image-item" style="position: relative; display: inline-block;">' +
-                            '<img src="' + imageUrl + '" style="max-width: 150px; height: auto; display: block;" />' +
-                            '<input type="hidden" name="<?php echo $post_type; ?>_images[]" value="' + imageUrl + '" />' +
-                            '<button class="remove-<?php echo $post_type; ?>-image" style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer;">Remove</button>' +
-                            '</div>'
-                        );
-                    });
-                }).open();
-            });
+    <?php
+}
 
-            // Remove image button
-            $(document).on('click', '.remove-<?php echo $post_type; ?>-image', function(e) {
-                e.preventDefault();
-                $(this).closest('.<?php echo $post_type; ?>-image-item').remove();
-            });
-        });
-    </script>
+function display_custom_images_meta_box($post) {
+    $post_type = get_post_type($post);
+    $images = get_post_meta($post->ID, $post_type . '_images', true);
+    ?>
+    <div class="custom-meta-box-content" id="<?php echo $post_type; ?>-images-meta-box">
+        <div id="<?php echo $post_type; ?>-images-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <?php
+            if (!empty($images)) {
+                foreach ($images as $image) {
+                    echo '<div class="' . $post_type . '-image-item" style="position: relative; display: inline-block;">';
+                    echo '<img src="' . esc_url($image) . '" style="max-width: 150px; height: auto; display: block;" />';
+                    echo '<input type="hidden" name="' . $post_type . '_images[]" value="' . esc_url($image) . '" />';
+                    echo '<button class="remove-' . $post_type . '-image" style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer;">Remove</button>';
+                    echo '</div>';
+                }
+            }
+            ?>
+        </div>
+        <button id="upload-<?php echo $post_type; ?>-image-button" class="button">Upload Images</button>
+    </div>
     <?php
 }
 
@@ -575,12 +573,14 @@ function save_custom_meta_box_data($post_id) {
         delete_post_meta($post_id, $post_type . '_salary');
     }
 
-    // Save images
-    if (isset($_POST[$post_type . '_images'])) {
-        $images = array_map('esc_url_raw', $_POST[$post_type . '_images']);
-        update_post_meta($post_id, $post_type . '_images', $images);
-    } else {
-        delete_post_meta($post_id, $post_type . '_images');
+    $post_types = array('vietnam', 'laos', 'cambodia');
+
+    foreach ($post_types as $post_type) {
+        if (isset($_POST[$post_type . '_images'])) {
+            update_post_meta($post_id, $post_type . '_images', $_POST[$post_type . '_images']);
+        } else {
+            delete_post_meta($post_id, $post_type . '_images');
+        }
     }
 
     // Save provinces
@@ -599,15 +599,32 @@ function save_custom_meta_box_data($post_id) {
         delete_post_meta($post_id, $post_type . '_countries');
     }
 
-    // Save year
-    if (isset($_POST[$post_type . '_year'])) {
-        update_post_meta($post_id, $post_type . '_year', intval($_POST[$post_type . '_year']));
-    } else {
-        delete_post_meta($post_id, $post_type . '_year');
+    foreach ($post_types as $post_type) {
+        if (isset($_POST[$post_type . '_year'])) {
+            $year = sanitize_text_field($_POST[$post_type . '_year']);
+            update_post_meta($post_id, $post_type . '_year', $year);
+        }
+    }
+    // Xử lý dữ liệu từ các tab
+    if (isset($_POST['tab1_field'])) {
+        $tab1_data = wp_kses_post($_POST['tab1_field']); // Xử lý dữ liệu từ trình soạn thảo văn bản
+        update_post_meta($post_id, '_my_tab1_key', $tab1_data);
+    }
+    if (isset($_POST['tab2_field'])) {
+        $tab2_data = sanitize_text_field($_POST['tab2_field']);
+        update_post_meta($post_id, '_my_tab2_key', $tab2_data);
+    }
+    if (isset($_POST['tab3_image_ids'])) {
+        $tab3_image_ids = array_map('intval', explode(',', $_POST['tab3_image_ids']));
+        update_post_meta($post_id, '_my_tab3_image_ids', $tab3_image_ids);
+    }
+    // Xử lý và lưu dữ liệu
+    if (isset($_POST['my_additional_info_field'])) {
+        $additional_info = wp_kses_post($_POST['my_additional_info_field']);
+        update_post_meta($post_id, '_my_additional_info_key', $additional_info);
     }
 }
 add_action('save_post', 'save_custom_meta_box_data');
-
 
 
 
@@ -769,6 +786,62 @@ function display_province_posts($post_type, $taxonomy_provinces, $fixed_years) {
 
     wp_reset_postdata();
 }
+
+function enqueue_custom_meta_box_scripts($hook_suffix) {
+    // Kiểm tra xem có phải là trang chỉnh sửa bài viết không
+    if ($hook_suffix === 'post.php' || $hook_suffix === 'post-new.php') {
+        // Đăng ký và đưa vào file JavaScript
+        wp_enqueue_script(
+            'custom-meta-box-tabs',
+            get_template_directory_uri() . '/js/custom-meta-box-tabs.js', // Đảm bảo đường dẫn chính xác
+            array('jquery'), // Phụ thuộc vào jQuery
+            null,
+            true
+        );
+
+        // Đăng ký và đưa vào file CSS nếu có
+        wp_enqueue_style(
+            'custom-meta-box-tabs-style',
+            get_template_directory_uri() . '/css/custom-meta-box-tabs.css', // Đảm bảo đường dẫn chính xác
+            array(),
+            null
+        );
+    }
+}
+add_action('admin_enqueue_scripts', 'enqueue_custom_meta_box_scripts');
+
+
+function my_enqueue_media_uploader() {
+    wp_enqueue_media();
+}
+add_action('admin_enqueue_scripts', 'my_enqueue_media_uploader');
+
+
+add_action('wp_ajax_remove_image', 'handle_remove_image');
+function handle_remove_image() {
+    // Kiểm tra nonce và quyền truy cập
+    if (!isset($_POST['image_id']) || !isset($_POST['post_id'])) {
+        wp_send_json_error('Missing required parameters.');
+    }
+
+    $image_id = intval($_POST['image_id']);
+    $post_id = intval($_POST['post_id']);
+
+    // Lấy dữ liệu hiện tại từ meta box
+    $image_ids = get_post_meta($post_id, '_my_tab3_image_ids', true);
+
+    if (!is_array($image_ids)) {
+        $image_ids = array();
+    }
+
+    // Xóa ảnh khỏi danh sách
+    $image_ids = array_diff($image_ids, array($image_id));
+    update_post_meta($post_id, '_my_tab3_image_ids', $image_ids);
+
+    wp_send_json_success();
+}
+
+
 
 
 
