@@ -226,10 +226,18 @@
                         const maxTranslateX = this.maxTranslate();
                         if (translateX < maxTranslateX) {
                             // Chuyển hướng sau khi người dùng cố gắng vuốt qua slide cuối
-                            window.location.href = 'http://localhost/mintoku_mobile/vietnam-provinces/da-nang/';
+                            var currentDomain = window.location.hostname;
+                            if (currentDomain === 'localhost') {
+                                // Redirect to a specific URL if on localhost
+                                window.location.href = 'http://localhost/mintoku_mobile/vietnam-provinces/da-nang/';
+                            } else {
+                                // Navigate back to the previous page if not on localhost
+                                window.history.back();
+                            }
                         }
                     }
-                },
+                }
+
                 slideChange: function () {
                     // Cập nhật URL với tham số của slide hiện tại
                     const slideIndex = this.activeIndex + 1; // +1 vì các chỉ số slide bắt đầu từ 0
