@@ -236,7 +236,7 @@
                             }
                         }
                     }
-                }
+                },
 
                 slideChange: function () {
                     // Cập nhật URL với tham số của slide hiện tại
