@@ -81,3 +81,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    var backButton = document.getElementById('backButton');
+    var currentPath = window.location.pathname;
+
+    console.log(currentPath)
+
+    // Kiểm tra xem trang hiện tại có phải là trang chính không
+    if (currentPath === '/mintoku_mobile/' || currentPath === '/mintoku_mobile/') {
+        // Nếu là trang chính, ẩn nút
+        backButton.style.display = 'none';
+    } else {
+        // Nếu không phải trang chính, hiển thị nút
+        backButton.style.display = 'block';
+    }
+});
+
+function goHome() {
+    window.location.href = 'http://localhost/mintoku_mobile'; // Đường dẫn đến trang chủ của bạn
+}
+

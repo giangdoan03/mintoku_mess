@@ -8,7 +8,7 @@ html {
 
 header,
 footer {
-    background-color: #343a40;
+    /*background-color: #343a40;*/
     /* Màu nền của header và footer */
     color: white;
     text-align: center;
@@ -440,6 +440,212 @@ ul li a:hover {
     transform: translateX(-100%);
     opacity: 0;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+
+.button_Navigation {
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 100%;
+}
+.button_Navigation .swiper-button-prev {
+    right: auto !important;
+    left: 10px !important;
+}
+.button_Navigation .swiper-button-next {
+    left: auto !important;
+    right: 10px !important;
+}
+
+.swiper-large-container .swiper-pagination {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 100%;
+}
+.swiper-large-container .swiper-pagination-bullet {
+    margin: 5px;
+}
+
+.swiper-large-container .swiper-button-next, .swiper-large-container .swiper-button-prev {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    margin-top: -20px; /* Cân chỉnh lại vị trí theo chiều dọc nếu cần */
+    border-top: 15px solid transparent;   /* Tăng chiều cao của mũi tên */
+    border-bottom: 15px solid transparent; /* Tăng chiều cao của mũi tên */
+    border-left: 20px solid #007aff; /* Màu và chiều rộng của mũi tên */
+    cursor: pointer;
+    z-index: 10;
+    transition: border-left-color 0.3s ease;
+}
+
+.swiper-large-container .swiper-button-next, .swiper-large-container .swiper-button-prev {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    margin-top: -20px; /* Cân chỉnh lại vị trí theo chiều dọc nếu cần */
+    border-top: 15px solid transparent;   /* Tăng chiều cao của mũi tên */
+    border-bottom: 15px solid transparent; /* Tăng chiều cao của mũi tên */
+    border-left: 20px solid #007aff; /* Màu và chiều rộng của mũi tên */
+    cursor: pointer;
+    z-index: 10;
+    transition: border-left-color 0.3s ease;
+}
+
+/* Đổi màu khi hover */
+.swiper-large-container .swiper-button-next:hover, .swiper-large-container .swiper-button-prev:hover {
+    border-left-color: #ff0000; /* Đổi sang màu đỏ khi hover */
+}
+.swiper-large-container .swiper-button-next {
+    transform: rotate(0);
+}
+.swiper-large-container .swiper-button-prev {
+    transform: rotate(180deg);
+}
+.btn_back_list {
+    position: fixed;
+    bottom: 10px;
+    left: 50%; /* Đặt nút ở giữa màn hình theo chiều ngang */
+    transform: translateX(-50%); /* Căn chỉnh để nút thực sự ở giữa */
+    z-index: 10;
+    padding: 10px 20px; /* Kích thước nhỏ hơn */
+    background-color: #007aff; /* Màu nền nổi bật */
+    color: white; /* Màu chữ */
+    font-size: 14px; /* Kích thước chữ nhỏ hơn */
+    font-weight: bold; /* Đậm chữ */
+    text-align: center;
+    text-decoration: none; /* Xóa gạch chân nếu là link */
+    border-radius: 25px; /* Bo góc tròn hơn */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng mềm */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hiệu ứng khi hover */
+.btn_back_list:hover {
+    background-color: #005bb5; /* Màu nền khi hover */
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3); /* Tăng độ mạnh của đổ bóng khi hover */
+    transform: translateX(-50%) translateY(-2px); /* Nhấn mạnh hiệu ứng khi hover */
+}
+
+/* Hiệu ứng khi nhấn */
+.btn_back_list:active {
+    transform: translateX(-50%) translateY(0); /* Giảm nhẹ hiệu ứng khi nhấn */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2); /* Giảm độ mạnh của đổ bóng khi nhấn */
+}
+
+footer {
+    display: block;
+}
+
+/* Định dạng cho danh sách các post type */
+#page_content {
+    list-style: none; /* Xóa dấu chấm đầu dòng */
+    padding: 0; /* Xóa khoảng cách padding */
+    margin: 0; /* Xóa khoảng cách margin */
+    display: flex; /* Hiển thị theo kiểu flex */
+    flex-direction: column; /* Xếp theo cột */
+}
+
+#page_content ul {
+    margin-left: 0;
+}
+
+#page_content li {
+    margin-bottom: 15px; /* Khoảng cách giữa các mục */
+}
+
+#page_content a {
+    display: block; /* Hiển thị liên kết như khối */
+    padding: 10px 15px; /* Padding cho liên kết */
+    background-color: #007aff; /* Màu nền liên kết */
+    color: white; /* Màu chữ */
+    text-decoration: none; /* Xóa gạch chân */
+    border-radius: 5px; /* Bo góc liên kết */
+    font-size: 16px; /* Kích thước chữ */
+    font-weight: bold; /* Chữ đậm */
+    transition: background-color 0.3s, transform 0.3s; /* Hiệu ứng chuyển màu nền và biến đổi */
+}
+
+/* Hiệu ứng khi hover */
+#page_content a:hover {
+    background-color: #005bb5; /* Màu nền khi hover */
+    transform: translateY(-2px); /* Hiệu ứng nâng liên kết khi hover */
+}
+
+/* Hiệu ứng khi nhấn */
+#page_content a:active {
+    transform: translateY(0); /* Đặt lại vị trí khi nhấn */
+}
+
+
+/* Container chính của trang lưu trữ */
+.archive-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9; /* Màu nền nhẹ */
+    border-radius: 8px; /* Bo góc */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+/* Tiêu đề của trang lưu trữ */
+.archive-container h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Danh sách các tỉnh */
+.province-list {
+    list-style: none; /* Xóa dấu chấm đầu dòng */
+    padding: 0; /* Xóa khoảng cách padding */
+    margin: 0; /* Xóa khoảng cách margin */
+}
+
+.province-list li {
+    margin-bottom: 15px; /* Khoảng cách giữa các mục */
+}
+
+.province-list a {
+    display: block; /* Hiển thị liên kết như khối */
+    padding: 10px 15px; /* Padding cho liên kết */
+    background-color: #007aff; /* Màu nền liên kết */
+    color: white; /* Màu chữ */
+    text-decoration: none; /* Xóa gạch chân */
+    border-radius: 5px; /* Bo góc liên kết */
+    font-size: 16px; /* Kích thước chữ */
+    font-weight: bold; /* Chữ đậm */
+    transition: background-color 0.3s, transform 0.3s; /* Hiệu ứng chuyển màu nền và biến đổi */
+}
+
+/* Hiệu ứng khi hover */
+.province-list a:hover {
+    background-color: #005bb5; /* Màu nền khi hover */
+    transform: translateY(-2px); /* Hiệu ứng nâng liên kết khi hover */
+}
+
+/* Hiệu ứng khi nhấn */
+.province-list a:active {
+    transform: translateY(0); /* Đặt lại vị trí khi nhấn */
+}
+
+/* Thông báo nếu không có tỉnh để hiển thị */
+.archive-container p {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
 }
 
 

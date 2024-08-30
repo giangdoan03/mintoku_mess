@@ -180,8 +180,10 @@
                         </div>
                         <!-- Add Pagination and Navigation -->
                         <div class="swiper-pagination"></div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
+                        <div class="button_Navigation">
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
                     </div>
                 </div>
             </div><!-- #post-<?php the_ID(); ?> -->
