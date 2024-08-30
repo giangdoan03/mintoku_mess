@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(currentPath)
 
     // Kiểm tra xem trang hiện tại có phải là trang chính không
-    if (currentPath === '/mintoku_mobile/' || currentPath === '/mintoku_mobile/') {
+    if (currentPath === '/mintoku.mobile.vccdev.vn/' || currentPath === '/mintoku.mobile.vccdev.vn/') {
         // Nếu là trang chính, ẩn nút
         backButton.style.display = 'none';
     } else {
@@ -99,6 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function goHome() {
-    window.location.href = 'http://localhost/mintoku_mobile'; // Đường dẫn đến trang chủ của bạn
+    window.location.href = 'https://mintoku.mobile.vccdev.vn'; // Đường dẫn đến trang chủ của bạn
 }
 
