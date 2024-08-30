@@ -112,3 +112,56 @@ function goHome() {
     window.location.href = 'https://mintoku.mobile.vccdev.vn'; // Đường dẫn đến trang chủ của bạn
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Lấy tất cả các liên kết trong danh sách bài viết
+    var postLinks = document.querySelectorAll('.post-info a');
+
+    // Thêm sự kiện click cho từng liên kết
+    postLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định (chuyển trang ngay lập tức)
+
+            var targetUrl = this.getAttribute('href'); // Lấy URL của trang đích
+
+            // Thêm hiệu ứng fade out cho toàn bộ trang
+            document.body.style.transition = 'opacity 0.5s';
+            document.body.style.opacity = 0;
+
+            // Sau khi hiệu ứng hoàn tất, chuyển hướng đến trang đích
+            setTimeout(function() {
+                window.location.href = targetUrl;
+            }, 500); // Đợi 500ms để hoàn thành hiệu ứng fade out
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Khi trang đã tải xong, thêm lớp "loaded" vào body để ẩn spinner
+    document.body.classList.add('loaded');
+
+    // Lấy tất cả các liên kết trong danh sách bài viết
+    var postLinks = document.querySelectorAll('.post-info a');
+
+    // Thêm sự kiện click cho từng liên kết
+    postLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định (chuyển trang ngay lập tức)
+
+            var targetUrl = this.getAttribute('href'); // Lấy URL của trang đích
+
+            // Hiển thị lại spinner khi chuyển trang
+            document.body.classList.remove('loaded');
+
+            // Thêm hiệu ứng fade out cho toàn bộ trang
+            document.body.style.transition = 'opacity 0.5s';
+            document.body.style.opacity = 0;
+
+            // Sau khi hiệu ứng hoàn tất, chuyển hướng đến trang đích
+            setTimeout(function() {
+                window.location.href = targetUrl;
+            }, 500); // Đợi 500ms để hoàn thành hiệu ứng fade out
+        });
+    });
+});
+
+

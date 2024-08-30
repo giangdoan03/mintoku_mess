@@ -775,7 +775,10 @@ function display_province_posts($post_type, $taxonomy_provinces, $fixed_years) {
 
     // Hiển thị bài viết
     if ($query->have_posts()) {
-        echo '<h1>Jobs tỉnh/thành ' . esc_html($term->name) . '</h1>';
+        echo '<div id="loading-spinner">';
+        echo '<div class="spinner"></div>';
+        echo '</div>';
+        echo '<h1 class="title_list_job_province">Jobs tỉnh/thành ' . esc_html($term->name) . '</h1>';
         echo '<ul class="post-list scroll-container">';
         while ($query->have_posts()) {
             $query->the_post();
@@ -787,7 +790,7 @@ function display_province_posts($post_type, $taxonomy_provinces, $fixed_years) {
             echo '<li class="post-item scroll-area">';
             echo '<div class="post-thumbnail"><img src="' . esc_url($thumbnail_url) . '" alt="' . esc_attr(get_the_title()) . '"></div>';
             echo '<div class="post-info">';
-            echo '<a href="' . get_permalink() . '">' . get_the_title() . '</a> (' . $display_year . ')';
+            echo '<a href="' . get_permalink() . '">' . get_the_title() . '</a> <span class="label_year"> (' . $display_year . ')</span>';
             echo '<p class="post-excerpt">' . esc_html($excerpt) . '</p>'; // Hiển thị mô tả ngắn
             echo '</div>';
             echo '</li>';

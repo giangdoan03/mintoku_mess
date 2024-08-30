@@ -301,7 +301,7 @@ ul li a:hover {
 
 .post-info a {
     text-decoration: none;
-    color: #0073aa;
+    color: #000000;
     font-size: 18px;
     font-weight: bold;
     display: inline-block;
@@ -516,35 +516,44 @@ ul li a:hover {
 }
 .btn_back_list {
     position: fixed;
-    bottom: 10px;
-    left: 50%; /* Đặt nút ở giữa màn hình theo chiều ngang */
-    transform: translateX(-50%); /* Căn chỉnh để nút thực sự ở giữa */
-    z-index: 10;
-    padding: 10px 20px; /* Kích thước nhỏ hơn */
-    background-color: #007aff; /* Màu nền nổi bật */
-    color: white; /* Màu chữ */
-    font-size: 14px; /* Kích thước chữ nhỏ hơn */
-    font-weight: bold; /* Đậm chữ */
+    bottom: 20px;
+    left: 15px; /* Đặt nút cách bên trái 15px */
+    z-index: 100;
+    padding: 10px 20px;
+    background-color: rgba(0, 122, 255, 0.5);
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
     text-align: center;
-    text-decoration: none; /* Xóa gạch chân nếu là link */
-    border-radius: 25px; /* Bo góc tròn hơn */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng mềm */
+    text-decoration: none;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     cursor: pointer;
 }
 
+.home #page_content {
+    padding: 15px !important;
+}
+
+.title_list_job_province {
+    font-size: 16px;
+    padding-left: 15px;
+}
+
 /* Hiệu ứng khi hover */
 .btn_back_list:hover {
-    background-color: #005bb5; /* Màu nền khi hover */
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3); /* Tăng độ mạnh của đổ bóng khi hover */
-    transform: translateX(-50%) translateY(-2px); /* Nhấn mạnh hiệu ứng khi hover */
+    background-color: #005bb5;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+    transform: translateX(-50%) translateY(-2px);
 }
 
 /* Hiệu ứng khi nhấn */
 .btn_back_list:active {
-    transform: translateX(-50%) translateY(0); /* Giảm nhẹ hiệu ứng khi nhấn */
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2); /* Giảm độ mạnh của đổ bóng khi nhấn */
+    transform: translateX(-50%) translateY(0);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 footer {
     display: block;
@@ -652,6 +661,113 @@ footer {
 .single .content-area {
     padding: 10px;
 }
+
+body {
+    opacity: 1;
+    transition: opacity 0.5s; /* Hiệu ứng fade in khi tải trang */
+}
+
+/* CSS cho container của loading spinner */
+#loading-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Màu nền mờ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Đảm bảo nó nằm trên tất cả các phần tử khác */
+}
+
+/* CSS cho chính spinner */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #3d4070; /* Màu của phần xoay */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+/* Keyframes cho hoạt ảnh xoay */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Ẩn spinner khi trang đã tải xong */
+body.loaded #loading-spinner {
+    display: none;
+}
+
+/* Chuyển hiệu ứng mờ dần cho body */
+body {
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+span.label_year {
+    color: #000000;
+    font-size: 30px;
+}
+
+
+/* Container form */
+#filter {
+    display: flex;
+    align-items: center; /* Căn chỉnh label và select ở giữa theo chiều dọc */
+    justify-content: center; /* Căn chỉnh form ở giữa màn hình */
+    margin: 20px 0; /* Khoảng cách bên trên và dưới form */
+    padding: 10px 15px; /* Khoảng cách bên trong form */
+    background-color: #f7f7f7; /* Màu nền nhẹ nhàng */
+    border-radius: 10px; /* Bo góc cho form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+/* Label */
+#filter label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px; /* Khoảng cách giữa label và select */
+    color: #333; /* Màu chữ */
+}
+
+/* Select dropdown */
+#year-dropdown {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333; /* Màu chữ */
+    background-color: #ffffff; /* Màu nền dropdown */
+    border: 1px solid #ccc; /* Viền nhẹ */
+    border-radius: 5px; /* Bo góc cho dropdown */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    appearance: none; /* Xóa kiểu mặc định của browser */
+    cursor: pointer;
+}
+
+/* Thêm mũi tên tùy chỉnh cho dropdown */
+#year-dropdown::after {
+    content: "\25BC"; /* Mã ký tự mũi tên xuống */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Hiệu ứng khi focus vào dropdown */
+#year-dropdown:focus {
+    border-color: #007aff; /* Viền màu nổi bật */
+    box-shadow: 0 0 5px rgba(0, 122, 255, 0.5); /* Đổ bóng khi focus */
+    outline: none; /* Xóa outline mặc định */
+}
+
+
 
 
 

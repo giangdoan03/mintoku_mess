@@ -13,9 +13,9 @@
 
 <footer id="footer_s">
     <div class="btn_back_list" id="backButton" onclick="goHome()">
-        back
+        Back
     </div>
-    <p>Footer</p>
+<!--    <p>Footer</p>-->
 </footer>
 </div><!-- #page -->
 
