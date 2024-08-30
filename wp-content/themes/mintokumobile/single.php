@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+	<div id="primary" class="site-main">
 
         <?php
         if (in_array(get_post_type(), ['vietnam', 'laos', 'cambodia'])) {
@@ -22,7 +22,7 @@ get_header();
         ?>
 
 
-    </main><!-- #main -->
+    </div><!-- #main -->
 
 <?php
 //get_sidebar();

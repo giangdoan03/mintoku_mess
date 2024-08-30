@@ -54,6 +54,9 @@
 				'after'  => '</div>',
 			)
 		);
+        if (function_exists('display_custom_images')) {
+            display_custom_images(get_the_ID());
+        }
 		?>
 	</div><!-- .entry-content -->
 

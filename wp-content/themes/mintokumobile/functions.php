@@ -184,7 +184,7 @@ function enqueue_swiper_scripts() {
     wp_enqueue_script('jquery');
     wp_enqueue_script('jquery-js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js');
     wp_enqueue_script('swiper-js', 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.min.js');
-//    wp_enqueue_script('custom-js', get_template_directory_uri() . '/js/script.js');
+    wp_enqueue_script('custom-js', get_template_directory_uri() . '/js/script.js');
 }
 add_action('wp_enqueue_scripts', 'enqueue_swiper_scripts');
 
@@ -530,28 +530,37 @@ function display_custom_details_meta_box($post) {
     <?php
 }
 
+
 function display_custom_images_meta_box($post) {
     $post_type = get_post_type($post);
     $images = get_post_meta($post->ID, $post_type . '_images', true);
+
+    // Start output buffering
+    ob_start();
     ?>
-    <div class="custom-meta-box-content" id="<?php echo $post_type; ?>-images-meta-box">
-        <div id="<?php echo $post_type; ?>-images-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <div class="custom-meta-box-content" id="<?php echo esc_attr($post_type); ?>-images-meta-box">
+        <div id="<?php echo esc_attr($post_type); ?>-images-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
             <?php
-            if (!empty($images)) {
+            if (!empty($images) && is_array($images)) {
                 foreach ($images as $image) {
-                    echo '<div class="' . $post_type . '-image-item" style="position: relative; display: inline-block;">';
-                    echo '<img src="' . esc_url($image) . '" style="max-width: 150px; height: auto; display: block;" />';
-                    echo '<input type="hidden" name="' . $post_type . '_images[]" value="' . esc_url($image) . '" />';
-                    echo '<button class="remove-' . $post_type . '-image" style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer;">Remove</button>';
-                    echo '</div>';
+                    ?>
+                    <div class="<?php echo esc_attr($post_type); ?>-image-item" style="position: relative; display: inline-block;">
+                        <img src="<?php echo esc_url($image); ?>" style="max-width: 150px; height: auto; display: block;" />
+                        <input type="hidden" name="<?php echo esc_attr($post_type); ?>_images[]" value="<?php echo esc_url($image); ?>" />
+                        <button class="remove-<?php echo esc_attr($post_type); ?>-image" style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer;">Xóa</button>
+                    </div>
+                    <?php
                 }
             }
             ?>
         </div>
-        <button id="upload-<?php echo $post_type; ?>-image-button" class="button">Upload Images</button>
+        <button id="upload-<?php echo esc_attr($post_type); ?>-image-button" class="button">Upload Images</button>
     </div>
     <?php
+    // Get the output buffer content and clean the buffer
+    echo ob_get_clean();
 }
+
 
 
 function save_custom_meta_box_data($post_id) {
@@ -623,6 +632,10 @@ function save_custom_meta_box_data($post_id) {
         $additional_info = wp_kses_post($_POST['my_additional_info_field']);
         update_post_meta($post_id, '_my_additional_info_key', $additional_info);
     }
+    // Lưu ID ảnh vào metadata
+    $image_ids = isset($_POST['custom_image_ids']) ? array_map('intval', explode(',', $_POST['custom_image_ids'])) : [];
+
+    update_post_meta($post_id, '_custom_image_ids', $image_ids);
 }
 add_action('save_post', 'save_custom_meta_box_data');
 
@@ -651,7 +664,7 @@ function display_post_types_list()
 add_shortcode('post_types_list', 'display_post_types_list');
 
 
-
+// filter by year
 function custom_taxonomy_query( $query ) {
     // Kiểm tra xem đây có phải là truy vấn chính trên trang taxonomy không
     if ( !is_admin() && $query->is_main_query() && is_tax() ) {
@@ -840,6 +853,82 @@ function handle_remove_image() {
 
     wp_send_json_success();
 }
+
+//add_meta_box để thêm metabox vào trang
+function custom_image_metabox() {
+    add_meta_box(
+        'custom_image_metabox_id',            // ID của metabox
+        'Upload Ảnh',                         // Tiêu đề của metabox
+        'render_custom_image_metabox',        // Hàm callback để render metabox
+        ['post', 'page'],                     // Các post types mà metabox sẽ xuất hiện (có thể thêm 'custom_post_type')
+        'side',                               // Vị trí của metabox ('normal', 'side', 'advanced')
+        'default'                             // Độ ưu tiên của metabox ('default', 'high', 'low')
+    );
+}
+add_action('add_meta_boxes', 'custom_image_metabox');
+
+function render_custom_image_metabox($post) {
+    // Sử dụng nonce để bảo vệ dữ liệu
+    wp_nonce_field(basename(__FILE__), 'custom_image_metabox_nonce');
+
+    // Lấy dữ liệu hiện tại từ metadata (nếu có)
+    $image_ids = get_post_meta($post->ID, '_custom_image_ids', true);
+
+    // Ensure $image_ids is an array
+    if (!is_array($image_ids)) {
+        $image_ids = array(); // If $image_ids is not an array, make it an empty array
+    }
+
+    ?>
+    <div id="custom-image-metabox-container">
+        <input type="button" class="button" id="upload_images_button" value="Upload Ảnh">
+        <ul id="image-preview">
+            <?php
+            if (!empty($image_ids)) {
+                foreach ($image_ids as $image_id) {
+                    echo '<li data-id="' . esc_attr($image_id) . '">';
+                    echo wp_get_attachment_image($image_id, 'thumbnail');
+                    echo '<a href="#" class="remove-image">Xóa</a>';
+                    echo '</li>';
+                }
+            }
+            ?>
+        </ul>
+        <input type="hidden" name="custom_image_ids" id="custom_image_ids" value="<?php echo esc_attr(implode(',', $image_ids)); ?>">
+    </div>
+    <?php
+}
+
+//hiển thị ảnh trên frontend bằng cách lấy dữ liệu từ metadata:
+function display_custom_images($post_id) {
+    $image_ids = get_post_meta($post_id, '_custom_image_ids', true);
+
+    if (!empty($image_ids)) {
+        echo '<div class="custom_images_visa">';
+        foreach ($image_ids as $image_id) {
+            echo wp_get_attachment_image($image_id, 'full');
+        }
+        echo '</div>';
+    }
+}
+
+function display_custom_images_ad_info($post_id) {
+    $image_ids = get_post_meta($post_id, '_my_additional_info_key', true);
+
+    if (!empty($image_ids)) {
+        echo '<div class="custom_images_info">';
+        foreach ($image_ids as $image_id) {
+            echo wp_get_attachment_image($image_id, 'full');
+        }
+        echo '</div>';
+    }
+}
+
+add_action('after_setup_theme', 'my_custom_image_sizes');
+function my_custom_image_sizes() {
+    add_image_size('thumbnail', 150, 150, true); // Ensure 'thumbnail' is defined
+}
+
 
 
 

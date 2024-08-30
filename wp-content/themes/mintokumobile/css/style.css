@@ -172,7 +172,7 @@ div#page{
     top: 0;
 }
 
-.swiper-slide {
+#swiper_container_content .swiper-container_c .swiper-slide {
     height: 300px;
     /* display: flex; */
     background: #eee;
@@ -180,6 +180,12 @@ div#page{
     justify-content: center;
     transition: all 200ms linear;
     transform: scale(0.8) !important;
+}
+
+div#slider_content_item {
+    max-width: 1000px;
+    overflow: hidden;
+    margin: 0 auto;
 }
 
 /*.swiper-slide.swiper-slide-active {*/
@@ -298,6 +304,7 @@ ul li a:hover {
     color: #0073aa;
     font-size: 18px;
     font-weight: bold;
+    display: inline-block;
 }
 
 .post-info a:hover {
@@ -357,7 +364,84 @@ ul li a:hover {
         justify-content: center;
         color: white;
     }
+    div#slider_content_item {
+        max-width: 500px;
+    }
 
 }
+
+.custom_images_visa {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center; /* Center images horizontally */
+}
+
+.custom_images_visa img {
+    width: 200px;
+    height: 150px; /* Fixed height for uniformity */
+    object-fit: cover; /* Ensure images cover the container while preserving aspect ratio */
+    border: 2px solid #ddd; /* Light border around images */
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
+}
+
+.custom_images_visa img:hover {
+    transform: scale(1.05); /* Slightly enlarge image on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+
+.swiper-no-swipe {
+    pointer-events: none;
+}
+
+
+/* Đặt kích thước và bố cục cho các phần tử */
+.post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.post-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+/* Hiệu ứng vuốt */
+.post-item.swiping {
+    transform: translateX(-100%);
+}
+.post-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+/* Thêm hiệu ứng fade-in khi vuốt sang trái */
+.post-item {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+}
+
+.post-item.swiping {
+    opacity: 0.5; /* Hiệu ứng fade-in khi vuốt */
+}
+
+/* Định nghĩa lớp để hiện thị phần tử trong trạng thái vuốt */
+.post-item.swipe-left {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+
 
 

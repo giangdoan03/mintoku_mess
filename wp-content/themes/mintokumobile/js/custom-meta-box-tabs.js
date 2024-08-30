@@ -146,4 +146,75 @@ jQuery(document).ready(function($) {
             }
         );
     });
+
+    function setupImageMetaBox(uploadButtonId, previewContainerId, hiddenInputId) {
+        var file_frame;
+
+        // Handle image upload
+        $(uploadButtonId).on('click', function(event) {
+            event.preventDefault();
+
+            if (file_frame) {
+                file_frame.open();
+                return;
+            }
+
+            file_frame = wp.media.frames.file_frame = wp.media({
+                title: 'Select or Upload Images',
+                button: {
+                    text: 'Use Selected Images',
+                },
+                multiple: true
+            });
+
+            file_frame.on('select', function() {
+                var attachments = file_frame.state().get('selection').toArray();
+                var attachment_ids = [];
+
+                $(previewContainerId).empty();
+
+                attachments.forEach(function(attachment) {
+                    if (attachment && attachment.attributes && attachment.attributes.sizes) {
+                        var thumbnail_url = attachment.attributes.sizes.thumbnail ? attachment.attributes.sizes.thumbnail.url : attachment.attributes.url;
+                        if (thumbnail_url) {
+                            attachment_ids.push(attachment.id);
+                            $(previewContainerId).append(
+                                '<li data-id="' + attachment.id + '" style="position: relative; display: inline-block;">' +
+                                '<img src="' + thumbnail_url + '" style="max-width: 150px; height: auto;" />' +
+                                '<a href="#" class="remove-image" style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer;">Remove</a>' +
+                                '</li>'
+                            );
+                        } else {
+                            console.error('Thumbnail URL not found for attachment:', attachment);
+                        }
+                    } else {
+                        console.error('Attachment data is missing expected properties:', attachment);
+                    }
+                });
+
+                $(hiddenInputId).val(attachment_ids.join(','));
+            });
+
+            file_frame.open();
+        });
+
+        // Handle image removal
+        $(document).on('click', '.remove-image', function(e) {
+            e.preventDefault();
+            var $li = $(this).closest('li');
+            var id = $li.data('id');
+            var ids = $(hiddenInputId).val().split(',');
+
+            ids = ids.filter(function(item) {
+                return item != id;
+            });
+
+            $(hiddenInputId).val(ids.join(','));
+            $li.remove();
+        });
+    }
+
+    // Call the function for different meta boxes
+    setupImageMetaBox('#upload_images_button', '#image-preview', '#custom_image_ids');
+    setupImageMetaBox('#vietnam-upload-images-button', '#vietnam-image-preview', '#vietnam-custom-image-ids');
 });

@@ -23,20 +23,16 @@
     <input type="text" id="tab2_field" name="tab2_field" value="<?php echo esc_attr($tab2_value); ?>" size="25" />
 </div>
 <div id="tab3" class="custom-meta-box-content-visa">
-    <label for="tab3_images">Ảnh đại diện:</label>
-    <input type="hidden" id="tab3_image_ids" name="tab3_image_ids" value="<?php echo esc_attr($tab3_image_ids_string); ?>" />
-    <div id="tab3_images_container">
-        <?php if (!empty($tab3_image_ids)): ?>
-            <?php foreach ($tab3_image_ids as $image_id): ?>
-                <?php $image_url = wp_get_attachment_url($image_id); ?>
-                <div class="tab3_image_wrapper">
-                    <img src="<?php echo esc_url($image_url); ?>" class="tab3_image" />
-                    <button class="tab3_remove_image_button" data-id="<?php echo esc_attr($image_id); ?>">
-                        <span class="dashicons dashicons-no-alt"></span>
-                    </button>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </div>
-    <button id="tab3_upload_images_button" class="button">Tải lên ảnh</button>
+  <?php
+  function custom_display_images_on_frontend($post_id) {
+      $post = get_post($post_id);
+      if ($post) {
+          // Call the metabox render function
+          render_custom_image_metabox($post);
+      }
+  }
+
+  // Call this function in your desired location
+  custom_display_images_on_frontend(get_the_ID());
+  ?>
 </div>
