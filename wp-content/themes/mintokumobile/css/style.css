@@ -508,9 +508,11 @@ ul li a:hover {
 }
 .swiper-large-container .swiper-button-next {
     transform: rotate(0);
+    background-image: none;
 }
 .swiper-large-container .swiper-button-prev {
     transform: rotate(180deg);
+    background-image: none;
 }
 .btn_back_list {
     position: fixed;
