@@ -649,6 +649,9 @@ footer {
     color: #666;
     text-align: center;
 }
+.single .content-area {
+    padding: 10px;
+}
 
 
 
