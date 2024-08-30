@@ -84,12 +84,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function() {
     var backButton = document.getElementById('backButton');
-    var currentPath = window.location.pathname;
+    var currentDomain = window.location.hostname;
 
-    console.log(currentPath)
+    console.log(currentDomain);
 
     // Kiểm tra xem trang hiện tại có phải là trang chính không
-    if (currentPath === '/mintoku.mobile.vccdev.vn/' || currentPath === '/mintoku.mobile.vccdev.vn/') {
+    if (currentDomain === 'mintoku.mobile.vccdev.vn') {
         // Nếu là trang chính, ẩn nút
         backButton.style.display = 'none';
     } else {
