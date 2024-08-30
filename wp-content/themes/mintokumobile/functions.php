@@ -784,7 +784,7 @@ function display_province_posts($post_type, $taxonomy_provinces, $fixed_years) {
             $query->the_post();
             $post_year = get_post_meta(get_the_ID(), $year_param, true);
             $display_year = !empty($post_year) ? esc_html($post_year) : 'N/A';
-            $thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'medium') : 'https://placehold.jp/3d4070/ffffff/200x200.png';
+            $thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'large') : 'https://placehold.jp/3d4070/ffffff/200x200.png';
             $excerpt = get_the_excerpt(); // Lấy mô tả ngắn
 
             echo '<li class="post-item scroll-area">';

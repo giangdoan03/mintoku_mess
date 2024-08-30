@@ -116,7 +116,7 @@
                                 <?php
                                 $tab1_value = get_post_meta(get_the_ID(), '_my_tab1_key', true);
                                 $tab2_value = get_post_meta(get_the_ID(), '_my_tab2_key', true);
-                                $tab3_image_ids = get_post_meta($post->ID, '_my_tab3_image_ids', true);
+                                $tab3_image_ids = get_post_meta($post->ID, '_custom_image_ids', true);
 
                                 if (!empty($tab1_value)) {
                                     echo '<div class="tab1-content">';
