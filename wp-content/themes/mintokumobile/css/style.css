@@ -768,6 +768,10 @@ span.label_year {
     outline: none; /* Xóa outline mặc định */
 }
 
+.post-category {
+    display: none; /* Ẩn phần hiển thị danh mục nếu không muốn hiển thị */
+}
+
 
 
 

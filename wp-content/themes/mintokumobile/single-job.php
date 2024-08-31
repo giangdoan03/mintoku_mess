@@ -45,6 +45,48 @@
     }
 </style>
 
+<?php
+// Get the current post type
+$post_type = get_post_type();
+
+$taxonomy = ''; // Initialize taxonomy variable
+
+// Determine the taxonomy based on the post type
+switch ($post_type) {
+    case 'vietnam':
+        $taxonomy = 'province_vietnam';
+        break;
+    case 'laos':
+        $taxonomy = 'province_laos';
+        break;
+    case 'cambodia':
+        $taxonomy = 'province_cambodia';
+        break;
+    default:
+        $taxonomy = ''; // Set a default value if needed
+        break;
+}
+
+if ($taxonomy) {
+    $terms = get_the_terms(get_the_ID(), $taxonomy);
+    if ($terms && !is_wp_error($terms)) {
+        echo '<div class="post-category">';
+        foreach ($terms as $term) {
+            echo '<a href="' . esc_url(get_term_link($term)) . '">' . esc_html($term->name) . '</a>';
+        }
+        echo '</div>';
+    } else {
+        echo 'No terms found.';
+    }
+} else {
+    echo 'Taxonomy not found for this post type.';
+}
+?>
+
+
+
+
+
 <div id="primary" class="content-area">
     <div id="main" class="site-main" role="main">
         <?php while (have_posts()) : the_post(); ?>
@@ -225,18 +267,20 @@
                         const translateX = this.translate;
                         const maxTranslateX = this.maxTranslate();
                         if (translateX < maxTranslateX) {
-                            // Chuyển hướng sau khi người dùng cố gắng vuốt qua slide cuối
-                            var currentDomain = window.location.hostname;
-                            if (currentDomain === 'localhost') {
-                                // Redirect to a specific URL if on localhost
-                                window.location.href = 'http://localhost/mintoku_mobile/vietnam-provinces/da-nang/';
+                            // Lấy liên kết danh mục đầu tiên mà bài viết này thuộc về
+                            var firstCategoryLink = document.querySelector('.post-category a').href;
+
+                            // Kiểm tra nếu liên kết danh mục tồn tại
+                            if (firstCategoryLink) {
+                                window.location.href = firstCategoryLink;
                             } else {
-                                // Navigate back to the previous page if not on localhost
+                                // Nếu không có danh mục nào, quay lại trang trước đó
                                 window.history.back();
                             }
                         }
                     }
                 },
+
 
                 slideChange: function () {
                     // Cập nhật URL với tham số của slide hiện tại
