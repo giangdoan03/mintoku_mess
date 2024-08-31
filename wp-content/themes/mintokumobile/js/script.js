@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Kiểm tra xem trang hiện tại có phải là localhost không
     if (currentDomain === 'localhost') {
         // Nếu là localhost, hiển thị nút
-        backButton.style.display = 'block';
+        // backButton.style.display = 'block';
         backButton.onclick = function() {
             window.location.href = 'http://localhost/mintoku_mobile'; // Đường dẫn đến trang chủ của localhost
         };
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
         backButton.style.display = 'none';
     } else {
         // Nếu không phải localhost hay trang chính, hiển thị nút
-        backButton.style.display = 'block';
+        // backButton.style.display = 'block';
         backButton.onclick = function() {
             window.location.href = 'https://mintoku.mobile.vccdev.vn'; // Đường dẫn đến trang chủ của bạn
         };
