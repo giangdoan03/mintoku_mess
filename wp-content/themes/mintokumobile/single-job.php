@@ -44,12 +44,13 @@
         /*}*/
     }
 </style>
-
+<div id="taxonomy-terms-container"></div>
 <?php
 // Get the current post type
 $post_type = get_post_type();
 
 $taxonomy = ''; // Initialize taxonomy variable
+$terms_data = []; // Array to hold term data
 
 // Determine the taxonomy based on the post type
 switch ($post_type) {
@@ -70,18 +71,23 @@ switch ($post_type) {
 if ($taxonomy) {
     $terms = get_the_terms(get_the_ID(), $taxonomy);
     if ($terms && !is_wp_error($terms)) {
-        echo '<div class="post-category">';
         foreach ($terms as $term) {
-            echo '<a href="' . esc_url(get_term_link($term)) . '">' . esc_html($term->name) . '</a>';
+            $terms_data[] = [
+                'name' => esc_html($term->name),
+                'link' => esc_url(get_term_link($term))
+            ];
         }
-        echo '</div>';
-    } else {
-        echo 'No terms found.';
     }
-} else {
-    echo 'Taxonomy not found for this post type.';
 }
+
+// Pass the data to JavaScript
 ?>
+<script>
+
+</script>
+
+
+
 
 
 
@@ -237,6 +243,39 @@ if ($taxonomy) {
 
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
+
+    var taxonomyTerms = <?php echo json_encode($terms_data); ?>;
+    var previousPage = document.referrer;
+    console.log('Previous Page URL:', previousPage); // For debugging
+    console.log('Taxonomy Terms:', taxonomyTerms);
+
+    // Function to display taxonomy terms
+    function displayTaxonomyTerms() {
+        var termsContainer = document.createElement('div');
+        termsContainer.className = 'post-category';
+
+        if (Array.isArray(taxonomyTerms)) {
+            taxonomyTerms.forEach(function(term) {
+                var link = document.createElement('a');
+                link.href = term.link;
+                link.textContent = term.name;
+                termsContainer.appendChild(link);
+
+                // Add a line break or other styling as needed
+                termsContainer.appendChild(document.createElement('br'));
+            });
+        } else {
+            termsContainer.textContent = 'No terms found.';
+        }
+
+        // Append the termsContainer to a specific element in the page
+        document.getElementById('taxonomy-terms-container').appendChild(termsContainer);
+    }
+
+    // Call the function to display terms
+    displayTaxonomyTerms();
+
+
     document.addEventListener('DOMContentLoaded', function () {
         var swiperP = new Swiper('.swiper-large-container', {
             loop: false,
@@ -270,9 +309,11 @@ if ($taxonomy) {
                             // Lấy liên kết danh mục đầu tiên mà bài viết này thuộc về
                             var firstCategoryLink = document.querySelector('.post-category a').href;
 
+                            console.log('firstCategoryLink', firstCategoryLink)
+
                             // Kiểm tra nếu liên kết danh mục tồn tại
-                            if (firstCategoryLink) {
-                                window.location.href = firstCategoryLink;
+                            if (previousPage) {
+                                window.location.href = previousPage;
                             } else {
                                 // Nếu không có danh mục nào, quay lại trang trước đó
                                 window.history.back();
