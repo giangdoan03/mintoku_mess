@@ -30,8 +30,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         postItems.forEach(post => {
             const rect = post.getBoundingClientRect();
-            if (positionX >= rect.left && positionX <= rect.right) {
+            // Check if the swipe position is within the boundaries of the post item
+            if (positionX >= rect.left && positionX <= rect.right && positionX >= rect.top && positionX <= rect.bottom) {
                 currentPost = post;
+                console.log('currentPost:', currentPost);
             }
         });
 

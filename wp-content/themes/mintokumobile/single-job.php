@@ -82,16 +82,6 @@ if ($taxonomy) {
 
 // Pass the data to JavaScript
 ?>
-<script>
-
-</script>
-
-
-
-
-
-
-
 
 <div id="primary" class="content-area">
     <div id="main" class="site-main" role="main">
@@ -105,6 +95,7 @@ if ($taxonomy) {
                         <div class="swiper-wrapper">
                             <!-- Slide 1: content_job_detail -->
                             <div class="swiper-slide content_job_detail">
+                                <p> <?php the_title('<h1 class="entry-title">', '</h1>'); ?></p>
                                 <?php
                                 the_content();
 
