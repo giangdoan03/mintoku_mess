@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function handleSwipe(post) {
         if (post) {
-            post.classList.add('swipe-left');
+            // post.classList.add('swipe-left');
             setTimeout(() => {
                 const link = post.querySelector('.post-info a').href;
                 console.log(`Redirecting to: ${link}`);
