@@ -11,11 +11,11 @@
 
 ?>
 
-<!--<footer id="footer_s">-->
-<!--    <div class="btn_back_list" id="backButton" onclick="goHome()">-->
-<!--        Back-->
-<!--    </div>-->
-<!--</footer>-->
+<footer id="footer_s">
+    <div class="btn_back_list" id="backButton" onclick="goHome()">
+        Back
+    </div>
+</footer>
 </div><!-- #page -->
 
 <?php wp_footer(); ?>
