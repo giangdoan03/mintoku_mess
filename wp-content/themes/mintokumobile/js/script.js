@@ -166,4 +166,66 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+jQuery(document).ready(function($) {
+    var path_1 = window.location.pathname;
+    var segments_1 = path_1.split('/');
+    var year_1 = segments_1[segments_1.length - 2];
+    $('#province-filter').on('change', function() {
+        var provinceId = $(this).val();
+
+        if (provinceId) {
+            $.ajax({
+                url: myAjax.ajaxurl, // URL AJAX được định nghĩa qua wp_localize_script
+                type: 'POST',
+                data: {
+                    action: 'load_universities',
+                    province_id: provinceId,
+                    year: year_1
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    $('#university-filter').html(data.universities); // Cập nhật danh sách trường đại học
+                    $('#posts-container').html(data.jobs); // Cập nhật danh sách job
+                }
+            });
+        } else {
+            $('#university-filter').html('<option value="">Chọn trường đại học</option>');
+            $('#posts-container').html(''); // Xóa nội dung khi không chọn tỉnh
+        }
+    });
+
+
+
+    var path = window.location.pathname;
+    var segments = path.split('/');
+    var year = segments[segments.length - 2];
+
+    $('#university-filter').on('change', function() {
+        var universityId = $(this).val();
+
+        if (universityId) {
+            $.ajax({
+                url: myAjax.ajaxurl, // URL AJAX được định nghĩa qua wp_localize_script
+                type: 'POST',
+                data: {
+                    action: 'filter_posts_by_university',
+                    university_id: universityId,
+                    year: year // Truyền giá trị năm vào AJAX
+                },
+                success: function(response) {
+                    console.log('response')
+                    $('#posts-container').html(response);
+                }
+            });
+        } else {
+            $('#posts-container').html(''); // Xóa nội dung khi không chọn trường đại học
+        }
+    });
+});
+
+
+
+
+
+
 

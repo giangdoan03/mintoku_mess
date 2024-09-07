@@ -156,7 +156,7 @@ footer {
 .swiper-container {
     position: relative;
     width: 90vw;
-    height: 200px;
+    /*height: 200px;*/
 }
 div#post-details {
     padding: 0 10px;
@@ -479,13 +479,67 @@ ul li a:hover {
     width: 0;
     height: 0;
     margin-top: -20px; /* Cân chỉnh lại vị trí theo chiều dọc nếu cần */
-    border-top: 15px solid transparent;   /* Tăng chiều cao của mũi tên */
-    border-bottom: 15px solid transparent; /* Tăng chiều cao của mũi tên */
-    border-left: 20px solid #007aff; /* Màu và chiều rộng của mũi tên */
+    /*     border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-left: 20px solid #007aff; */
     cursor: pointer;
     z-index: 10;
     transition: border-left-color 0.3s ease;
 }
+
+.button_Navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.swiper-container .swiper-button-next:before {
+    content: 'Next';
+    position: absolute;
+    left: 3px;
+    top: -20px;
+    color: #000000;
+}
+.swiper-container .swiper-button-prev:before {
+    content: 'Prev';
+    position: absolute;
+    right: 3px;
+    top: -20px;
+    color: #000000;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    background-color: rgba(0, 123, 255, 0.5); /* Blue background with opacity */
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 15px; /* Font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+    user-select: none; /* Prevent text selection */
+    text-align: center; /* Center text */
+    line-height: 1.5; /* Adjust line height for centering */
+    display: inline-flex;
+    align-items: center; /* Vertical alignment */
+    justify-content: center; /* Horizontal alignment */
+    font-weight: bold;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background-color: rgba(0, 86, 179, 0.8); /* Darker blue background on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.swiper-button-prev:active,
+.swiper-button-next:active {
+    background-color: rgba(0, 61, 128, 0.8); /* Even darker blue on click */
+    transform: scale(0.95); /* Slightly shrink on click */
+}
+
 
 .swiper-large-container .swiper-button-next, .swiper-large-container .swiper-button-prev {
     position: absolute;
@@ -494,9 +548,9 @@ ul li a:hover {
     width: 0;
     height: 0;
     margin-top: -20px; /* Cân chỉnh lại vị trí theo chiều dọc nếu cần */
-    border-top: 15px solid transparent;   /* Tăng chiều cao của mũi tên */
-    border-bottom: 15px solid transparent; /* Tăng chiều cao của mũi tên */
-    border-left: 20px solid #007aff; /* Màu và chiều rộng của mũi tên */
+    /*     border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-left: 20px solid #007aff; */
     cursor: pointer;
     z-index: 10;
     transition: border-left-color 0.3s ease;
@@ -511,7 +565,7 @@ ul li a:hover {
     background-image: none;
 }
 .swiper-large-container .swiper-button-prev {
-    transform: rotate(180deg);
+    /*     transform: rotate(180deg); */
     background-image: none;
 }
 .btn_back_list {
@@ -771,6 +825,284 @@ span.label_year {
 .post-category {
     display: none; /* Ẩn phần hiển thị danh mục nếu không muốn hiển thị */
 }
+
+
+/* Cấu hình chung cho body và các yếu tố cơ bản */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* CSS cho toàn bộ phần taxonomy year */
+.taxonomy-year {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Tiêu đề của trang */
+.taxonomy-year h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* CSS cho container của dropdown filter */
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.filter-container label {
+    font-size: 16px;
+    color: #555;
+    margin-right: 10px;
+}
+
+.filter-container select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+}
+
+/* CSS cho danh sách các bài viết */
+#posts-container {
+    margin-top: 20px;
+}
+
+.year-posts {
+    list-style-type: none;
+    padding: 0;
+    margin-left: 0;
+}
+
+.year-posts li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.year-posts li:hover {
+    background-color: #e0e0e0;
+}
+
+.year-posts a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.year-posts img {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.year-posts a:hover {
+    color: #0073aa;
+}
+
+
+.archive-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.archive-container h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.year-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.year-list li {
+    background: #fff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, transform 0.3s;
+    display: flex;
+}
+
+.year-list li a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+    display: block;
+}
+
+.year-list li a:hover {
+    text-decoration: underline;
+    color: #2c3e50;
+}
+
+.year-list li::before {
+    content: '•';
+    color: #3498db;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+p {
+    font-size: 16px;
+    color: #666;
+}
+
+.post-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hiệu ứng hover cho mỗi bài viết */
+.post-item:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.02);
+}
+
+.post-item a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.post-item a:hover {
+    color: #0073aa;
+}
+
+/* Thiết lập cho hình ảnh đại diện */
+.post-item img {
+    width: 100px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề bài viết */
+.post-item a span {
+    font-size: 18px;
+    line-height: 1.2;
+    color: #333;
+}
+
+.taxonomy-year ul {
+    margin-left: 0;
+}
+
+
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .taxonomy-year {
+        padding: 15px;
+    }
+
+    .filter-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-container label {
+        margin-bottom: 5px;
+    }
+
+    .filter-container select {
+        margin-bottom: 10px;
+    }
+
+    .archive-container {
+        padding: 15px;
+    }
+
+    .archive-container h1 {
+        font-size: 24px;
+    }
+
+    .year-list li {
+        padding: 10px;
+    }
+
+    .year-list li::before {
+        font-size: 18px;
+    }
+    .filter-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filter-container label {
+        margin-bottom: 10px;
+    }
+
+    .year-posts li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .year-posts a {
+        margin-left: 0;
+        margin-top: 10px;
+        display: flex;
+        align-items: flex-start;
+    }
+    .post-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-item img {
+        margin-bottom: 10px;
+        width: 100%;
+        height: auto;
+    }
+}
+
 
 
 

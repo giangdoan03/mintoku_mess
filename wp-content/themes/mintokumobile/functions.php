@@ -7,9 +7,9 @@
  * @package mintokumobile
  */
 
-if ( ! defined( '_S_VERSION' ) ) {
-	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.0' );
+if (!defined('_S_VERSION')) {
+    // Replace the version number of the theme on each release.
+    define('_S_VERSION', '1.0.0');
 }
 
 /**
@@ -19,88 +19,90 @@ if ( ! defined( '_S_VERSION' ) ) {
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support for post thumbnails.
  */
-function mintokumobile_setup() {
-	/*
-		* Make theme available for translation.
-		* Translations can be filed in the /languages/ directory.
-		* If you're building a theme based on mintokumobile, use a find and replace
-		* to change 'mintokumobile' to the name of your theme in all the template files.
-		*/
-	load_theme_textdomain( 'mintokumobile', get_template_directory() . '/languages' );
+function mintokumobile_setup()
+{
+    /*
+        * Make theme available for translation.
+        * Translations can be filed in the /languages/ directory.
+        * If you're building a theme based on mintokumobile, use a find and replace
+        * to change 'mintokumobile' to the name of your theme in all the template files.
+        */
+    load_theme_textdomain('mintokumobile', get_template_directory() . '/languages');
 
-	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
+    // Add default posts and comments RSS feed links to head.
+    add_theme_support('automatic-feed-links');
 
-	/*
-		* Let WordPress manage the document title.
-		* By adding theme support, we declare that this theme does not use a
-		* hard-coded <title> tag in the document head, and expect WordPress to
-		* provide it for us.
-		*/
-	add_theme_support( 'title-tag' );
+    /*
+        * Let WordPress manage the document title.
+        * By adding theme support, we declare that this theme does not use a
+        * hard-coded <title> tag in the document head, and expect WordPress to
+        * provide it for us.
+        */
+    add_theme_support('title-tag');
 
-	/*
-		* Enable support for Post Thumbnails on posts and pages.
-		*
-		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
-		*/
-	add_theme_support( 'post-thumbnails' );
+    /*
+        * Enable support for Post Thumbnails on posts and pages.
+        *
+        * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+        */
+    add_theme_support('post-thumbnails');
 
-	// This theme uses wp_nav_menu() in one location.
-	register_nav_menus(
-		array(
-			'menu-1' => esc_html__( 'Primary', 'mintokumobile' ),
-		)
-	);
+    // This theme uses wp_nav_menu() in one location.
+    register_nav_menus(
+        array(
+            'menu-1' => esc_html__('Primary', 'mintokumobile'),
+        )
+    );
 
-	/*
-		* Switch default core markup for search form, comment form, and comments
-		* to output valid HTML5.
-		*/
-	add_theme_support(
-		'html5',
-		array(
-			'search-form',
-			'comment-form',
-			'comment-list',
-			'gallery',
-			'caption',
-			'style',
-			'script',
-		)
-	);
+    /*
+        * Switch default core markup for search form, comment form, and comments
+        * to output valid HTML5.
+        */
+    add_theme_support(
+        'html5',
+        array(
+            'search-form',
+            'comment-form',
+            'comment-list',
+            'gallery',
+            'caption',
+            'style',
+            'script',
+        )
+    );
 
-	// Set up the WordPress core custom background feature.
-	add_theme_support(
-		'custom-background',
-		apply_filters(
-			'mintokumobile_custom_background_args',
-			array(
-				'default-color' => 'ffffff',
-				'default-image' => '',
-			)
-		)
-	);
+    // Set up the WordPress core custom background feature.
+    add_theme_support(
+        'custom-background',
+        apply_filters(
+            'mintokumobile_custom_background_args',
+            array(
+                'default-color' => 'ffffff',
+                'default-image' => '',
+            )
+        )
+    );
 
-	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
+    // Add theme support for selective refresh for widgets.
+    add_theme_support('customize-selective-refresh-widgets');
 
-	/**
-	 * Add support for core custom logo.
-	 *
-	 * @link https://codex.wordpress.org/Theme_Logo
-	 */
-	add_theme_support(
-		'custom-logo',
-		array(
-			'height'      => 250,
-			'width'       => 250,
-			'flex-width'  => true,
-			'flex-height' => true,
-		)
-	);
+    /**
+     * Add support for core custom logo.
+     *
+     * @link https://codex.wordpress.org/Theme_Logo
+     */
+    add_theme_support(
+        'custom-logo',
+        array(
+            'height' => 250,
+            'width' => 250,
+            'flex-width' => true,
+            'flex-height' => true,
+        )
+    );
 }
-add_action( 'after_setup_theme', 'mintokumobile_setup' );
+
+add_action('after_setup_theme', 'mintokumobile_setup');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -109,45 +111,51 @@ add_action( 'after_setup_theme', 'mintokumobile_setup' );
  *
  * @global int $content_width
  */
-function mintokumobile_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'mintokumobile_content_width', 640 );
+function mintokumobile_content_width()
+{
+    $GLOBALS['content_width'] = apply_filters('mintokumobile_content_width', 640);
 }
-add_action( 'after_setup_theme', 'mintokumobile_content_width', 0 );
+
+add_action('after_setup_theme', 'mintokumobile_content_width', 0);
 
 /**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function mintokumobile_widgets_init() {
-	register_sidebar(
-		array(
-			'name'          => esc_html__( 'Sidebar', 'mintokumobile' ),
-			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'mintokumobile' ),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
-		)
-	);
+function mintokumobile_widgets_init()
+{
+    register_sidebar(
+        array(
+            'name' => esc_html__('Sidebar', 'mintokumobile'),
+            'id' => 'sidebar-1',
+            'description' => esc_html__('Add widgets here.', 'mintokumobile'),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget' => '</section>',
+            'before_title' => '<h2 class="widget-title">',
+            'after_title' => '</h2>',
+        )
+    );
 }
-add_action( 'widgets_init', 'mintokumobile_widgets_init' );
+
+add_action('widgets_init', 'mintokumobile_widgets_init');
 
 /**
  * Enqueue scripts and styles.
  */
-function mintokumobile_scripts() {
-	wp_enqueue_style( 'mintokumobile-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'mintokumobile-style', 'rtl', 'replace' );
+function mintokumobile_scripts()
+{
+    wp_enqueue_style('mintokumobile-style', get_stylesheet_uri(), array(), _S_VERSION);
+    wp_style_add_data('mintokumobile-style', 'rtl', 'replace');
 
-	wp_enqueue_script( 'mintokumobile-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+    wp_enqueue_script('mintokumobile-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
 }
-add_action( 'wp_enqueue_scripts', 'mintokumobile_scripts' );
+
+add_action('wp_enqueue_scripts', 'mintokumobile_scripts');
 
 /**
  * Implement the Custom Header feature.
@@ -172,11 +180,12 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Load Jetpack compatibility file.
  */
-if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/jetpack.php';
+if (defined('JETPACK__VERSION')) {
+    require get_template_directory() . '/inc/jetpack.php';
 }
 
-function enqueue_swiper_scripts() {
+function enqueue_swiper_scripts()
+{
 
     wp_enqueue_style('swiper-css', 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css');
     wp_enqueue_style('style-css', get_template_directory_uri() . '/css/style.css');
@@ -184,18 +193,26 @@ function enqueue_swiper_scripts() {
     wp_enqueue_script('jquery');
     wp_enqueue_script('jquery-js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js');
     wp_enqueue_script('swiper-js', 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.min.js');
-    wp_enqueue_script('custom-js', get_template_directory_uri() . '/js/script.js');
+    wp_enqueue_script('my-ajax-script', get_template_directory_uri() . '/js/script.js', array('jquery'), null, true);
+
+    // Truyền ajaxurl vào script
+    wp_localize_script('my-ajax-script', 'myAjax', array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+    ));
 }
+
 add_action('wp_enqueue_scripts', 'enqueue_swiper_scripts');
 
-function custom_rest_endpoint() {
+function custom_rest_endpoint()
+{
     register_rest_route('custom-api/v1', '/posts', array(
         'methods' => 'GET',
         'callback' => 'get_custom_posts',
     ));
 }
 
-function get_custom_posts() {
+function get_custom_posts()
+{
     $args = array(
         'post_type' => 'post',
         'posts_per_page' => 5, // Number of posts to retrieve
@@ -223,7 +240,8 @@ function get_custom_posts() {
 add_action('rest_api_init', 'custom_rest_endpoint');
 
 // Thêm endpoint REST API để trả về URL ảnh
-function my_custom_image_urls() {
+function my_custom_image_urls()
+{
     // Lấy URL của ảnh placeholder từ thư mục chủ đề
     $placeholder_image = get_stylesheet_directory_uri() . '/images/placeholder-image.jpg';
 
@@ -242,7 +260,8 @@ add_action('rest_api_init', function () {
 
 
 // Đăng ký custom post types cho ba quốc gia
-function create_custom_post_types() {
+function create_custom_post_types()
+{
     // Vietnam
     register_post_type('vietnam', array(
         'labels' => array(
@@ -252,7 +271,8 @@ function create_custom_post_types() {
         'public' => true,
         'has_archive' => true,
         'rewrite' => array('slug' => 'vietnam'),
-        'supports' => array('title', 'editor', 'thumbnail'),
+//        'supports' => array('title', 'editor', 'thumbnail'),
+        'supports' => array('title', 'thumbnail'),
     ));
 
     // Laos
@@ -279,10 +299,12 @@ function create_custom_post_types() {
         'supports' => array('title', 'editor', 'thumbnail'),
     ));
 }
+
 add_action('init', 'create_custom_post_types');
 
 // Đăng ký taxonomy riêng cho mỗi quốc gia
-function create_province_taxonomies() {
+function create_province_taxonomies()
+{
     // Taxonomy cho Vietnam
     register_taxonomy('province_vietnam', 'vietnam', array(
         'labels' => array(
@@ -313,25 +335,49 @@ function create_province_taxonomies() {
         'rewrite' => array('slug' => 'cambodia-provinces'),
     ));
 }
+
 add_action('init', 'create_province_taxonomies');
 
 
-function create_year_taxonomy() {
-    register_taxonomy('year', array('vietnam', 'laos', 'cambodia'), array(
-        'labels' => array(
-            'name' => __('Years'),
-            'singular_name' => __('Year')
+function create_year_taxonomy()
+{
+
+    // Đăng ký taxonomy cho Vietnam
+    register_taxonomy('year_vietnam', 'vietnam', array(
+        'label' => __('Year Vietnam', 'textdomain'),
+        'rewrite' => array(
+            'slug' => 'vietnam-year', // Điều chỉnh URL
+            'with_front' => false,
+        ),
+        'hierarchical' => true,
+    ));
+
+    // Đăng ký taxonomy cho Laos
+    register_taxonomy('year_laos', 'laos', array(
+        'label' => __('Year Laos', 'textdomain'),
+        'rewrite' => array(
+            'slug' => 'laos-year', // Điều chỉnh URL
+            'with_front' => false,
         ),
         'hierarchical' => false,
-        'rewrite' => array('slug' => 'year'),
+    ));
+
+    // Đăng ký taxonomy cho Cambodia
+    register_taxonomy('year_cambodia', 'cambodia', array(
+        'label' => __('Year Cambodia', 'textdomain'),
+        'rewrite' => array(
+            'slug' => 'cambodia-year', // Điều chỉnh URL
+            'with_front' => false,
+        ),
+        'hierarchical' => false,
     ));
 }
+
 add_action('init', 'create_year_taxonomy');
 
 
-
-
-function filter_provinces_by_post_type($terms, $taxonomies, $args) {
+function filter_provinces_by_post_type($terms, $taxonomies, $args)
+{
     if (!in_array('province', $taxonomies)) {
         return $terms;
     }
@@ -352,22 +398,24 @@ function filter_provinces_by_post_type($terms, $taxonomies, $args) {
 
     return $filtered_terms;
 }
+
 add_filter('get_terms', 'filter_provinces_by_post_type', 10, 3);
 
 
-
-function save_province_meta_data($term_id) {
+function save_province_meta_data($term_id)
+{
     if (isset($_POST['post_types'])) {
         $post_types = array_map('sanitize_text_field', $_POST['post_types']);
         update_term_meta($term_id, 'associated_post_types', $post_types);
     }
 }
+
 add_action('edited_province', 'save_province_meta_data');
 add_action('create_province', 'save_province_meta_data');
 
 
-
-function add_province_meta_box() {
+function add_province_meta_box()
+{
     add_meta_box(
         'province_meta_box',
         'Post Types',
@@ -377,15 +425,18 @@ function add_province_meta_box() {
         'default'
     );
 }
+
 add_action('admin_init', 'add_province_meta_box');
 
-function render_province_meta_box($term) {
+function render_province_meta_box($term)
+{
     $post_types = get_term_meta($term->term_id, 'associated_post_types', true);
     $all_post_types = get_post_types(array('public' => true), 'objects');
     ?>
     <div id="post-types">
         <?php foreach ($all_post_types as $post_type) : ?>
-            <input type="checkbox" name="post_types[]" value="<?php echo esc_attr($post_type->name); ?>" <?php checked(in_array($post_type->name, (array) $post_types)); ?>>
+            <input type="checkbox" name="post_types[]"
+                   value="<?php echo esc_attr($post_type->name); ?>" <?php checked(in_array($post_type->name, (array)$post_types)); ?>>
             <?php echo esc_html($post_type->label); ?><br>
         <?php endforeach; ?>
     </div>
@@ -393,54 +444,9 @@ function render_province_meta_box($term) {
 }
 
 
-// Add meta boxes
-function add_custom_meta_box() {
-    $post_types = array('vietnam', 'laos', 'cambodia');
-
-    foreach ($post_types as $post_type) {
-        add_meta_box(
-            $post_type . '_meta_boxes', // ID của meta box
-            'Job detail', // Tiêu đề của meta box
-            function($post) use ($post_type) {
-                ?>
-                <div class="custom-meta-box-tabs">
-                    <button type="button" data-tab="<?php echo $post_type; ?>-images-meta-box">Images</button>
-                    <button type="button" data-tab="<?php echo $post_type; ?>-details-meta-box">Details</button>
-                    <button type="button" data-tab="<?php echo $post_type; ?>-salary-meta-box">Salary</button>
-                </div>
-                <?php
-                display_custom_images_meta_box($post);
-                display_custom_details_meta_box($post);
-                display_custom_salary_meta_box($post);
-            },
-            $post_type,
-            'normal',
-            'high'
-        );
-    }
-}
-add_action('add_meta_boxes', 'add_custom_meta_box');
-
-
-// Thêm meta box visa vào các loại bài viết
-function my_custom_meta_box_visa() {
-    $post_types = array('vietnam', 'laos', 'cambodia'); // Các loại bài viết cần thêm meta box
-
-    foreach ($post_types as $post_type) {
-        add_meta_box(
-            'my_meta_box_id',          // ID của meta box
-            'Visa',        // Tiêu đề của meta box
-            'my_meta_box_callback',    // Hàm callback để hiển thị nội dung của meta box
-            $post_type,                // Loại bài viết
-            'normal',                  // Vị trí của meta box ('normal', 'side', 'advanced')
-            'high'                     // Độ ưu tiên của meta box ('default', 'low', 'high')
-        );
-    }
-}
-add_action('add_meta_boxes', 'my_custom_meta_box_visa');
-
 // Hàm callback để hiển thị nội dung của meta box
-function my_meta_box_callback($post) {
+function my_meta_box_callback($post)
+{
     global $tab1_value, $tab2_value, $tab3_image_ids, $tab3_image_ids_string;
 
     // Thêm nonce field để bảo mật
@@ -465,26 +471,9 @@ function my_meta_box_callback($post) {
 }
 
 
-
-// Thêm meta box vào các loại bài viết
-function my_additional_info_meta_box() {
-    $post_types = array('vietnam', 'laos', 'cambodia'); // Các loại bài viết cần thêm meta box
-
-    foreach ($post_types as $post_type) {
-        add_meta_box(
-            'my_additional_info_meta_box_id',      // ID của meta box
-            'Additional Info',                    // Tiêu đề của meta box
-            'my_additional_info_meta_box_callback', // Hàm callback để hiển thị nội dung của meta box
-            $post_type,                           // Loại bài viết
-            'normal',                             // Vị trí của meta box ('normal', 'side', 'advanced')
-            'high'                                // Độ ưu tiên của meta box ('default', 'low', 'high')
-        );
-    }
-}
-add_action('add_meta_boxes', 'my_additional_info_meta_box');
-
 // Hàm callback để hiển thị nội dung của meta box
-function my_additional_info_meta_box_callback($post) {
+function my_additional_info_meta_box_callback($post)
+{
     // Thêm nonce field để bảo mật
     wp_nonce_field('my_additional_info_meta_box_nonce_action', 'my_additional_info_meta_box_nonce_name');
 
@@ -501,18 +490,21 @@ function my_additional_info_meta_box_callback($post) {
 
 
 // Display salary meta box
-function display_custom_salary_meta_box($post) {
+function display_custom_salary_meta_box($post)
+{
     $salary = get_post_meta($post->ID, get_post_type($post->ID) . '_salary', true);
     ?>
     <div class="custom-meta-box-content" id="<?php echo get_post_type($post->ID); ?>-salary-meta-box">
         <label for="job_salary">Salary:</label>
-        <input type="text" id="job_salary" name="<?php echo get_post_type($post->ID); ?>_salary" value="<?php echo esc_attr($salary); ?>" />
+        <input type="text" id="job_salary" name="<?php echo get_post_type($post->ID); ?>_salary"
+               value="<?php echo esc_attr($salary); ?>"/>
     </div>
     <?php
 }
 
 
-function display_custom_details_meta_box($post) {
+function display_custom_details_meta_box($post)
+{
     $post_type = get_post_type($post);
     $selected_year = get_post_meta($post->ID, $post_type . '_year', true);
 
@@ -531,7 +523,8 @@ function display_custom_details_meta_box($post) {
 }
 
 
-function display_custom_images_meta_box($post) {
+function display_custom_images_meta_box($post)
+{
     $post_type = get_post_type($post);
     $images = get_post_meta($post->ID, $post_type . '_images', true);
 
@@ -539,15 +532,22 @@ function display_custom_images_meta_box($post) {
     ob_start();
     ?>
     <div class="custom-meta-box-content" id="<?php echo esc_attr($post_type); ?>-images-meta-box">
-        <div id="<?php echo esc_attr($post_type); ?>-images-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <div id="<?php echo esc_attr($post_type); ?>-images-container"
+             style="display: flex; flex-wrap: wrap; gap: 10px;">
             <?php
             if (!empty($images) && is_array($images)) {
                 foreach ($images as $image) {
                     ?>
-                    <div class="<?php echo esc_attr($post_type); ?>-image-item" style="position: relative; display: inline-block;">
-                        <img src="<?php echo esc_url($image); ?>" style="max-width: 150px; height: auto; display: block;" />
-                        <input type="hidden" name="<?php echo esc_attr($post_type); ?>_images[]" value="<?php echo esc_url($image); ?>" />
-                        <button class="remove-<?php echo esc_attr($post_type); ?>-image" style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer;">Xóa</button>
+                    <div class="<?php echo esc_attr($post_type); ?>-image-item"
+                         style="position: relative; display: inline-block;">
+                        <img src="<?php echo esc_url($image); ?>"
+                             style="max-width: 150px; height: auto; display: block;"/>
+                        <input type="hidden" name="<?php echo esc_attr($post_type); ?>_images[]"
+                               value="<?php echo esc_url($image); ?>"/>
+                        <button class="remove-<?php echo esc_attr($post_type); ?>-image"
+                                style="position: absolute; top: 0; right: 0; background: red; color: white; border: none; cursor: pointer;">
+                            Xóa
+                        </button>
                     </div>
                     <?php
                 }
@@ -562,8 +562,8 @@ function display_custom_images_meta_box($post) {
 }
 
 
-
-function save_custom_meta_box_data($post_id) {
+function save_custom_meta_box_data($post_id)
+{
     // Check permissions and auto-save
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return;
@@ -637,8 +637,8 @@ function save_custom_meta_box_data($post_id) {
 
     update_post_meta($post_id, '_custom_image_ids', $image_ids);
 }
-add_action('save_post', 'save_custom_meta_box_data');
 
+add_action('save_post', 'save_custom_meta_box_data');
 
 
 // Template hoặc shortcode để hiển thị danh sách post type
@@ -665,40 +665,41 @@ add_shortcode('post_types_list', 'display_post_types_list');
 
 
 // filter by year
-function custom_taxonomy_query( $query ) {
+function custom_taxonomy_query($query)
+{
     // Kiểm tra xem đây có phải là truy vấn chính trên trang taxonomy không
-    if ( !is_admin() && $query->is_main_query() && is_tax() ) {
+    if (!is_admin() && $query->is_main_query() && is_tax()) {
         // Lấy tên taxonomy hiện tại
         $current_taxonomy = get_queried_object()->taxonomy;
 
         // Xác định các taxonomy và các giá trị năm tương ứng
         $taxonomies = array(
-            'province_vietnam' => 'vietnam_year',
-            'province_laos'    => 'laos_year',
-            'province_cambodia'=> 'cambodia_year',
+            'province_vietnam' => 'year_vietnam',
+            'province_laos' => 'year_laos',
+            'province_cambodia' => 'year_cambodia',
         );
 
         // Kiểm tra nếu taxonomy hiện tại có trong danh sách
-        if ( array_key_exists( $current_taxonomy, $taxonomies ) ) {
+        if (array_key_exists($current_taxonomy, $taxonomies)) {
             $year_param = $taxonomies[$current_taxonomy];
 
             // Kiểm tra nếu có giá trị năm trong $_GET
-            if ( isset( $_GET[$year_param] ) && !empty( $_GET[$year_param] ) ) {
-                $year = sanitize_text_field( $_GET[$year_param] ); // Làm sạch dữ liệu đầu vào
+            if (isset($_GET[$year_param]) && !empty($_GET[$year_param])) {
+                $year = sanitize_text_field($_GET[$year_param]); // Làm sạch dữ liệu đầu vào
 
                 // Thêm điều kiện meta query
                 $meta_query = array(
                     array(
-                        'key'     => $year_param, // Tên custom field dựa trên taxonomy
-                        'value'   => $year, // Giá trị năm từ URL
+                        'key' => $year_param, // Tên custom field dựa trên taxonomy
+                        'value' => $year, // Giá trị năm từ URL
                         'compare' => '=', // So sánh chính xác
-                        'type'    => 'NUMERIC', // Xác định kiểu dữ liệu
+                        'type' => 'NUMERIC', // Xác định kiểu dữ liệu
                     ),
                 );
 
                 // Đảm bảo rằng meta_query không bị xóa bởi các điều kiện mặc định của WordPress
-                if ( ! isset( $query->query_vars['meta_query'] ) ) {
-                    $query->set( 'meta_query', $meta_query );
+                if (!isset($query->query_vars['meta_query'])) {
+                    $query->set('meta_query', $meta_query);
                 } else {
                     $query->query_vars['meta_query'][] = $meta_query;
                 }
@@ -706,10 +707,12 @@ function custom_taxonomy_query( $query ) {
         }
     }
 }
-add_action( 'pre_get_posts', 'custom_taxonomy_query' );
+
+add_action('pre_get_posts', 'custom_taxonomy_query');
 
 
-function display_province_posts($post_type, $taxonomy_provinces, $fixed_years) {
+function display_province_posts($post_type, $taxonomy_provinces, $fixed_years)
+{
     // Lấy thông tin tỉnh thành từ URL
     $term = get_queried_object();
 
@@ -727,7 +730,8 @@ function display_province_posts($post_type, $taxonomy_provinces, $fixed_years) {
     ?>
     <form id="filter" method="GET" action="<?php echo esc_url(get_term_link($term, $taxonomy_provinces)); ?>">
         <label for="year-dropdown">Chọn Năm:</label>
-        <select id="year-dropdown" name="<?php echo esc_attr($year_param); ?>" onchange="document.getElementById('filter').submit()">
+        <select id="year-dropdown" name="<?php echo esc_attr($year_param); ?>"
+                onchange="document.getElementById('filter').submit()">
             <option value="">Chọn năm</option>
             <?php foreach ($fixed_years as $year) : ?>
                 <option value="<?php echo esc_attr($year); ?>" <?php selected($selected_year, $year); ?>>
@@ -744,8 +748,8 @@ function display_province_posts($post_type, $taxonomy_provinces, $fixed_years) {
         'tax_query' => array(
             array(
                 'taxonomy' => $taxonomy_provinces,
-                'field'    => 'term_id',
-                'terms'    => $term->term_id,
+                'field' => 'term_id',
+                'terms' => $term->term_id,
             ),
         ),
         'meta_query' => array(),
@@ -756,7 +760,7 @@ function display_province_posts($post_type, $taxonomy_provinces, $fixed_years) {
     if (!empty($selected_year)) {
         $args['meta_query'] = array(
             array(
-                'key'   => $year_param,
+                'key' => $year_param,
                 'value' => $selected_year,
                 'compare' => '=',
             ),
@@ -765,7 +769,7 @@ function display_province_posts($post_type, $taxonomy_provinces, $fixed_years) {
         // Nếu không có năm được chọn, chỉ cần hiển thị toàn bộ bài viết
         $args['meta_query'] = array(
             array(
-                'key'     => $year_param,
+                'key' => $year_param,
                 'compare' => 'EXISTS',
             ),
         );
@@ -803,7 +807,8 @@ function display_province_posts($post_type, $taxonomy_provinces, $fixed_years) {
     wp_reset_postdata();
 }
 
-function enqueue_custom_meta_box_scripts($hook_suffix) {
+function enqueue_custom_meta_box_scripts($hook_suffix)
+{
     // Kiểm tra xem có phải là trang chỉnh sửa bài viết không
     if ($hook_suffix === 'post.php' || $hook_suffix === 'post-new.php') {
         // Đăng ký và đưa vào file JavaScript
@@ -824,17 +829,21 @@ function enqueue_custom_meta_box_scripts($hook_suffix) {
         );
     }
 }
+
 add_action('admin_enqueue_scripts', 'enqueue_custom_meta_box_scripts');
 
 
-function my_enqueue_media_uploader() {
+function my_enqueue_media_uploader()
+{
     wp_enqueue_media();
 }
+
 add_action('admin_enqueue_scripts', 'my_enqueue_media_uploader');
 
 
 add_action('wp_ajax_remove_image', 'handle_remove_image');
-function handle_remove_image() {
+function handle_remove_image()
+{
     // Kiểm tra nonce và quyền truy cập
     if (!isset($_POST['image_id']) || !isset($_POST['post_id'])) {
         wp_send_json_error('Missing required parameters.');
@@ -858,7 +867,8 @@ function handle_remove_image() {
 }
 
 //add_meta_box để thêm metabox vào trang
-function custom_image_metabox() {
+function custom_image_metabox()
+{
     add_meta_box(
         'custom_image_metabox_id',            // ID của metabox
         'Upload Ảnh',                         // Tiêu đề của metabox
@@ -868,9 +878,11 @@ function custom_image_metabox() {
         'default'                             // Độ ưu tiên của metabox ('default', 'high', 'low')
     );
 }
+
 add_action('add_meta_boxes', 'custom_image_metabox');
 
-function render_custom_image_metabox($post) {
+function render_custom_image_metabox($post)
+{
     // Sử dụng nonce để bảo vệ dữ liệu
     wp_nonce_field(basename(__FILE__), 'custom_image_metabox_nonce');
 
@@ -897,13 +909,15 @@ function render_custom_image_metabox($post) {
             }
             ?>
         </ul>
-        <input type="hidden" name="custom_image_ids" id="custom_image_ids" value="<?php echo esc_attr(implode(',', $image_ids)); ?>">
+        <input type="hidden" name="custom_image_ids" id="custom_image_ids"
+               value="<?php echo esc_attr(implode(',', $image_ids)); ?>">
     </div>
     <?php
 }
 
 //hiển thị ảnh trên frontend bằng cách lấy dữ liệu từ metadata:
-function display_custom_images($post_id) {
+function display_custom_images($post_id)
+{
     $image_ids = get_post_meta($post_id, '_custom_image_ids', true);
 
     if (!empty($image_ids)) {
@@ -915,7 +929,8 @@ function display_custom_images($post_id) {
     }
 }
 
-function display_custom_images_ad_info($post_id) {
+function display_custom_images_ad_info($post_id)
+{
     $image_ids = get_post_meta($post_id, '_my_additional_info_key', true);
 
     if (!empty($image_ids)) {
@@ -928,9 +943,186 @@ function display_custom_images_ad_info($post_id) {
 }
 
 add_action('after_setup_theme', 'my_custom_image_sizes');
-function my_custom_image_sizes() {
+function my_custom_image_sizes()
+{
     add_image_size('thumbnail', 150, 150, true); // Ensure 'thumbnail' is defined
 }
+
+
+// Xử lý yêu cầu AJAX để tải trường đại học theo tỉnh
+function load_universities()
+{
+    $province_id = isset($_POST['province_id']) ? intval($_POST['province_id']) : 0;
+    $year = isset($_POST['year']) ? intval($_POST['year']) : 0; // Lấy year từ yêu cầu AJAX
+
+    if ($province_id) {
+        // Lấy các term con của tỉnh hiện tại (trường đại học)
+        $args = array(
+            'taxonomy' => 'province_vietnam', // Tên taxonomy cho tỉnh
+            'hide_empty' => false,
+            'parent' => $province_id, // Lọc các term con của tỉnh
+        );
+
+        $terms = get_terms($args);
+
+        $university_options = '<option value="">Chọn trường đại học</option>';
+        if (!empty($terms) && !is_wp_error($terms)) {
+            foreach ($terms as $term) {
+                $university_options .= '<option value="' . esc_attr($term->term_id) . '">' . esc_html($term->name) . '</option>';
+            }
+        } else {
+            $university_options .= '<option value="">Không có trường đại học nào</option>';
+        }
+
+        // Truy vấn các job thuộc tỉnh đã chọn và lọc theo năm (year)
+        $job_args = array(
+            'post_type' => 'vietnam', // Loại bài viết là 'vietnam'
+            'posts_per_page' => -1, // Lấy tất cả các job
+            'tax_query' => array(
+                'relation' => 'AND', // Tất cả các điều kiện phải đúng
+                array(
+                    'taxonomy' => 'province_vietnam', // Taxonomy của tỉnh
+                    'field' => 'term_id',
+                    'terms' => $province_id, // Lọc theo ID tỉnh
+                ),
+                // Thêm điều kiện lọc theo năm nếu có
+                array(
+                    'taxonomy' => 'year_vietnam',
+                    'field' => 'slug', // Hoặc 'name' nếu bạn sử dụng tên term
+                    'terms' => $year,
+                    'operator' => 'IN'
+                ),
+// Nếu $year là số nguyên
+//                array(
+//                    'taxonomy' => 'year_vietnam',
+//                    'field' => 'term_id',
+//                    'terms' => $year,
+//                    'operator' => 'IN'
+//                ),
+            ),
+        );
+
+        $job_query = new WP_Query($job_args);
+
+        $job_list = '';
+        if ($job_query->have_posts()) {
+            $job_list .= '<ul>';
+            while ($job_query->have_posts()) {
+                $job_query->the_post();
+
+                // Kiểm tra xem bài viết có ảnh đại diện hay không
+                if (has_post_thumbnail()) {
+                    $thumbnail = get_the_post_thumbnail(get_the_ID(), 'thumbnail', ['style' => 'width: 100px; height: 80px;']);
+                } else {
+                    $thumbnail = '<img src="https://placehold.jp/100x80.png" alt="Placeholder" style="width: 100px; height: 80px;">';
+                }
+
+                // Thêm ảnh đại diện vào danh sách bài viết
+                $job_list .= '<li class="post-item">';
+                $job_list .= '<a href="' . get_the_permalink() . '">';
+                $job_list .= $thumbnail; // Hiển thị ảnh đại diện
+                $job_list .= get_the_title(); // Hiển thị tiêu đề bài viết
+                $job_list .= '</a>';
+                $job_list .= '</li>';
+            }
+            $job_list .= '</ul>';
+        } else {
+            $job_list .= '<p>Không có job nào thuộc tỉnh này và năm đã chọn.</p>';
+        }
+
+
+
+        wp_reset_postdata();
+
+        // Trả về response dạng JSON
+        echo json_encode(array(
+            'universities' => $university_options,
+            'jobs' => $job_list
+        ));
+    }
+
+    wp_die(); // Kết thúc yêu cầu AJAX
+}
+
+add_action('wp_ajax_load_universities', 'load_universities');
+add_action('wp_ajax_nopriv_load_universities', 'load_universities');
+
+
+function filter_posts_by_university()
+{
+    $university_id = isset($_POST['university_id']) ? intval($_POST['university_id']) : 0;
+    $current_year = isset($_POST['year']) ? sanitize_text_field($_POST['year']) : '';
+
+    if ($university_id && $current_year) {
+        // Lấy các bài viết thuộc trường đại học và năm hiện tại
+        $args = array(
+            'post_type' => 'vietnam', // Hoặc post type của bạn nếu khác
+            'tax_query' => array(
+                'relation' => 'AND',
+                array(
+                    'taxonomy' => 'province_vietnam', // Tên taxonomy cho trường đại học
+                    'field' => 'term_id',
+                    'terms' => $university_id,
+                ),
+                array(
+                    'taxonomy' => 'year_vietnam', // Tên taxonomy cho năm
+                    'field' => 'slug', // hoặc 'term_id' nếu bạn dùng ID
+                    'terms' => $current_year,
+                ),
+            ),
+        );
+
+        $query = new WP_Query($args);
+
+        if ($query->have_posts()) {
+            $output = '<ul>';
+            while ($query->have_posts()) {
+                $query->the_post();
+
+                // Kiểm tra xem bài viết có ảnh đại diện hay không
+                if (has_post_thumbnail()) {
+                    $thumbnail = get_the_post_thumbnail(get_the_ID(), 'thumbnail', ['style' => 'width: 100px; height: 80px;']);
+                } else {
+                    $thumbnail = '<img src="https://placehold.jp/100x80.png" alt="Placeholder" style="width: 100px; height: 80px;">';
+                }
+
+                // Thêm ảnh đại diện và tiêu đề bài viết
+                $output .= '<li class="post-item">';
+                $output .= '<a href="' . get_permalink() . '">';
+                $output .= $thumbnail; // Hiển thị ảnh đại diện
+                $output .= get_the_title(); // Hiển thị tiêu đề bài viết
+                $output .= '</a>';
+                $output .= '</li>';
+            }
+            $output .= '</ul>';
+            wp_reset_postdata();
+        } else {
+            $output = '<p>Không có bài viết nào.</p>';
+        }
+
+
+        echo $output;
+    }
+
+    wp_die(); // Kết thúc yêu cầu AJAX
+}
+
+add_action('wp_ajax_filter_posts_by_university', 'filter_posts_by_university');
+add_action('wp_ajax_nopriv_filter_posts_by_university', 'filter_posts_by_university');
+
+
+// Thêm vào functions.php
+function add_custom_query_vars($vars)
+{
+    $vars[] = 'year';
+    return $vars;
+}
+
+add_filter('query_vars', 'add_custom_query_vars');
+
+
+
+
 
 
 
