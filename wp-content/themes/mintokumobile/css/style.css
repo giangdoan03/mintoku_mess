@@ -1101,6 +1101,18 @@ p {
         width: 100%;
         height: auto;
     }
+
+    .box_btn_navigation {
+        position: fixed;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
 }
 
 

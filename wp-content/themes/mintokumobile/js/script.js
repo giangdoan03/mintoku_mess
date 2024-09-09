@@ -84,31 +84,31 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    var backButton = document.getElementById('backButton');
-    var currentDomain = window.location.hostname;
-    var currentURL = window.location.href;
-
-    console.log(currentDomain);
-
-    // Kiểm tra xem trang hiện tại có phải là localhost không
-    if (currentDomain === 'localhost') {
-        // Nếu là localhost, hiển thị nút
-        // backButton.style.display = 'block';
-        backButton.onclick = function() {
-            window.location.href = 'http://localhost/mintoku_mobile'; // Đường dẫn đến trang chủ của localhost
-        };
-    } else if (currentDomain === 'mintoku.mobile.vccdev.vn' && currentURL === 'https://mintoku.mobile.vccdev.vn/') {
-        // Nếu là trang chính, ẩn nút
-        backButton.style.display = 'none';
-    } else {
-        // Nếu không phải localhost hay trang chính, hiển thị nút
-        // backButton.style.display = 'block';
-        backButton.onclick = function() {
-            window.location.href = 'https://mintoku.mobile.vccdev.vn'; // Đường dẫn đến trang chủ của bạn
-        };
-    }
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//     var backButton = document.getElementById('backButton');
+//     var currentDomain = window.location.hostname;
+//     var currentURL = window.location.href;
+//
+//     console.log(currentDomain);
+//
+//     // Kiểm tra xem trang hiện tại có phải là localhost không
+//     if (currentDomain === 'localhost') {
+//         // Nếu là localhost, hiển thị nút
+//         // backButton.style.display = 'block';
+//         backButton.onclick = function() {
+//             window.location.href = 'http://localhost/mintoku_mobile'; // Đường dẫn đến trang chủ của localhost
+//         };
+//     } else if (currentDomain === 'mintoku.mobile.vccdev.vn' && currentURL === 'https://mintoku.mobile.vccdev.vn/') {
+//         // Nếu là trang chính, ẩn nút
+//         backButton.style.display = 'none';
+//     } else {
+//         // Nếu không phải localhost hay trang chính, hiển thị nút
+//         // backButton.style.display = 'block';
+//         backButton.onclick = function() {
+//             window.location.href = 'https://mintoku.mobile.vccdev.vn'; // Đường dẫn đến trang chủ của bạn
+//         };
+//     }
+// });
 
 function goHome() {
     window.location.href = 'https://mintoku.mobile.vccdev.vn'; // Đường dẫn đến trang chủ của bạn
@@ -167,61 +167,100 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 jQuery(document).ready(function($) {
-    var path_1 = window.location.pathname;
-    var segments_1 = path_1.split('/');
-    var year_1 = segments_1[segments_1.length - 2];
-    $('#province-filter').on('change', function() {
-        var provinceId = $(this).val();
+    var currentUrl = new URL(window.location.href);
+    var year = currentUrl.pathname.split('/').slice(-2, -1)[0];
 
-        if (provinceId) {
+    // Khi chọn tỉnh
+    $('#province-filter').on('change', function() {
+        var provinceSlug = $('#province-filter option:selected').text().toLowerCase().replace(/\s/g, '-');
+
+        if (provinceSlug) {
+            // Xóa tham số `university` khỏi URL
+            currentUrl.searchParams.delete('university');
+            history.pushState(null, '', currentUrl.toString());
+
+            // Cập nhật URL với tham số `province`
+            currentUrl.searchParams.set('province', provinceSlug);
+            history.pushState(null, '', currentUrl.toString());
+
+            // Gọi AJAX để lấy dữ liệu trường đại học và công việc
             $.ajax({
-                url: myAjax.ajaxurl, // URL AJAX được định nghĩa qua wp_localize_script
+                url: myAjax.ajaxurl,
                 type: 'POST',
                 data: {
                     action: 'load_universities',
-                    province_id: provinceId,
-                    year: year_1
+                    province_id: $(this).val(),
+                    year: year
                 },
                 success: function(response) {
                     var data = JSON.parse(response);
-                    $('#university-filter').html(data.universities); // Cập nhật danh sách trường đại học
-                    $('#posts-container').html(data.jobs); // Cập nhật danh sách job
+                    $('#university-filter').html(data.universities);
+                    $('#posts-container').html(data.jobs);
                 }
             });
-        } else {
-            $('#university-filter').html('<option value="">Chọn trường đại học</option>');
-            $('#posts-container').html(''); // Xóa nội dung khi không chọn tỉnh
         }
     });
 
-
-
-    var path = window.location.pathname;
-    var segments = path.split('/');
-    var year = segments[segments.length - 2];
-
+    // Khi chọn trường đại học
     $('#university-filter').on('change', function() {
-        var universityId = $(this).val();
+        var universitySlug = $('#university-filter option:selected').text().toLowerCase().replace(/\s/g, '-');
 
-        if (universityId) {
+        if (universitySlug) {
+            // Cập nhật URL với tham số `university`
+            currentUrl.searchParams.set('university', universitySlug);
+            history.pushState(null, '', currentUrl.toString());
+
+            // Gọi AJAX để lấy bài viết
             $.ajax({
-                url: myAjax.ajaxurl, // URL AJAX được định nghĩa qua wp_localize_script
+                url: myAjax.ajaxurl,
                 type: 'POST',
                 data: {
                     action: 'filter_posts_by_university',
-                    university_id: universityId,
-                    year: year // Truyền giá trị năm vào AJAX
+                    university_id: $(this).val(),
+                    year: year
                 },
                 success: function(response) {
-                    console.log('response')
                     $('#posts-container').html(response);
                 }
             });
-        } else {
-            $('#posts-container').html(''); // Xóa nội dung khi không chọn trường đại học
         }
     });
+
+    // Tải lại trang và duy trì kết quả filter dựa trên URL
+    var provinceSlug = currentUrl.searchParams.get('province');
+    var universitySlug = currentUrl.searchParams.get('university');
+    var firstLoad = true; // Cờ để kiểm tra lần tải đầu tiên
+
+    if (provinceSlug) {
+        // Tự động chọn giá trị tỉnh từ URL
+        $('#province-filter option').each(function() {
+            if ($(this).text().toLowerCase().replace(/\s/g, '-') === provinceSlug) {
+                $(this).prop('selected', true);
+            }
+        });
+
+        // Gọi AJAX để load các trường đại học khi tỉnh đã được chọn
+        $('#province-filter').trigger('change');
+    }
+
+    if (universitySlug) {
+        // Chỉ gọi `ajaxComplete` một lần khi lần đầu tải trang
+        $(document).one('ajaxComplete', function() {
+            if (firstLoad) {
+                $('#university-filter option').each(function() {
+                    if ($(this).text().toLowerCase().replace(/\s/g, '-') === universitySlug) {
+                        $(this).prop('selected', true);
+                    }
+                });
+
+                // Gọi AJAX để load bài viết khi trường đại học đã được chọn
+                $('#university-filter').trigger('change');
+                firstLoad = false; // Đánh dấu lần tải đầu tiên đã hoàn tất
+            }
+        });
+    }
 });
+
 
 
 

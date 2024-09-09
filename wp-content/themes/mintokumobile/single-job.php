@@ -58,8 +58,10 @@ if ($taxonomy) {
             </div>
 
             <!-- Nếu bạn muốn thêm các nút điều hướng -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+            <div class="box_btn_navigation">
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
 
             <!-- Nếu bạn muốn thêm phân trang -->
             <div class="swiper-pagination"></div>
