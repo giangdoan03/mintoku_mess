@@ -1191,6 +1191,105 @@ function get_university_taxonomy() {
 }
 
 
+function custom_frontend_query_group_by_year( $query ) {
+    // Kiểm tra nếu không phải trang admin, là truy vấn chính và đang tìm kiếm post type vietnam
+    if ( !is_admin() && $query->is_main_query() && is_post_type_archive('vietnam') ) {
+
+        // Lấy giá trị 'province_vietnam' từ URL nếu có
+        if ( isset( $_GET['university'] ) && !empty( $_GET['university'] ) ) {
+            $province_slug = sanitize_text_field( $_GET['university'] );
+
+            // Thêm điều kiện meta_query cho province_vietnam
+            $meta_query = array(
+                array(
+                    'key'     => 'province_vietnam',
+                    'value'   => $province_slug,
+                    'compare' => '=',
+                )
+            );
+
+            // Áp dụng meta_query vào truy vấn
+            $query->set( 'meta_query', $meta_query );
+            $query->set( 'posts_per_page', -1 ); // Lấy tất cả bài viết không giới hạn
+        }
+    }
+}
+add_action( 'pre_get_posts', 'custom_frontend_query_group_by_year' );
+
+function display_grouped_by_year() {
+    // Thực hiện WP_Query để lấy tất cả các bài viết
+    $args = array(
+        'post_type' => 'vietnam',
+        'posts_per_page' => -1, // Lấy tất cả bài viết
+        'meta_key' => 'year_vietnam', // Lấy bài viết theo custom field 'year_vietnam'
+        'orderby' => 'meta_value_num', // Sắp xếp theo giá trị của custom field
+        'order' => 'ASC', // Sắp xếp theo thứ tự tăng dần
+    );
+
+    $query = new WP_Query( $args );
+
+    if ( $query->have_posts() ) {
+        $posts_by_year = array();
+
+        // Nhóm các bài viết theo năm
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            $year = get_post_meta( get_the_ID(), 'year_vietnam', true );
+
+            // Nếu chưa có nhóm cho năm này, khởi tạo mảng
+            if ( ! isset( $posts_by_year[ $year ] ) ) {
+                $posts_by_year[ $year ] = array();
+            }
+
+            // Thêm bài viết vào nhóm của năm hiện tại
+            $posts_by_year[ $year ][] = get_the_ID();
+        }
+
+        // Hiển thị bài viết đã được nhóm theo năm
+        foreach ( $posts_by_year as $year => $posts ) {
+            echo '<h2>Năm ' . esc_html( $year ) . '</h2>';
+            echo '<ul>';
+            foreach ( $posts as $post_id ) {
+                echo '<li><a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a></li>';
+            }
+            echo '</ul>';
+        }
+
+        wp_reset_postdata(); // Reset post data sau khi vòng lặp kết thúc
+    } else {
+        echo '<p>Không có bài viết nào.</p>';
+    }
+}
+
+
+// Modify the query based on URL parameters on frontend
+function custom_frontend_query_province( $query ) {
+    // Kiểm tra nếu không phải trang admin, là truy vấn chính và đang tìm kiếm
+    if ( !is_admin() && $query->is_main_query() && is_post_type_archive('vietnam') ) {
+
+        // Lấy giá trị 'province_vietnam' từ URL nếu có
+        if ( isset( $_GET['university'] ) && !empty( $_GET['university'] ) ) {
+            $province_slug = sanitize_text_field( $_GET['university'] ); // Làm sạch dữ liệu đầu vào
+
+            // Thêm điều kiện cho province_vietnam dựa trên slug
+            $meta_query = array(
+                array(
+                    'key'     => 'province_vietnam', // Custom field 'province_vietnam'
+                    'value'   => $province_slug,
+                    'compare' => '=', // So sánh chính xác
+                )
+            );
+
+            // Áp dụng meta_query vào truy vấn
+            $query->set( 'meta_query', $meta_query );
+        }
+    }
+}
+add_action( 'pre_get_posts', 'custom_frontend_query_province' );
+
+
+
+
 
 
 

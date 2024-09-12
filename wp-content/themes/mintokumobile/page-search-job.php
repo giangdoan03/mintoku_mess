@@ -1,12 +1,13 @@
 <?php
-/**
- * Template Name: Search Job Results
+/*
+ * Template Name: Search Job
  */
 
 get_header();
 ?>
 
 <form id="post-type-form" method="get" action="<?php echo home_url('/search-job/'); ?>">
+    <input type="hidden" name="s" value="">
     <label for="post_type">Chọn Post Type:</label>
     <select name="post_type" id="post_type">
         <option value="">Chọn Post Type</option>
@@ -21,7 +22,7 @@ get_header();
     </select>
 
     <label for="university">Chọn Trường Đại Học:</label>
-    <select name="university" id="university">
+    <select name="province_vietnam" id="university">
         <option value="">Chọn Trường Đại Học</option>
     </select>
 
@@ -117,17 +118,19 @@ get_header();
         if (postType) {
             params.set('post_type', postType);
         }
-        if (province) {
-            params.set('province', province);
-        }
+        // if (province) {
+        //     params.set('province', province);
+        // }
         if (university) {
-            params.set('university', university);
+            params.set('province_vietnam', university); // Đảm bảo sử dụng 'province_vietnam' ở đây
         }
 
-        var baseUrl = '<?php echo home_url('/search-job/'); ?>';
+        var baseUrl = '<?php echo home_url('/search-job/'); ?>'; // URL trang đích
         var newUrl = baseUrl + '?' + params.toString();
         history.replaceState(null, null, newUrl);
     }
+
+
 </script>
 
 <?php
