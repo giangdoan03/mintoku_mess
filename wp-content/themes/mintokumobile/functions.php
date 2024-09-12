@@ -1121,6 +1121,85 @@ function add_custom_query_vars($vars)
 add_filter('query_vars', 'add_custom_query_vars');
 
 
+// Hàm trả về danh sách province (taxonomy cấp 0)
+add_action('wp_ajax_get_province_taxonomy', 'get_province_taxonomy');
+add_action('wp_ajax_nopriv_get_province_taxonomy', 'get_province_taxonomy');
+function get_province_taxonomy() {
+    $post_type = sanitize_text_field($_GET['post_type']);
+    $taxonomy = 'province_' . $post_type;
+
+    if (!taxonomy_exists($taxonomy)) {
+        wp_send_json_error(array('error' => 'Invalid taxonomy.'));
+        return;
+    }
+
+    $args = array(
+        'taxonomy'   => $taxonomy,
+        'hide_empty' => false,
+        'parent'     => 0, // Chỉ lấy các term cấp 0
+    );
+
+    $provinces = get_terms($args);
+
+    if (is_wp_error($provinces)) {
+        wp_send_json_error($provinces->get_error_messages());
+    } else {
+        wp_send_json($provinces);
+    }
+}
+
+add_action('wp_ajax_get_university_taxonomy', 'get_university_taxonomy');
+add_action('wp_ajax_nopriv_get_university_taxonomy', 'get_university_taxonomy');
+function get_university_taxonomy() {
+    $province_slug = sanitize_text_field($_GET['province_slug']);
+    $taxonomy = 'province_vietnam'; // Taxonomy cấp 0
+
+    if (!taxonomy_exists($taxonomy)) {
+        wp_send_json_error(array('error' => 'Invalid taxonomy.'));
+        return;
+    }
+
+    // Tìm term ID từ slug
+    $term = get_term_by('slug', $province_slug, $taxonomy);
+    if (!$term) {
+        wp_send_json_error(array('error' => 'Invalid province slug.'));
+        return;
+    }
+    $province_id = $term->term_id;
+
+    // Lấy term cấp 1 từ taxonomy cấp 0
+    $args = array(
+        'taxonomy'   => $taxonomy,
+        'hide_empty' => false,
+        'parent'     => $province_id, // Lấy các term cấp 1
+    );
+
+    $universities = get_terms($args);
+
+    if (is_wp_error($universities)) {
+        wp_send_json_error(array('error' => $universities->get_error_messages()));
+    } else {
+        // Chuyển đổi dữ liệu thành slug và tên
+        $result = array_map(function($university) {
+            return array(
+                'slug' => $university->slug,
+                'name' => $university->name,
+            );
+        }, $universities);
+        wp_send_json($result);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

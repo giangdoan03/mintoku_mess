@@ -1035,6 +1035,22 @@ p {
 }
 
 
+.logo_job {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+
+.page-header form {
+    margin-top: 10px;
+}
+
+.page-header select {
+    margin-right: 10px;
+    padding: 5px;
+}
+
 
 
 /* Responsive design */

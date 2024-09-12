@@ -6,7 +6,7 @@
  *
  * @package mintokumobile
  */
-
+//var_dump('xxx');die;
 get_header();
 ?>
 

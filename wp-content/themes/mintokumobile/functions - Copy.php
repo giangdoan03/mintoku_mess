@@ -667,7 +667,7 @@ add_shortcode('post_types_list', 'display_post_types_list');
 // filter by year
 function custom_taxonomy_query( $query ) {
     // Kiểm tra xem đây có phải là truy vấn chính trên trang taxonomy không
-    if ( !is_admin() && $query->is_main_query() && is_tax() ) {
+    if ( !is_admin() && $query->is_main_query() && is_tax() && is_search()) {
         // Lấy tên taxonomy hiện tại
         $current_taxonomy = get_queried_object()->taxonomy;
 
