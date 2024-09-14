@@ -4,90 +4,135 @@ get_header(); ?>
 
 <main id="main" class="page-form-search xxxxxxxxxx">
     <section class="search-form">
-        <h1>Tìm kiếm tỉnh/thành phố</h1>
-        <form id="search-form" action="<?php echo esc_url(home_url('/')); ?>" method="get">
-            <label for="province_vietnam">Chọn tỉnh/thành phố:</label>
-            <select name="province_vietnam" id="province_vietnam">
-                <option value="">Chọn tỉnh/thành phố</option>
-                <?php
-                $terms = get_terms(array(
-                    'taxonomy'   => 'province_vietnam',
-                    'hide_empty' => false,
-                    'parent'     => 0,
-                ));
+        <h1>Tìm kiếm bài viết</h1>
+        <label for="post_type">Chọn quốc gia:</label>
+        <select name="post_type" id="post_type">
+            <option value="">Chọn quốc gia</option>
+            <option value="vietnam">Việt Nam</option>
+            <option value="laos">Lào</option>
+            <option value="cambodia">Campuchia</option>
+        </select>
 
-                if (!empty($terms) && !is_wp_error($terms)) {
-                    foreach ($terms as $term) {
-                        echo '<option value="' . esc_attr($term->slug) . '">' . esc_html($term->name) . '</option>';
-                    }
-                }
-                ?>
-            </select>
+        <label for="province_vietnam">Chọn tỉnh/thành phố:</label>
+        <select name="province_vietnam" id="province_vietnam">
+            <option value="">Chọn tỉnh/thành phố</option>
+        </select>
 
-            <label for="university">Chọn trường đại học:</label>
-            <select name="university" id="university">
-                <option value="">Chọn trường đại học</option>
-                <!-- Options sẽ được nạp bằng AJAX -->
-            </select>
+        <label for="university_vietnam">Chọn trường đại học:</label>
+        <select name="university_vietnam" id="university_vietnam">
+            <option value="">Chọn trường đại học</option>
+        </select>
 
-            <label for="year">Chọn năm:</label>
-            <select name="year" id="year">
-                <option value="">Chọn năm</option>
-                <?php
-                $years = get_terms(array(
-                    'taxonomy'   => 'year_vietnam',
-                    'hide_empty' => false,
-                ));
+        <label for="year_vietnam">Chọn năm:</label>
+        <select name="year_vietnam" id="year_vietnam">
+            <option value="">Chọn năm</option>
+        </select>
 
-                if (!empty($years) && !is_wp_error($years)) {
-                    foreach ($years as $year) {
-                        echo '<option value="' . esc_attr($year->slug) . '">' . esc_html($year->name) . '</option>';
-                    }
-                }
-                ?>
-            </select>
-
-            <button type="submit">Tìm kiếm</button>
-        </form>
+        <!-- Nơi hiển thị kết quả -->
+        <div id="search-results"></div>
     </section>
 </main>
 
+
+
 <script>
     jQuery(document).ready(function($) {
-        $('#province_vietnam').change(function() {
-            var provinceSlug = $(this).val();
+        // Hàm thực hiện tìm kiếm và tải bài viết
+        function performSearch() {
+            var postType = $('#post_type').val();  // Lấy giá trị post_type
+            var provinceSlug = $('#province_vietnam').val(); // Lấy slug của tỉnh
+            var universitySlug = $('#university_vietnam').val(); // Lấy slug của trường đại học
+            var yearSlug = $('#year_vietnam').val(); // Lấy slug của năm
 
-            console.log('provinceSlug', provinceSlug)
+            // Thực hiện Ajax để tải bài viết
+            $.ajax({
+                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                type: 'GET',
+                data: {
+                    action: 'search_posts',
+                    post_type: postType,
+                    province_slug: provinceSlug,
+                    university_slug: universitySlug,
+                    year_slug: yearSlug
+                },
+                success: function(response) {
+                    if (response.success) {
+                        var resultHtml = '';
+                        response.data.forEach(function(post) {
+                            resultHtml += '<p><a href="' + post.link + '">' + post.title + '</a></p>';
+                        });
+                        $('#search-results').html(resultHtml);
+                    } else {
+                        $('#search-results').html('<p>Không có bài viết nào.</p>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX request failed:', error);
+                    $('#search-results').html('<p>Có lỗi xảy ra khi tìm kiếm.</p>');
+                }
+            });
+        }
 
+        // Khi chọn quốc gia
+        $('#post_type').change(function() {
+            var postType = $(this).val();
+            localStorage.setItem('post_type', postType); // Lưu giá trị post_type vào localStorage
 
-            if (provinceSlug) {
+            if (postType === 'vietnam') {
+                // Nạp dữ liệu tỉnh, trường đại học, và năm khi chọn Việt Nam
                 $.ajax({
                     url: '<?php echo admin_url('admin-ajax.php'); ?>',
                     type: 'GET',
                     data: {
-                        action: 'load_universities',
-                        province_slug: provinceSlug
+                        action: 'load_filters',
+                        post_type: postType
                     },
                     success: function(response) {
                         if (response.success) {
-                            $('#university').html('<option value="">Chọn trường đại học</option>');
-                            response.data.forEach(function(university) {
-                                $('#university').append('<option value="' + university.term_slug + '">' + university.name + '</option>');
+                            // Nạp dữ liệu tỉnh vào dropdown
+                            $('#province_vietnam').html('<option value="">Chọn tỉnh/thành phố</option>');
+                            response.data.provinces.forEach(function(province) {
+                                $('#province_vietnam').append('<option value="' + province.slug + '">' + province.name + '</option>');
                             });
-                        } else {
-                            console.error('Error loading universities:', response.data);
-                            $('#university').html('<option value="">Chọn trường đại học</option>');
+
+                            // Nạp dữ liệu trường đại học vào dropdown
+                            $('#university_vietnam').html('<option value="">Chọn trường đại học</option>');
+                            response.data.universities.forEach(function(university) {
+                                $('#university_vietnam').append('<option value="' + university.slug + '">' + university.name + '</option>');
+                            });
+
+                            // Nạp dữ liệu năm vào dropdown
+                            $('#year_vietnam').html('<option value="">Chọn năm</option>');
+                            response.data.years.forEach(function(year) {
+                                $('#year_vietnam').append('<option value="' + year.slug + '">' + year.name + '</option>');
+                            });
+
+                            // Hiển thị tất cả các bài viết của Việt Nam
+                            performSearch();
                         }
                     },
                     error: function(xhr, status, error) {
                         console.error('AJAX request failed:', error);
-                        $('#university').html('<option value="">Chọn trường đại học</option>');
                     }
                 });
             } else {
-                $('#university').html('<option value="">Chọn trường đại học</option>');
+                $('#province_vietnam').html('<option value="">Chọn tỉnh/thành phố</option>');
+                $('#university_vietnam').html('<option value="">Chọn trường đại học</option>');
+                $('#year_vietnam').html('<option value="">Chọn năm</option>');
+                $('#search-results').html('');
             }
         });
+
+        // Trigger tìm kiếm khi người dùng thay đổi bất kỳ lựa chọn nào
+        $('#province_vietnam, #university_vietnam, #year_vietnam').change(function() {
+            performSearch();
+        });
+
+        // Khôi phục trạng thái từ localStorage khi tải trang
+        var savedPostType = localStorage.getItem('post_type');
+        if (savedPostType) {
+            $('#post_type').val(savedPostType).trigger('change');
+        }
     });
 </script>
 

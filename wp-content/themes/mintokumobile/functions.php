@@ -376,6 +376,44 @@ function create_year_taxonomy()
 add_action('init', 'create_year_taxonomy');
 
 
+
+function create_university_taxonomy()
+{
+
+    // Đăng ký taxonomy cho Vietnam
+    register_taxonomy('university_vietnam', 'vietnam', array(
+        'label' => __('University Vietnam', 'textdomain'),
+        'rewrite' => array(
+            'slug' => 'vietnam-university', // Điều chỉnh URL
+            'with_front' => false,
+        ),
+        'hierarchical' => true,
+    ));
+
+    // Đăng ký taxonomy cho Laos
+    register_taxonomy('university_laos', 'laos', array(
+        'label' => __('University Laos', 'textdomain'),
+        'rewrite' => array(
+            'slug' => 'laos-university', // Điều chỉnh URL
+            'with_front' => false,
+        ),
+        'hierarchical' => false,
+    ));
+
+    // Đăng ký taxonomy cho Cambodia
+    register_taxonomy('university_cambodia', 'cambodia', array(
+        'label' => __('University Cambodia', 'textdomain'),
+        'rewrite' => array(
+            'slug' => 'cambodia-university', // Điều chỉnh URL
+            'with_front' => false,
+        ),
+        'hierarchical' => false,
+    ));
+}
+
+add_action('init', 'create_university_taxonomy');
+
+
 function filter_provinces_by_post_type($terms, $taxonomies, $args)
 {
     if (!in_array('province', $taxonomies)) {
@@ -1237,6 +1275,104 @@ function search_by_taxonomy_slug($query) {
     }
 }
 add_action('pre_get_posts', 'search_by_taxonomy_slug');
+
+// Xử lý AJAX tìm kiếm bài viết
+// Xử lý Ajax để nạp dữ liệu cho các trường chọn (province, university, year)
+function ajax_load_filters() {
+    $post_type = isset($_GET['post_type']) ? sanitize_text_field($_GET['post_type']) : '';
+
+    if ($post_type === 'vietnam') {
+        // Lấy tất cả tỉnh, trường đại học, và năm cho post_type là 'vietnam'
+        $provinces = get_terms(array(
+            'taxonomy' => 'province_vietnam',
+            'hide_empty' => false,
+        ));
+
+        $universities = get_terms(array(
+            'taxonomy' => 'university_vietnam',
+            'hide_empty' => false,
+        ));
+
+        $years = get_terms(array(
+            'taxonomy' => 'year_vietnam',
+            'hide_empty' => false,
+        ));
+
+        wp_send_json_success(array(
+            'provinces' => $provinces,
+            'universities' => $universities,
+            'years' => $years,
+        ));
+    } else {
+        wp_send_json_error('Không có dữ liệu.');
+    }
+
+    wp_die();
+}
+add_action('wp_ajax_nopriv_load_filters', 'ajax_load_filters');
+add_action('wp_ajax_load_filters', 'ajax_load_filters');
+
+// Xử lý Ajax để tìm kiếm bài viết theo các điều kiện
+function ajax_search_posts() {
+    $post_type = isset($_GET['post_type']) ? sanitize_text_field($_GET['post_type']) : 'vietnam';
+    $province_slug = isset($_GET['province_slug']) ? sanitize_text_field($_GET['province_slug']) : '';
+    $university_slug = isset($_GET['university_slug']) ? sanitize_text_field($_GET['university_slug']) : '';
+    $year_slug = isset($_GET['year_slug']) ? sanitize_text_field($_GET['year_slug']) : '';
+
+    $args = array(
+        'post_type' => $post_type,
+        'posts_per_page' => -1,
+        'tax_query' => array(
+            'relation' => 'AND',
+        ),
+    );
+
+    if (!empty($province_slug)) {
+        $args['tax_query'][] = array(
+            'taxonomy' => 'province_vietnam',
+            'field' => 'slug',
+            'terms' => $province_slug,
+        );
+    }
+
+    if (!empty($university_slug)) {
+        $args['tax_query'][] = array(
+            'taxonomy' => 'university_vietnam',
+            'field' => 'slug',
+            'terms' => $university_slug,
+        );
+    }
+
+    if (!empty($year_slug)) {
+        $args['tax_query'][] = array(
+            'taxonomy' => 'year_vietnam',
+            'field' => 'slug',
+            'terms' => $year_slug,
+        );
+    }
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        $posts = array();
+        while ($query->have_posts()) {
+            $query->the_post();
+            $posts[] = array(
+                'title' => get_the_title(),
+                'link' => get_permalink(),
+            );
+        }
+        wp_send_json_success($posts);
+    } else {
+        wp_send_json_error('Không có bài viết nào.');
+    }
+
+    wp_die();
+}
+add_action('wp_ajax_nopriv_search_posts', 'ajax_search_posts');
+add_action('wp_ajax_search_posts', 'ajax_search_posts');
+
+
 
 
 
