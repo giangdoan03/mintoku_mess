@@ -1,13 +1,16 @@
 <?php
+/* Template Name: Search Car */
+?>
 
+<?php
 get_header(); ?>
 
 <main id="main" class="page-form-search">
     <section class="search-form">
         <h1>Tìm kiếm ô tô</h1>
-        <label for="color">Chọn tỉnh/thành:</label>
+        <label for="color">Chọn màu:</label>
         <select name="color" id="color">
-            <option value="">Chọn tỉnh/thành:</option>
+            <option value="">Chọn màu</option>
             <?php
             $terms = get_terms(array(
                 'taxonomy' => 'color',
@@ -43,7 +46,7 @@ get_header(); ?>
 
     jQuery(document).ready(function($) {
         function performSearch() {
-            var province_vietnam = $('#province_vietnam').val();
+            var color = $('#color').val();
             var searchQuery = $('#search_query').val();
 
             $.ajax({
@@ -51,7 +54,7 @@ get_header(); ?>
                 type: 'GET',
                 data: {
                     action: 'search_cars',
-                    color: province_vietnam,
+                    color: color,
                     search_query: searchQuery
                 },
                 success: function(response) {
@@ -80,7 +83,7 @@ get_header(); ?>
 
         // Xử lý khi trang được tải lại với tham số URL
         var urlParams = new URLSearchParams(window.location.search);
-        $('#color').val(urlParams.get('province_vietnam') || '');
+        $('#color').val(urlParams.get('color') || '');
         $('#search_query').val(urlParams.get('search_query') || '');
 
         if (urlParams.has('color') || urlParams.has('search_query')) {

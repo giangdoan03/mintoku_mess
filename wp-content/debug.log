@@ -1,0 +1,32 @@
+[15-Sep-2024 04:29:28 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "car" in D:\laragon\www\mintoku_mess\wp-content\themes\mintokumobile\archive.php:25
+Stack trace:
+#0 D:\laragon\www\mintoku_mess\wp-includes\template-loader.php(106): include()
+#1 D:\laragon\www\mintoku_mess\wp-blog-header.php(19): require_once('D:\\laragon\\www\\...')
+#2 D:\laragon\www\mintoku_mess\index.php(17): require('D:\\laragon\\www\\...')
+#3 {main}
+  thrown in D:\laragon\www\mintoku_mess\wp-content\themes\mintokumobile\archive.php on line 25
+[15-Sep-2024 04:30:17 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "car" in D:\laragon\www\mintoku_mess\wp-content\themes\mintokumobile\archive.php:25
+Stack trace:
+#0 D:\laragon\www\mintoku_mess\wp-includes\template-loader.php(106): include()
+#1 D:\laragon\www\mintoku_mess\wp-blog-header.php(19): require_once('D:\\laragon\\www\\...')
+#2 D:\laragon\www\mintoku_mess\index.php(17): require('D:\\laragon\\www\\...')
+#3 {main}
+  thrown in D:\laragon\www\mintoku_mess\wp-content\themes\mintokumobile\archive.php on line 25
+[15-Sep-2024 04:30:54 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "car" in D:\laragon\www\mintoku_mess\wp-content\themes\mintokumobile\archive.php:25
+Stack trace:
+#0 D:\laragon\www\mintoku_mess\wp-includes\template-loader.php(106): include()
+#1 D:\laragon\www\mintoku_mess\wp-blog-header.php(19): require_once('D:\\laragon\\www\\...')
+#2 D:\laragon\www\mintoku_mess\index.php(17): require('D:\\laragon\\www\\...')
+#3 {main}
+  thrown in D:\laragon\www\mintoku_mess\wp-content\themes\mintokumobile\archive.php on line 25
+[15-Sep-2024 04:31:08 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "car" in D:\laragon\www\mintoku_mess\wp-content\themes\mintokumobile\archive.php:25
+Stack trace:
+#0 D:\laragon\www\mintoku_mess\wp-includes\template-loader.php(106): include()
+#1 D:\laragon\www\mintoku_mess\wp-blog-header.php(19): require_once('D:\\laragon\\www\\...')
+#2 D:\laragon\www\mintoku_mess\index.php(17): require('D:\\laragon\\www\\...')
+#3 {main}
+  thrown in D:\laragon\www\mintoku_mess\wp-content\themes\mintokumobile\archive.php on line 25
+[15-Sep-2024 14:29:36 UTC] Automatic updates starting...
+[15-Sep-2024 14:29:38 UTC]   Automatic plugin updates starting...
+[15-Sep-2024 14:29:38 UTC]   Automatic plugin updates complete.
+[15-Sep-2024 14:29:38 UTC] Automatic updates complete.

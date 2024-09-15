@@ -1,9 +1,13 @@
 <?php
+/* Template Name: page list job */
+?>
+
+<?php
 get_header(); ?>
 
 <main id="main" class="page-form-search">
     <section class="search-form">
-        <h1>Tìm kiếm ô tô</h1>
+        <h1>Tìm kiếm công việc</h1>
 
         <!-- Post Type Dropdown -->
         <label for="post_type">Chọn loại bài viết:</label>
@@ -33,8 +37,8 @@ get_header(); ?>
         </select>
 
         <!-- Search Query -->
-        <label for="search_query">Tìm kiếm từ khóa:</label>
-        <input type="text" id="search_query" name="search_query" />
+<!--        <label for="search_query">Tìm kiếm từ khóa:</label>-->
+        <input type="hidden" id="search_query" name="search_query" />
 
         <!-- Search Button -->
         <button id="search_button">Tìm kiếm</button>
