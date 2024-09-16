@@ -634,7 +634,6 @@ footer {
 #page_content a {
     display: block; /* Hiển thị liên kết như khối */
     padding: 10px 15px; /* Padding cho liên kết */
-    background-color: #007aff; /* Màu nền liên kết */
     color: white; /* Màu chữ */
     text-decoration: none; /* Xóa gạch chân */
     border-radius: 5px; /* Bo góc liên kết */
@@ -645,7 +644,7 @@ footer {
 
 /* Hiệu ứng khi hover */
 #page_content a:hover {
-    background-color: #005bb5; /* Màu nền khi hover */
+    /*background-color: #005bb5; !* Màu nền khi hover *!*/
     transform: translateY(-2px); /* Hiệu ứng nâng liên kết khi hover */
 }
 
@@ -1137,9 +1136,73 @@ button:hover {
 
 
 
+/* Căn chỉnh logo trung tâm */
+.logo_job {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.logo_job img {
+    max-width: 200px;
+    height: auto;
+}
+
+/* Định dạng container chính */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Kiểu chữ cho tiêu đề */
+.wrap-content h3 {
+    font-size: 36px;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+/* Định dạng menu */
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.menu_item {
+    background-color: #007BFF;
+    border-radius: 10px;
+    padding: 15px 25px;
+    transition: all 0.3s ease;
+}
+
+.menu_item a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+}
+
+/* Hiệu ứng hover cho các item menu */
+.menu_item:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+}
+
 
 /* Responsive design */
 @media (max-width: 768px) {
+    .menu {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu_item {
+        width: 100%;
+        text-align: center;
+    }
     .taxonomy-year {
         padding: 15px;
     }

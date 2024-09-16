@@ -246,7 +246,7 @@ function create_year_taxonomy()
         'label' => __('Year Vietnam', 'textdomain'),
         'public' => true,
         'rewrite' => array(
-            'slug' => 'year', // Điều chỉnh URL
+            'slug' => 'year_r', // Điều chỉnh URL
             'with_front' => true,
         ),
         'hierarchical' => true,
@@ -257,7 +257,7 @@ function create_year_taxonomy()
         'label' => __('Year Laos', 'textdomain'),
         'public' => true,
         'rewrite' => array(
-            'slug' => 'year', // Điều chỉnh URL
+            'slug' => 'year_r', // Điều chỉnh URL
             'with_front' => true,
         ),
         'hierarchical' => false,
@@ -268,7 +268,7 @@ function create_year_taxonomy()
         'label' => __('Year Cambodia', 'textdomain'),
         'public' => true,
         'rewrite' => array(
-            'slug' => 'year', // Điều chỉnh URL
+            'slug' => 'year_r', // Điều chỉnh URL
             'with_front' => true,
         ),
         'hierarchical' => false,
@@ -323,7 +323,7 @@ add_action('init', 'create_university_taxonomy');
 // Thêm vào functions.php
 add_filter('query_vars', 'add_custom_query_vars');
 function add_custom_query_vars($vars) {
-    $vars[] = 'year';
+    $vars[] = 'year_r';
     $vars[] = 'province_vietnam';
     $vars[] = 'university';
     return $vars;
@@ -355,7 +355,7 @@ function ajax_load_filters() {
         wp_send_json_success(array(
             'provinces' => $provinces,
             'universities' => $universities,
-            'years' => $years,
+            'year_r' => $years,
         ));
     } else {
         wp_send_json_error('Không có dữ liệu.');
@@ -436,79 +436,12 @@ function ajax_search_posts() {
 add_action('wp_ajax_nopriv_search_posts', 'ajax_search_posts');
 add_action('wp_ajax_search_posts', 'ajax_search_posts');
 
-// Đăng ký Post Type 'car'
-function register_car_post_type() {
-    $labels = array(
-        'name'               => _x('Cars', 'post type general name'),
-        'singular_name'      => _x('Car', 'post type singular name'),
-        'menu_name'          => _x('Cars', 'admin menu'),
-        'name_admin_bar'     => _x('Car', 'add new on admin bar'),
-        'add_new'            => _x('Add New', 'car'),
-        'add_new_item'       => __('Add New Car'),
-        'new_item'           => __('New Car'),
-        'edit_item'          => __('Edit Car'),
-        'view_item'          => __('View Car'),
-        'all_items'          => __('All Cars'),
-        'search_items'       => __('Search Cars'),
-        'parent_item_colon'  => __('Parent Cars:'),
-        'not_found'          => __('No cars found.'),
-        'not_found_in_trash' => __('No cars found in Trash.')
-    );
-
-    $args = array(
-        'labels'             => $labels,
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array('slug' => 'car'),
-        'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => 20,
-        'supports'           => array('title', 'editor', 'thumbnail')
-    );
-
-    register_post_type('car', $args);
-}
-add_action('init', 'register_car_post_type');
-
-// Đăng ký Taxonomy 'color'
-function register_color_taxonomy() {
-    $labels = array(
-        'name'              => _x('Colors', 'taxonomy general name'),
-        'singular_name'     => _x('Color', 'taxonomy singular name'),
-        'search_items'      => __('Search Colors'),
-        'all_items'         => __('All Colors'),
-        'parent_item'       => __('Parent Color'),
-        'parent_item_colon' => __('Parent Color:'),
-        'edit_item'         => __('Edit Color'),
-        'update_item'       => __('Update Color'),
-        'add_new_item'      => __('Add New Color'),
-        'new_item_name'     => __('New Color Name'),
-        'menu_name'         => __('Colors'),
-    );
-
-    $args = array(
-        'hierarchical'      => false,
-        'labels'            => $labels,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'query_var'         => true,
-        'rewrite'           => array('slug' => 'color'),
-    );
-
-    register_taxonomy('color', array('car'), $args);
-}
-add_action('init', 'register_color_taxonomy');
-
 
 function search_jobs() {
-    $post_type = sanitize_text_field($_GET['post_type']);
+    $post_type = sanitize_text_field($_GET['region']);
     $province = sanitize_text_field($_GET['province']);
     $university = sanitize_text_field($_GET['university']);
-    $year = sanitize_text_field($_GET['year']);
+    $year = sanitize_text_field($_GET['year_r']);
     $search_query = sanitize_text_field($_GET['search_query']);
 
     $args = array(
@@ -563,30 +496,63 @@ function search_jobs() {
 add_action('wp_ajax_search_jobs', 'search_jobs');
 add_action('wp_ajax_nopriv_search_jobs', 'search_jobs');
 
+
 function get_taxonomy_terms() {
-    $post_type = sanitize_text_field($_GET['post_type']);
+    // Sanitize and retrieve the parameters
+    $post_type = sanitize_text_field($_GET['region']);
+    $selected_province = sanitize_text_field($_GET['province']);
+    $selected_university = sanitize_text_field($_GET['university']);
+    $selected_year = sanitize_text_field($_GET['year_r']);
 
     $taxonomy_data = array();
 
     if ($post_type === 'vietnam') {
         // Get province, university, and year taxonomies for Vietnam
-        $provinces = get_terms(array('taxonomy' => 'province_vietnam', 'hide_empty' => false));
-        $universities = get_terms(array('taxonomy' => 'university_vietnam', 'hide_empty' => false));
-        $years = get_terms(array('taxonomy' => 'year_vietnam', 'hide_empty' => false));
+        $taxonomy_data['provinces'] = get_terms(array(
+            'taxonomy' => 'province_vietnam',
+            'hide_empty' => false
+        ));
+        $taxonomy_data['universities'] = get_terms(array(
+            'taxonomy' => 'university_vietnam',
+            'hide_empty' => false
+        ));
+        $taxonomy_data['years'] = get_terms(array(
+            'taxonomy' => 'year_vietnam',
+            'hide_empty' => false
+        ));
 
-        $taxonomy_data['provinces'] = !empty($provinces) && !is_wp_error($provinces) ? $provinces : array();
-        $taxonomy_data['universities'] = !empty($universities) && !is_wp_error($universities) ? $universities : array();
-        $taxonomy_data['years'] = !empty($years) && !is_wp_error($years) ? $years : array();
+        // Filter provinces if a specific province is selected
+        if ($selected_province) {
+            $taxonomy_data['provinces'] = array_filter($taxonomy_data['provinces'], function($term) use ($selected_province) {
+                return $term->slug === $selected_province;
+            });
+        }
+
+        // Filter universities if a specific university is selected
+        if ($selected_university) {
+            $taxonomy_data['universities'] = array_filter($taxonomy_data['universities'], function($term) use ($selected_university) {
+                return $term->slug === $selected_university;
+            });
+        }
+
+        // Filter years if a specific year is selected
+        if ($selected_year) {
+            $taxonomy_data['years'] = array_filter($taxonomy_data['years'], function($term) use ($selected_year) {
+                return $term->slug === $selected_year;
+            });
+        }
     }
 
     if (!empty($taxonomy_data)) {
         wp_send_json_success($taxonomy_data);
+    } else {
+        wp_send_json_error();
     }
-
-    wp_send_json_error();
 }
+
 add_action('wp_ajax_get_taxonomy_terms', 'get_taxonomy_terms');
 add_action('wp_ajax_nopriv_get_taxonomy_terms', 'get_taxonomy_terms');
+
 
 
 
