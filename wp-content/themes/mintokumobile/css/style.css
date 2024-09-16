@@ -618,7 +618,6 @@ footer {
 #page_content {
     list-style: none; /* Xóa dấu chấm đầu dòng */
     padding: 0; /* Xóa khoảng cách padding */
-    margin: 0; /* Xóa khoảng cách margin */
     display: flex; /* Hiển thị theo kiểu flex */
     flex-direction: column; /* Xếp theo cột */
 }
