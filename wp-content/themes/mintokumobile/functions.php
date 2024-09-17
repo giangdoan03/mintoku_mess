@@ -500,9 +500,11 @@ add_action('wp_ajax_nopriv_search_jobs', 'search_jobs');
 function get_taxonomy_terms() {
     // Sanitize and retrieve the parameters
     $post_type = sanitize_text_field($_GET['region']);
-    $selected_province = sanitize_text_field($_GET['province']);
-    $selected_university = sanitize_text_field($_GET['university']);
-    $selected_year = sanitize_text_field($_GET['year_r']);
+
+    $selected_province = isset($_GET['province']) ? sanitize_text_field($_GET['province']) : '';
+    $selected_university = isset($_GET['university']) ? sanitize_text_field($_GET['university']) : '';
+    $selected_year = isset($_GET['year_r']) ? sanitize_text_field($_GET['year_r']) : '';
+
 
     $taxonomy_data = array();
 
