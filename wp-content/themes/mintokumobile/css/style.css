@@ -10,13 +10,13 @@ header,
 footer {
     /*background-color: #343a40;*/
     /* Màu nền của header và footer */
-    color: white;
+    /*color: white;*/
     text-align: center;
     padding: 10px;
-    position: fixed;
+    /*position: fixed;*/
     width: 100%;
     z-index: 1000;
-    display: none;
+    /*display: none;*/
 }
 
 header {
@@ -1190,6 +1190,27 @@ button:hover {
     transform: translateY(-5px);
 }
 
+.language-switcher {
+    list-style: none;
+    padding: 0;
+    text-align: right;
+    margin-top: 30px;
+}
+
+.language-switcher li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.language-switcher li a {
+    text-decoration: none;
+    color: #000; /* Màu cho ngôn ngữ chưa được chọn */
+}
+
+.language-switcher li.active {
+    font-weight: bold;
+    color: #0073aa; /* Màu cho ngôn ngữ đang chọn */
+}
 
 /* Responsive design */
 @media (max-width: 768px) {

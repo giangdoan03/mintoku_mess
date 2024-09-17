@@ -39,34 +39,45 @@ if ($taxonomy) {
 
 <div id="primary" class="content-area">
     <?php
-    // Kiểm tra xem field 'content_job' có tồn tại và có dữ liệu không
-    if( have_rows('content_job') ): ?>
+    // Get the current language
+    $current_language = apply_filters('wpml_current_language', NULL);
+
+    // Determine the correct custom field names based on the language
+    if ($current_language == 'vi') {
+        $content_field = 'content_job'; // English field
+        $sub_field = 'job_detail'; // Sub-field for English content
+    } else {
+        $content_field = 'cong_viec'; // Vietnamese field
+        $sub_field = 'chi_tiet'; // Sub-field for Vietnamese content
+    }
+
+    // Check if the field has content
+    if( have_rows($content_field) ): ?>
 
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <?php
-                // Lặp qua từng hàng của Repeater field
-                while ( have_rows('content_job') ) : the_row();
+                // Loop through the rows of the selected field
+                while ( have_rows($content_field) ) : the_row();
 
-                    // Lấy giá trị của sub-field WYSIWYG Editor
-                    $wysiwyg_content = get_sub_field('job_detail'); // Thay 'job_detail' bằng tên của sub-field bạn đã tạo
+                    // Get the sub-field content
+                    $wysiwyg_content = get_sub_field($sub_field);
                     ?>
                     <div class="swiper-slide">
-                        <?php echo $wysiwyg_content; // Hiển thị nội dung WYSIWYG ?>
+                        <?php echo $wysiwyg_content; // Display the WYSIWYG content ?>
                     </div>
                 <?php endwhile; ?>
             </div>
 
-            <!-- Nếu bạn muốn thêm các nút điều hướng -->
+            <!-- Navigation buttons -->
             <div class="box_btn_navigation">
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
 
-            <!-- Nếu bạn muốn thêm phân trang -->
+            <!-- Pagination -->
             <div class="swiper-pagination"></div>
         </div>
-
 
     <?php else: ?>
         <p>No content available</p>
@@ -95,20 +106,13 @@ if ($taxonomy) {
             slidesPerView: 1,
         });
 
-
-        // console.log('Swiper initialized with params:', swiperP.params, swiperC.params);
-
-        // Khi trang được tải lại, kiểm tra tham số URL và chuyển đến slide tương ứng
+        // Check URL hash and navigate to the appropriate slide
         const hash = window.location.hash;
         if (hash) {
-            const slideIndex = parseInt(hash.replace('#', '')) - 1; // Chuyển đổi từ chỉ số bắt đầu từ 1 sang 0
+            const slideIndex = parseInt(hash.replace('#', '')) - 1;
             if (!isNaN(slideIndex) && slideIndex >= 0 && slideIndex < swiperP.slides.length) {
                 swiperP.slideTo(slideIndex);
             }
         }
     });
-
-
-
-
 </script>
