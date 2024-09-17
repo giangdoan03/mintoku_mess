@@ -107,6 +107,7 @@
             transition: opacity 0.3s ease, transform 0.3s ease;
             opacity: 0;
             transform: translateY(10px);
+            right: 0px;
         }
 
         /* Links inside the dropdown */
