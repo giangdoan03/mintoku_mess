@@ -105,7 +105,7 @@
             border-radius: 5px;
             min-width: 180px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
+            z-index: 2;
             /*margin-top: 10px;*/
             overflow: hidden;
             transition: opacity 0.3s ease, transform 0.3s ease;
