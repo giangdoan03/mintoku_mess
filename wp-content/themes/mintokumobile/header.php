@@ -28,7 +28,7 @@
     <header id="header_s">
         <div class="menu_language">
             <?php
-            $current_language = apply_filters('wpml_current_language', NULL);
+            $current_language = ICL_LANGUAGE_CODE; // Lấy mã ngôn ngữ hiện tại
             $languages = apply_filters('wpml_active_languages', NULL, 'skip_missing=0');
 
             if (!empty($languages)) {
@@ -37,8 +37,10 @@
                 foreach ($languages as $language) {
                     if ($language['code'] == $current_language) {
                         $flag_url = esc_url($language['country_flag_url']);
+                        // Hiển thị cờ, tên ngôn ngữ và mã ngôn ngữ
                         echo '<img src="' . $flag_url . '" alt="' . esc_attr($language['native_name']) . ' flag" style="width: 20px; height: auto; margin-right: 5px;">';
-                        echo esc_html($language['native_name']);
+//                        echo esc_html($language['native_name']) . ' (' . esc_html($language['code']) . ')'; // In ra mã ngôn ngữ bên cạnh
+                        echo esc_html($language['native_name']); // In ra mã ngôn ngữ bên cạnh
                     }
                 }
                 echo '</button>';
@@ -48,8 +50,10 @@
                     $flag_url = esc_url($language['country_flag_url']); // WPML flag URL
 
                     echo '<a href="' . $url . '">';
+                    // Hiển thị cờ, tên ngôn ngữ và mã ngôn ngữ cho mỗi mục
                     echo '<img src="' . $flag_url . '" alt="' . esc_attr($language['native_name']) . ' flag" style="width: 20px; height: auto; margin-right: 5px;">';
-                    echo esc_html($language['native_name']);
+//                    echo esc_html($language['native_name']) . ' (' . esc_html($language['code']) . ')'; // In ra mã ngôn ngữ bên cạnh
+                    echo esc_html($language['native_name']); // In ra mã ngôn ngữ bên cạnh
                     echo '</a>';
                 }
                 echo '</div>';

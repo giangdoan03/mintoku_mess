@@ -8,42 +8,41 @@ get_header(); ?>
 <main id="main" class="page-form-search">
     <section class="search-form">
         <div>
-            <h1>Tìm kiếm công việc</h1>
+            <h1 data-translate="search_job">Tìm kiếm công việc</h1>
 
             <!-- Post Type Dropdown -->
-            <label for="post_type">Chọn loại bài viết:</label>
+            <label for="post_type" data-translate="select_post_type">Chọn loại bài viết:</label>
             <select name="region" id="post_type">
-                <option value="">Chọn loại bài viết:</option>
-                <option value="vietnam">Việt Nam</option>
-                <option value="laos">Lào</option>
-                <option value="cambodia">Campuchia</option>
+                <option value="" data-translate="select_post_type" ><?php echo esc_html__('Chọn loại bài viết:', 'text-domain'); ?></option>
+                <option value="vietnam"><?php echo esc_html__('Việt Nam', 'text-domain'); ?></option>
+                <option value="laos"><?php echo esc_html__('Lào', 'text-domain'); ?></option>
+                <option value="cambodia"><?php echo esc_html__('Campuchia', 'text-domain'); ?></option>
             </select>
-            <span id="post_type_error" style="color: red; display: none;">Vui lòng chọn loại bài viết.</span>
+            <span id="post_type_error" style="color: red; display: none;" data-translate="error_no_post_type"></span>
 
             <!-- Province Dropdown -->
-            <label for="province">Chọn tỉnh/thành:</label>
+            <label for="province" data-translate="select_province">Chọn tỉnh/thành:</label>
             <select name="province" id="province" disabled>
-                <option value="">Chọn tỉnh/thành:</option>
+                <option value="" data-translate="select_province"><?php echo esc_html__('Chọn tỉnh/thành:', 'text-domain'); ?></option>
             </select>
 
             <!-- University Dropdown -->
-            <label for="university">Chọn trường đại học:</label>
+            <label for="university" data-translate="select_university">Chọn trường đại học:</label>
             <select name="university" id="university" disabled>
-                <option value="">Chọn trường đại học:</option>
+                <option value="" data-translate="select_university"><?php echo esc_html__('Chọn trường đại học:', 'text-domain'); ?></option>
             </select>
 
             <!-- Year Dropdown -->
-            <label for="year_r">Chọn năm:</label>
+            <label for="year_r" data-translate="select_year">Chọn năm:</label>
             <select name="year_r" id="year_r" disabled>
-                <option value="">Chọn năm:</option>
+                <option value="" data-translate="select_year"><?php echo esc_html__('Chọn năm:', 'text-domain'); ?></option>
             </select>
 
             <!-- Search Query -->
-            <!--        <label for="search_query">Tìm kiếm từ khóa:</label>-->
             <input type="hidden" id="search_query" name="search_query"/>
 
             <!-- Search Button -->
-            <button id="search_button">Tìm kiếm</button>
+            <button id="search_button" data-translate="search">Tìm kiếm</button>
         </div>
         <!-- Results Section -->
         <div id="search-results"></div>
@@ -52,8 +51,37 @@ get_header(); ?>
 
 <script>
 
+
+    async function fetchTranslations() {
+        try {
+            const response = await fetch('<?php echo get_template_directory_uri(); ?>/js/translations.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        } catch (error) {
+            console.error('Error fetching translations:', error);
+        }
+    }
+
+    async function setLanguage(language) {
+        try {
+            const translations = await fetchTranslations();
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+        } catch (error) {
+            console.error('Error setting language:', error);
+        }
+    }
+
     // Perform the search based on selected filters
     jQuery(document).ready(function ($) {
+        const language = '<?php echo ICL_LANGUAGE_CODE; ?>'; // PHP variable
+        setLanguage(language);
         // Function to update the taxonomy dropdown based on post type
         function updateProvinceDropdown(postType, selectedProvince, selectedUniversity, selectedYear) {
             var provinceDropdown = $('#province');
