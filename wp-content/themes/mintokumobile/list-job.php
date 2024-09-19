@@ -113,6 +113,21 @@ $query = new WP_Query($args);
 
     <!-- JavaScript remains the same -->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const listItems = document.querySelectorAll('.page-list-job-filter li');
+
+            listItems.forEach(item => {
+                const hammer = new Hammer(item);
+
+                hammer.on('swipeleft', function () {
+                    window.location.href = item.querySelector('a').href;
+                });
+            });
+        });
+    </script>
+
 <?php
 wp_reset_postdata();
 get_footer();
