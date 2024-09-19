@@ -1212,8 +1212,276 @@ button:hover {
     color: #0073aa; /* Màu cho ngôn ngữ đang chọn */
 }
 
+
+/* Cải thiện phần chứa danh sách công việc */
+.page-list-job-filter {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5; /* Màu nền nhẹ */
+    border-radius: 8px; /* Bo tròn góc */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+/* Tiêu đề */
+.page-list-job-filter h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Danh sách công việc */
+.page-list-job-filter ul {
+    list-style: none; /* Loại bỏ dấu chấm đầu dòng */
+    padding: 0;
+    margin: 0;
+}
+
+.page-list-job-filter li {
+    background-color: #ffffff; /* Màu nền trắng */
+    border: 1px solid #ddd; /* Đường viền nhẹ */
+    border-radius: 5px; /* Bo tròn góc */
+    margin-bottom: 10px;
+    padding: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
+}
+
+.page-list-job-filter li:hover {
+    background-color: #f0f0f0; /* Màu nền khi di chuột qua */
+    transform: translateY(-2px); /* Nâng nhẹ lên khi di chuột qua */
+}
+
+/* Liên kết */
+.page-list-job-filter a {
+    text-decoration: none; /* Loại bỏ gạch chân */
+    color: #0073e6; /* Màu liên kết */
+    font-weight: bold;
+}
+
+.page-list-job-filter a:hover {
+    color: #0056b3; /* Màu liên kết khi di chuột qua */
+}
+
+/* Thông báo không có công việc */
+.page-list-job-filter p {
+    font-size: 18px;
+    color: #777;
+    text-align: center; /* Căn giữa */
+}
+
+
+
+/* Cải thiện phần chứa danh sách công việc */
+.page-list-job-filter {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5; /* Màu nền nhẹ */
+    border-radius: 8px; /* Bo tròn góc */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    box-sizing: border-box; /* Bao gồm padding và border vào kích thước tổng */
+    position: relative; /* Để tiêu đề có thể cố định */
+}
+
+/* Tiêu đề */
+.title_list_job_filter {
+    position: sticky;
+    top: 52px;
+    background-color: #ffffff; /* Màu nền trắng */
+    padding: 15px;
+    border-bottom: 1px solid #ddd; /* Đường viền dưới */
+    z-index: 10; /* Đảm bảo tiêu đề nằm trên cùng */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+.title_list_job_filter h4 {
+    font-size: 24px; /* Kích thước chữ lớn cho tiêu đề */
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+    text-align: center; /* Căn giữa */
+}
+
+/* Danh sách công việc */
+.content_list_job_filter ul {
+    list-style: none; /* Loại bỏ dấu chấm đầu dòng */
+    padding: 0;
+    margin: 0;
+}
+
+.content_list_job_filter li {
+    background-color: #ffffff; /* Màu nền trắng */
+    border: 1px solid #ddd; /* Đường viền nhẹ */
+    border-radius: 5px; /* Bo tròn góc */
+    margin-bottom: 10px;
+    padding: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
+}
+
+.content_list_job_filter li:hover {
+    background-color: #f0f0f0; /* Màu nền khi di chuột qua */
+    transform: translateY(-2px); /* Nâng nhẹ lên khi di chuột qua */
+}
+
+/* Liên kết */
+.content_list_job_filter a {
+    text-decoration: none; /* Loại bỏ gạch chân */
+    color: #0073e6; /* Màu liên kết */
+    font-weight: bold;
+}
+
+.content_list_job_filter a:hover {
+    color: #0056b3; /* Màu liên kết khi di chuột qua */
+}
+
+/* Thông báo không có công việc */
+.page-list-job-filter p {
+    font-size: 18px;
+    color: #777;
+    text-align: center; /* Căn giữa */
+}
+
+
+/* Container để cuộn và snap */
+.content_list_job_filter {
+    width: 100vw; /* Toàn bộ chiều rộng của màn hình */
+    height: 100vh; /* Toàn bộ chiều cao của màn hình */
+    overflow-x: hidden; /* Ẩn cuộn ngang */
+    overflow-y: scroll; /* Hiển thị cuộn dọc */
+    scroll-snap-type: y mandatory; /* Snap dọc */
+    -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Danh sách */
+.content_list_job_filter ul {
+    list-style: none; /* Loại bỏ dấu chấm đầu dòng */
+    padding: 0;
+    margin: 0;
+}
+
+/* Container để cuộn và snap */
+.content_list_job_filter {
+    width: 100vw; /* Toàn bộ chiều rộng của màn hình */
+    height: 100vh; /* Toàn bộ chiều cao của màn hình */
+    overflow-x: hidden; /* Ẩn cuộn ngang */
+    overflow-y: scroll; /* Hiển thị cuộn dọc */
+    scroll-snap-type: y mandatory; /* Snap dọc */
+    -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Danh sách */
+.content_list_job_filter ul {
+    list-style: none; /* Loại bỏ dấu chấm đầu dòng */
+    padding: 0;
+    margin: 0;
+}
+
+/* Mục danh sách */
+.content_list_job_filter li {
+    width: 100vw; /* Chiếm toàn bộ chiều rộng màn hình */
+    height: 100vh; /* Chiếm toàn bộ chiều cao màn hình */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Căn giữa nội dung */
+    background-color: #ffffff; /* Màu nền */
+    border-bottom: 1px solid #ddd; /* Đường viền dưới */
+    scroll-snap-align: start; /* Căn chỉnh khi cuộn */
+    box-sizing: border-box; /* Bao gồm padding và border trong kích thước */
+}
+
+/* Liên kết */
+.content_list_job_filter a {
+    text-decoration: none; /* Loại bỏ gạch chân */
+    color: #0073e6; /* Màu liên kết */
+    font-weight: bold;
+    text-align: center; /* Căn giữa văn bản */
+}
+
+/* Hiệu ứng hover cho liên kết */
+.content_list_job_filter a:hover {
+    color: #0056b3; /* Màu liên kết khi di chuột qua */
+}
+
+
+/* Nút Back to Top */
+#back-to-top {
+    position: fixed;
+    bottom: 100px; /* Cách dưới màn hình 100px */
+    right: 20px; /* Cách bên phải màn hình 20px */
+    width: 50px; /* Chiều rộng */
+    height: 50px; /* Chiều cao */
+    display: none; /* Mặc định ẩn nút */
+    background: #333;
+    color: #fff;
+    border-radius: 50%; /* Bo tròn để nút thành hình tròn */
+    text-align: center;
+    font-size: 24px;
+    line-height: 50px; /* Căn giữa văn bản theo chiều dọc */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Hiệu ứng mượt mà */
+    z-index: 999;
+}
+
+#back-to-top.show {
+    display: block; /* Hiển thị nút khi thêm class 'show' */
+}
+
+#back-to-top:hover {
+    background: #555; /* Màu nền khi hover */
+}
+
+/* Hiệu ứng khi nút được click */
+html, body {
+    scroll-behavior: smooth; /* Hiệu ứng cuộn mượt mà */
+}
+
+/* Nút Back */
+#back-button {
+    position: fixed;
+    top: 3px; /* Cách trên màn hình 50px */
+    left: 20px; /* Cách bên trái màn hình 20px */
+    background-color: #0073e6; /* Màu nền */
+    color: white; /* Màu chữ */
+    padding: 10px 15px;
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000; /* Đảm bảo nút nằm trên tất cả các phần tử khác */
+}
+
+#back-button:hover {
+    background-color: #0056b3; /* Màu nền khi hover */
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
+    .content_list_job_filter li {
+        padding: 10px; /* Giảm padding cho các mục trên màn hình nhỏ */
+    }
+    .page-list-job-filter {
+        padding: 10px;
+    }
+
+    .title_list_job_filter h4 {
+        font-size: 20px; /* Giảm kích thước chữ cho tiêu đề trên màn hình nhỏ */
+    }
+
+    .content_list_job_filter li {
+        padding: 10px; /* Giảm padding cho các mục trong danh sách */
+    }
+    .title_list_job_filter {
+        position: fixed;
+        display: block;
+        width: 100%;
+    }
     .menu {
         flex-direction: column;
         align-items: center;

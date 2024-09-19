@@ -33,10 +33,10 @@ get_header(); ?>
             </select>
 
             <!-- Year Dropdown -->
-            <label for="year_r" data-translate="select_year">Chọn năm:</label>
-            <select name="year_r" id="year_r" disabled>
-                <option value="" data-translate="select_year"><?php echo esc_html__('Chọn năm:', 'text-domain'); ?></option>
-            </select>
+<!--            <label for="year_r" data-translate="select_year">Chọn năm:</label>-->
+<!--            <select name="year_r" id="year_r" disabled>-->
+<!--                <option value="" data-translate="select_year">--><?php //echo esc_html__('Chọn năm:', 'text-domain'); ?><!--</option>-->
+<!--            </select>-->
 
             <!-- Search Query -->
             <input type="hidden" id="search_query" name="search_query"/>
@@ -174,34 +174,22 @@ get_header(); ?>
         });
 
         // Function to perform search
+// Function to perform search
         function performSearch() {
-            // Lấy giá trị trực tiếp từ các input hiện tại
             var postType = $('#post_type').val();
             var province = $('#province').val();
             var university = $('#university').val();
             var year_r = $('#year_r').val();
             var searchQuery = $('#search_query').val();
 
-            // Kiểm tra nếu không chọn loại bài viết
             if (!postType) {
                 $('#post_type_error').show();
-                return; // Dừng lại nếu không chọn loại bài viết
+                return;
             } else {
                 $('#post_type_error').hide();
             }
 
-
-            // Kiểm tra nếu không chọn loại bài viết
-            if (!postType) {
-                // Hiển thị thông báo lỗi
-                $('#post_type_error').show();
-                return; // Dừng lại nếu không chọn loại bài viết
-            } else {
-                // Ẩn thông báo lỗi nếu có giá trị hợp lệ
-                $('#post_type_error').hide();
-            }
-
-            // Update the URL with the search parameters
+            // Update URL parameters
             updateUrlParams({
                 region: postType,
                 province: province,
@@ -224,10 +212,61 @@ get_header(); ?>
                 },
                 success: function (response) {
                     if (response.success) {
-                        var resultHtml = '';
+                        var groupedResults = {};
+
+                        // Nhóm các bài viết theo year_vietnam và university
                         response.data.forEach(function (post) {
-                            resultHtml += '<p><a href="' + post.link + '">' + post.title + '</a></p>';
+                            console.log('item',post)
+                            post.year_vietnam.forEach(function (year) {
+                                if (!groupedResults[post.university]) {
+                                    groupedResults[post.university] = [];
+                                }
+                                groupedResults[post.university].push({
+                                    year: year,
+                                    link: post.link,
+                                    university_slug: post.university_slug,
+                                    province: post.province, // Lấy slug của province
+                                    region: post.region // Lấy slug của province
+                                });
+                            });
                         });
+
+                        var resultHtml = '';
+                        var baseURL;
+                        // Xác định nếu đang ở localhost
+                        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                            baseURL = window.location.origin + '/mintoku_mobile'; // Đối với môi trường localhost
+                        } else {
+                            baseURL = window.location.origin; // Đối với môi trường sản xuất
+                        }
+
+                        // Nếu bạn đang ở môi trường hosting và muốn bỏ phần '/mintoku_mobile', cập nhật biến này
+                        // var baseURL = window.location.origin;
+                        // Đối tượng để lưu các link đã gặp
+                        var seenLinks = {};
+
+                        for (var university in groupedResults) {
+                            if (groupedResults.hasOwnProperty(university)) {
+                                groupedResults[university].forEach(function (item) {
+                                    // Tạo URL đầy đủ
+                                    var customLink = baseURL + '/jobs/?year_r=' + item.year + '&region=' + item.region +
+                                        '&province=' + item.province +
+                                        '&university=' + item.university_slug;
+
+                                    // Kiểm tra xem link đã tồn tại chưa
+                                    if (!seenLinks[customLink]) {
+                                        seenLinks[customLink] = true; // Đánh dấu link đã gặp
+
+                                        resultHtml += '<p><a href="' + customLink + '">' + university + ' - ' + item.year + '</a></p>';
+                                    }
+                                });
+                            }
+                        }
+
+                        $('#search-results').html(resultHtml);
+
+
+
                         $('#search-results').html(resultHtml);
                     } else {
                         $('#search-results').html('<p>Không có bài viết nào.</p>');
@@ -239,6 +278,7 @@ get_header(); ?>
                 }
             });
         }
+
 
         // Update dropdowns when post type changes
         $('#post_type').change(function () {

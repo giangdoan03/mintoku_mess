@@ -88,7 +88,6 @@
         }
 
         .dropdown-button img {
-            border-radius: 50%; /* Circular flag icon */
             margin-right: 8px;
         }
 
@@ -105,7 +104,7 @@
             border-radius: 5px;
             min-width: 180px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 2;
+            z-index: 11;
             /*margin-top: 10px;*/
             overflow: hidden;
             transition: opacity 0.3s ease, transform 0.3s ease;
@@ -126,7 +125,7 @@
         }
 
         .dropdown-content a img {
-            border-radius: 50%;
+            /*border-radius: 50%;*/
             margin-right: 10px;
             width: 20px;
             height: 20px;

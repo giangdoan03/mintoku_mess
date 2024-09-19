@@ -481,20 +481,34 @@ function search_jobs() {
 
     if ($query->have_posts()) {
         $posts = array();
+        $province_from_url = sanitize_text_field($_GET['province']); // Lấy giá trị từ URL
+        $post_type = sanitize_text_field($_GET['region']); // Lấy giá trị từ URL
         while ($query->have_posts()) {
             $query->the_post();
+            $post_universities = wp_get_post_terms(get_the_ID(), 'university_vietnam', array("fields" => "names")); // Lấy tên university
+            $post_university_slugs = wp_get_post_terms(get_the_ID(), 'university_vietnam', array("fields" => "slugs")); // Lấy slug university
+            $post_years = wp_get_post_terms(get_the_ID(), 'year_vietnam', array("fields" => "names")); // Lấy tên năm
+            $post_provinces = wp_get_post_terms(get_the_ID(), 'province_vietnam', array("fields" => "slugs")); // Lấy tên năm
             $posts[] = array(
                 'title' => get_the_title(),
                 'link' => get_permalink(),
+                'university' => $post_universities[0], // Lấy tên university đầu tiên
+                'university_slug' => $post_university_slugs[0], // Lấy slug university đầu tiên
+                'year_vietnam' => $post_years, // Trả về danh sách year_vietnam
+                'province' => $province_from_url,
+                'region' => $post_type,
             );
         }
         wp_send_json_success($posts);
     }
 
     wp_send_json_error();
+
+
 }
 add_action('wp_ajax_search_jobs', 'search_jobs');
 add_action('wp_ajax_nopriv_search_jobs', 'search_jobs');
+
 
 
 function get_taxonomy_terms() {
