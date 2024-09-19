@@ -5,7 +5,7 @@
 <?php
 get_header(); ?>
 
-<main id="main" class="page-form-search">
+<main id="main" class="page-form-search" <?php body_class('fade-in'); ?>>
     <section class="search-form">
         <div>
             <h1 data-translate="search_job">Tìm kiếm công việc</h1>
@@ -252,7 +252,7 @@ get_header(); ?>
                                     // Tạo URL đầy đủ
                                     var customLink = baseURL + '/jobs/?year_r=' + item.year + '&region=' + item.region +
                                         '&province=' + item.province +
-                                        '&university=' + item.university_slug + '&label=' + item.label
+                                        '&university=' + item.university_slug
 
                                     // Kiểm tra xem link đã tồn tại chưa
                                     if (!seenLinks[customLink]) {

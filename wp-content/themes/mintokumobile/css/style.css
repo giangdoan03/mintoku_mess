@@ -163,9 +163,6 @@ div#post-details {
     height: 286px;
     overflow: scroll;
 }
-div#page{
-    height: 100%;
-}
 
 .swiper-container>.swiper-slide__content {
     position: absolute;
@@ -1459,10 +1456,44 @@ html, body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     z-index: 1000; /* Đảm bảo nút nằm trên tất cả các phần tử khác */
 }
+/* Đặt trạng thái ban đầu cho trang chi tiết (ẩn và di chuyển sang trái) */
+.fade-out {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Khi trang đang hiển thị (fade-in) */
+.fade-in {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
 
 #back-button:hover {
     background-color: #0056b3; /* Màu nền khi hover */
 }
+
+/* CSS cho hiệu ứng khi nội dung trượt vào */
+.page-detail {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.page-detail.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* CSS cho hiệu ứng khi danh sách trượt ra */
+.page-list-job-filter.fade-out {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
 
 /* Responsive design */
 @media (max-width: 768px) {

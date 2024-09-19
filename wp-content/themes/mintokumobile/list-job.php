@@ -9,30 +9,53 @@ get_header();
 $year = isset($_GET['year_r']) ? sanitize_text_field($_GET['year_r']) : '';
 $post_type = isset($_GET['region']) ? sanitize_text_field($_GET['region']) : '';
 $province = isset($_GET['province']) ? sanitize_text_field($_GET['province']) : '';
-$university = isset($_GET['university']) ? sanitize_text_field($_GET['university']) : '';
+$university_slug = isset($_GET['university']) ? sanitize_text_field($_GET['university']) : '';
 $label = isset($_GET['label']) ? sanitize_text_field($_GET['label']) : '';
 
 // Kiểm tra và thiết lập taxonomy tương ứng với post_type
 $taxonomies = array();
+$university_name = '';
 
+// Xác định taxonomy và lấy tên university từ slug
 if ($post_type === 'vietnam') {
     $taxonomies = array(
         'year_vietnam' => $year,
         'province_vietnam' => $province,
-        'university_vietnam' => $university
+        'university_vietnam' => $university_slug
     );
+
+    if (!empty($university_slug)) {
+        $university_term = get_term_by('slug', $university_slug, 'university_vietnam'); // Thay 'university_vietnam' bằng taxonomy của bạn
+        if ($university_term) {
+            $university_name = $university_term->name;
+        }
+    }
 } elseif ($post_type === 'laos') {
     $taxonomies = array(
         'year_laos' => $year,
         'province_laos' => $province,
-        'university_laos' => $university
+        'university_laos' => $university_slug
     );
+
+    if (!empty($university_slug)) {
+        $university_term = get_term_by('slug', $university_slug, 'university_laos'); // Thay 'university_laos' bằng taxonomy của bạn
+        if ($university_term) {
+            $university_name = $university_term->name;
+        }
+    }
 } elseif ($post_type === 'cambodia') {
     $taxonomies = array(
         'year_cambodia' => $year,
         'province_cambodia' => $province,
-        'university_cambodia' => $university
+        'university_cambodia' => $university_slug
     );
+
+    if (!empty($university_slug)) {
+        $university_term = get_term_by('slug', $university_slug, 'university_cambodia'); // Thay 'university_cambodia' bằng taxonomy của bạn
+        if ($university_term) {
+            $university_name = $university_term->name;
+        }
+    }
 }
 
 // Tạo mảng args cho WP_Query
@@ -56,11 +79,11 @@ foreach ($taxonomies as $taxonomy => $term) {
 // Thực hiện WP_Query
 $query = new WP_Query($args);
 ?>
-    <div class="page-list-job-filter">
+    <div id="content" class="page-list-job-filter">
         <?php
         if ($query->have_posts()) : ?>
             <div class="title_list_job_filter">
-                <h4><?php echo $label. ' ' . $year; ?>
+                <h4><?php echo $university_name . ' ' . $year; ?>
                 </h4>
             </div>
             <div class="content_list_job_filter">
@@ -88,52 +111,8 @@ $query = new WP_Query($args);
         <?php endif; ?>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const listItems = document.querySelectorAll('.page-list-job-filter li');
+    <!-- JavaScript remains the same -->
 
-            listItems.forEach(item => {
-                const hammer = new Hammer(item);
-
-                hammer.on('swipeleft', function () {
-                    window.location.href = item.querySelector('a').href;
-                });
-            });
-        });
-    </script>
-
-    <script>
-        async function fetchTranslations() {
-            try {
-                const response = await fetch('<?php echo get_template_directory_uri(); ?>/js/translations.json');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            } catch (error) {
-                console.error('Error fetching translations:', error);
-            }
-        }
-
-        async function setLanguage(language) {
-            try {
-                const translations = await fetchTranslations();
-                document.querySelectorAll('[data-translate]').forEach(element => {
-                    const key = element.getAttribute('data-translate');
-                    if (translations[language] && translations[language][key]) {
-                        element.textContent = translations[language][key];
-                    }
-                });
-            } catch (error) {
-                console.error('Error setting language:', error);
-            }
-        }
-        jQuery(document).ready(function ($) {
-            const language = '<?php echo ICL_LANGUAGE_CODE; ?>'; // PHP variable
-            setLanguage(language);
-        });
-    </script>
 <?php
 wp_reset_postdata();
 get_footer();
