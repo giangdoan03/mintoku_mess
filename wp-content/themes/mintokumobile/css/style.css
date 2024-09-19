@@ -1217,10 +1217,14 @@ button:hover {
 .page-list-job-filter {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    /*padding: 20px;*/
     background-color: #f5f5f5; /* Màu nền nhẹ */
     border-radius: 8px; /* Bo tròn góc */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+.page-template-list-job #back-button {
+    display: none;
 }
 
 /* Tiêu đề */
@@ -1276,7 +1280,6 @@ button:hover {
 .page-list-job-filter {
     max-width: 100%;
     margin: 0 auto;
-    padding: 20px;
     background-color: #f5f5f5; /* Màu nền nhẹ */
     border-radius: 8px; /* Bo tròn góc */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
@@ -1463,20 +1466,12 @@ html, body {
 
 /* Responsive design */
 @media (max-width: 768px) {
-    .content_list_job_filter li {
-        padding: 10px; /* Giảm padding cho các mục trên màn hình nhỏ */
-    }
-    .page-list-job-filter {
-        padding: 10px;
-    }
+
 
     .title_list_job_filter h4 {
         font-size: 20px; /* Giảm kích thước chữ cho tiêu đề trên màn hình nhỏ */
     }
 
-    .content_list_job_filter li {
-        padding: 10px; /* Giảm padding cho các mục trong danh sách */
-    }
     .title_list_job_filter {
         position: fixed;
         display: block;
