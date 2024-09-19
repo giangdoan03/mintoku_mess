@@ -226,7 +226,8 @@ get_header(); ?>
                                     link: post.link,
                                     university_slug: post.university_slug,
                                     province: post.province, // Lấy slug của province
-                                    region: post.region // Lấy slug của province
+                                    region: post.region, // Lấy slug của province
+                                    label: post.university // Lấy slug của province
                                 });
                             });
                         });
@@ -251,7 +252,7 @@ get_header(); ?>
                                     // Tạo URL đầy đủ
                                     var customLink = baseURL + '/jobs/?year_r=' + item.year + '&region=' + item.region +
                                         '&province=' + item.province +
-                                        '&university=' + item.university_slug;
+                                        '&university=' + item.university_slug + '&label=' + item.label
 
                                     // Kiểm tra xem link đã tồn tại chưa
                                     if (!seenLinks[customLink]) {

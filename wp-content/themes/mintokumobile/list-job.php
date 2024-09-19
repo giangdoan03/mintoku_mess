@@ -10,6 +10,7 @@ $year = isset($_GET['year_r']) ? sanitize_text_field($_GET['year_r']) : '';
 $post_type = isset($_GET['region']) ? sanitize_text_field($_GET['region']) : '';
 $province = isset($_GET['province']) ? sanitize_text_field($_GET['province']) : '';
 $university = isset($_GET['university']) ? sanitize_text_field($_GET['university']) : '';
+$label = isset($_GET['label']) ? sanitize_text_field($_GET['label']) : '';
 
 // Kiểm tra và thiết lập taxonomy tương ứng với post_type
 $taxonomies = array();
@@ -59,14 +60,7 @@ $query = new WP_Query($args);
         <?php
         if ($query->have_posts()) : ?>
             <div class="title_list_job_filter">
-                <h4 data-translate="title_list_job_filter">Danh sách công việc<?php
-                    if (!empty($year)) {
-                        echo ' năm ' . esc_html($year);
-                    }
-                    if (!empty($university)) {
-                        echo ' của trường ' . esc_html($university);
-                    }
-                    ?>
+                <h4><?php echo $label. ' ' . $year; ?>
                 </h4>
             </div>
             <div class="content_list_job_filter">
@@ -93,6 +87,21 @@ $query = new WP_Query($args);
             <p>Không có công việc nào phù hợp.</p>
         <?php endif; ?>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const listItems = document.querySelectorAll('.page-list-job-filter li');
+
+            listItems.forEach(item => {
+                const hammer = new Hammer(item);
+
+                hammer.on('swipeleft', function () {
+                    window.location.href = item.querySelector('a').href;
+                });
+            });
+        });
+    </script>
 
     <script>
         async function fetchTranslations() {
