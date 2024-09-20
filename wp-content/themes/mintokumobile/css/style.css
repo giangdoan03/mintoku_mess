@@ -21,7 +21,8 @@ footer {
 
 header {
     top: 0;
-    padding: 0 10px;
+    padding: 0;
+    background: #ffffff;
 }
 
 .item h2 {
@@ -195,7 +196,7 @@ div#slider_content_item {
     height: 300px;
 }
 
-.swiper-container {
+.single .swiper-container {
     margin-bottom: 50px !important;
 }
 
@@ -1270,29 +1271,34 @@ button:hover {
     color: #777;
     text-align: center; /* Căn giữa */
 }
-
+.title_recommended {
+    text-align: center;
+    margin-bottom: 0;
+}
 
 
 /* Cải thiện phần chứa danh sách công việc */
 .page-list-job-filter {
     max-width: 100%;
     margin: 0 auto;
-    background-color: #f5f5f5; /* Màu nền nhẹ */
+    background-color: #ffffff; /* Màu nền nhẹ */
     border-radius: 8px; /* Bo tròn góc */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
     box-sizing: border-box; /* Bao gồm padding và border vào kích thước tổng */
     position: relative; /* Để tiêu đề có thể cố định */
 }
-
+.box_slider {
+    margin-bottom: 50px;
+}
 /* Tiêu đề */
 .title_list_job_filter {
     position: sticky;
-    top: 52px;
-    background-color: #ffffff; /* Màu nền trắng */
+    top: 38px;
+    background-color: #ffffff;
     padding: 15px;
-    border-bottom: 1px solid #ddd; /* Đường viền dưới */
-    z-index: 10; /* Đảm bảo tiêu đề nằm trên cùng */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    border-bottom: 1px solid #ddd;
+    z-index: 10;
+    box-shadow: none;
 }
 
 .title_list_job_filter h4 {
@@ -1339,7 +1345,13 @@ button:hover {
 .page-list-job-filter p {
     font-size: 18px;
     color: #777;
-    text-align: center; /* Căn giữa */
+    text-align: center;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.page-template-list-job .swiper-container-horizontal>.swiper-pagination-bullets, .page-template-list-job .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: -6px;
 }
 
 
@@ -1365,7 +1377,7 @@ button:hover {
 /* Container để cuộn và snap */
 .content_list_job_filter {
     width: 100vw; /* Toàn bộ chiều rộng của màn hình */
-    height: 100vh; /* Toàn bộ chiều cao của màn hình */
+    height: 45vh;
     overflow-x: hidden; /* Ẩn cuộn ngang */
     overflow-y: scroll; /* Hiển thị cuộn dọc */
     scroll-snap-type: y mandatory; /* Snap dọc */
@@ -1384,7 +1396,7 @@ button:hover {
 /* Mục danh sách */
 .content_list_job_filter li {
     width: 100vw; /* Chiếm toàn bộ chiều rộng màn hình */
-    height: 100vh; /* Chiếm toàn bộ chiều cao màn hình */
+    height: 45vh;
     display: flex;
     align-items: center;
     justify-content: center; /* Căn giữa nội dung */

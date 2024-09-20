@@ -570,6 +570,130 @@ add_action('wp_ajax_get_taxonomy_terms', 'get_taxonomy_terms');
 add_action('wp_ajax_nopriv_get_taxonomy_terms', 'get_taxonomy_terms');
 
 
+function display_acf_recommended_work_slider($atts) {
+    // Lấy giá trị 'region' từ URL
+    $region = isset($_GET['region']) ? sanitize_text_field($_GET['region']) : '';
+
+    // Xác định post type dựa trên giá trị của 'region'
+    switch ($region) {
+        case 'vietnam':
+            $post_type = 'vietnam';
+            break;
+        case 'laos':
+            $post_type = 'laos';
+            break;
+        case 'cambodia':
+            $post_type = 'cambodia';
+            break;
+        default:
+            $post_type = 'post'; // Loại post mặc định nếu không có region
+    }
+
+    // Query để lấy các bài viết có custom field `recommended_work` với giá trị 'add_to_suggested_work_list'
+    $args = array(
+        'post_type' => $post_type,
+        'meta_query' => array(
+            array(
+                'key' => 'recommended_work', // Tên custom field
+                'value' => 'recommended', // Giá trị của custom field (lựa chọn đã chọn)
+                'compare' => 'LIKE'
+            )
+        ),
+        'posts_per_page' => -1
+    );
+
+    $query = new WP_Query($args);
+
+    // Nếu có bài viết
+    if ($query->have_posts()) {
+        ob_start();
+        ?>
+        <div class="box_slider" id="box_slider">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <?php while ($query->have_posts()) : $query->the_post(); ?>
+                        <div class="swiper-slide">
+                            <a href="<?php the_permalink(); ?>">
+                                <?php
+                                // Kiểm tra nếu có ảnh đại diện
+                                if (has_post_thumbnail()) {
+                                    // Hiển thị ảnh đại diện
+                                    the_post_thumbnail('medium');
+                                } else {
+                                    // Hiển thị ảnh mặc định nếu không có ảnh đại diện
+                                    echo '<img src="https://placehold.co/600x300" alt="Placeholder">';
+                                }
+                                ?>
+                                <p><?php the_title(); ?></p>
+                            </a>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+        <?php
+        wp_reset_postdata();
+        return ob_get_clean();
+    } else {
+        return '<p>No recommended work found.</p>';
+    }
+}
+add_shortcode('acf_recommended_work_slider', 'display_acf_recommended_work_slider');
+
+
+
+function enqueue_swiper_assets_for_acf() {
+//    // Swiper CSS
+//    wp_enqueue_style('swiper-css', 'https://unpkg.com/swiper/swiper-bundle.min.css');
+//
+//    // Swiper JS
+//    wp_enqueue_script('swiper-js', 'https://unpkg.com/swiper/swiper-bundle.min.js', array(), null, true);
+
+    // Custom JS để khởi tạo Swiper
+    wp_add_inline_script('swiper-js', "
+        document.addEventListener('DOMContentLoaded', function() {
+            var swiper = new Swiper('#box_slider .swiper-container', {
+                slidesPerView: 3, // Số slide mặc định
+                spaceBetween: 10, // Khoảng cách giữa các slide
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                breakpoints: {
+                    // Khi màn hình >= 640px
+                    640: {
+                        slidesPerView: 1, // Hiển thị 1 slide trên màn hình nhỏ
+                        spaceBetween: 10,
+                    },
+                    // Khi màn hình >= 768px
+                    768: {
+                        slidesPerView: 2, // Hiển thị 2 slide trên màn hình tablet
+                        spaceBetween: 20,
+                    },
+                    // Khi màn hình >= 1024px
+                    1024: {
+                        slidesPerView: 3, // Hiển thị 3 slide trên màn hình lớn
+                        spaceBetween: 30,
+                    }
+                },
+                loop: true
+            });
+
+        });
+    ");
+}
+add_action('wp_enqueue_scripts', 'enqueue_swiper_assets_for_acf');
+
+
+
+
 
 
 

@@ -86,7 +86,7 @@ if ($taxonomy) {
 
 <?php get_footer(); ?>
 
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!--<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>-->
 <script>
 
     var taxonomyTerms = <?php echo json_encode($terms_data); ?>;
@@ -99,12 +99,18 @@ if ($taxonomy) {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
+            autoHeight: true,
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
             },
             slidesPerView: 1,
         });
+
+        // Đảm bảo rằng Swiper cập nhật chiều cao sau khi tải xong nội dung
+        // swiperP.on('slideChange', function () {
+        //     swiperP.updateAutoHeight();
+        // });
 
         // Check URL hash and navigate to the appropriate slide
         const hash = window.location.hash;

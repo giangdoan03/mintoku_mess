@@ -80,12 +80,17 @@ foreach ($taxonomies as $taxonomy => $term) {
 $query = new WP_Query($args);
 ?>
     <div id="content" class="page-list-job-filter">
+        <div class="title_list_job_filter">
+            <h4><?php echo $university_name . ' ' . $year; ?>
+            </h4>
+        </div>
+        <h4 class="title_recommended">
+            Công việc đề xuất
+        </h4>
+        <?php echo do_shortcode('[acf_recommended_work_slider]'); ?>
         <?php
         if ($query->have_posts()) : ?>
-            <div class="title_list_job_filter">
-                <h4><?php echo $university_name . ' ' . $year; ?>
-                </h4>
-            </div>
+
             <div class="content_list_job_filter">
                 <ul>
                     <?php while ($query->have_posts()) : $query->the_post(); ?>
