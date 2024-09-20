@@ -76,7 +76,9 @@ if ($taxonomy) {
             </div>
 
             <!-- Pagination -->
-            <div class="swiper-pagination"></div>
+            <div class="box_btn_pagination">
+                <div class="swiper-pagination"></div>
+            </div>
         </div>
 
     <?php else: ?>

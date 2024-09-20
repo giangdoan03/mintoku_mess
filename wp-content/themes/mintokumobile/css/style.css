@@ -1602,6 +1602,22 @@ html, body {
         justify-content: space-between;
         width: 100%;
     }
+    .box_btn_pagination {
+
+    }
+    .box_btn_pagination .swiper-pagination-bullet {
+        margin: 5px;
+    }
+
+    .box_btn_pagination .swiper-pagination {
+        position: fixed;
+        bottom: 35px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+    }
 
 }
 
