@@ -630,8 +630,8 @@ function display_acf_recommended_work_slider($atts) {
                     <?php endwhile; ?>
                 </div>
                 <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+<!--                <div class="swiper-button-next"></div>-->
+<!--                <div class="swiper-button-prev"></div>-->
             </div>
         </div>
         <?php

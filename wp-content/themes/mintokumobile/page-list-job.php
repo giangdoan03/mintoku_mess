@@ -149,22 +149,35 @@ get_header(); ?>
 
 
         // Function to add query parameters to the URL
-        function updateUrlParams(param, value) {
+        function updateUrlParams(param, value, clearParams = []) {
             var url = new URL(window.location.href);
+
+            // Set or delete the main parameter
             if (value) {
                 url.searchParams.set(param, value);
             } else {
-                url.searchParams.delete(param); // Xóa tham số nếu không có giá trị
+                url.searchParams.delete(param);
             }
+
+            // Clear other parameters if specified
+            clearParams.forEach(function (p) {
+                url.searchParams.delete(p);
+            });
+
             window.history.replaceState({}, '', url);
         }
 
+
         // Khi người dùng chọn giá trị từ dropdown, cập nhật URL
         $('#post_type').on('change', function () {
-            updateUrlParams('region', $(this).val());
+            var postType = $(this).val();
+            updateUrlParams('region', postType, ['province', 'university']); // Clear province and university when post type is changed
+            updateProvinceDropdown(postType); // Update the province dropdown based on the selected post type
         });
         $('#province').on('change', function () {
-            updateUrlParams('province', $(this).val());
+            var province = $(this).val();
+            updateUrlParams('province', province, ['university']); // Clear university when province is changed
+            performSearch(); // Perform the search when province is selected
         });
         $('#university').on('change', function () {
             updateUrlParams('university', $(this).val());
@@ -174,7 +187,6 @@ get_header(); ?>
         });
 
         // Function to perform search
-// Function to perform search
         function performSearch() {
             var postType = $('#post_type').val();
             var province = $('#province').val();
