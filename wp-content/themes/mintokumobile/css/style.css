@@ -1619,6 +1619,10 @@ html, body {
         justify-content: space-between;
     }
 
+    .title_recommended {
+        padding-top: 45px;
+    }
+
 }
 
 
