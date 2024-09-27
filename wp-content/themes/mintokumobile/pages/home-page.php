@@ -27,9 +27,9 @@ $list_company_url = get_permalink(get_page_by_path('danh-sach-cong-ty'));
             <div class="menu_item">
                 <a href="#" data-translate="forum_link">質問掲示板</a>
             </div>
-            <div class="menu_item">
-                <a href="<?php echo esc_url($list_company_url); ?>" data-translate="company_link">会社一覧</a>
-            </div>
+<!--            <div class="menu_item">-->
+<!--                <a href="--><?php //echo esc_url($list_company_url); ?><!--" data-translate="company_link">会社一覧</a>-->
+<!--            </div>-->
         </div>
     </div>
 </div>
