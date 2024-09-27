@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Danh Sách Công Việc
+ * Template Name: Danh sách việc được tìm thấy
  */
 
 get_header();
@@ -8,9 +8,9 @@ get_header();
 // Lấy các tham số từ URL
 $year = isset($_GET['year_r']) ? sanitize_text_field($_GET['year_r']) : '';
 $post_type = isset($_GET['region']) ? sanitize_text_field($_GET['region']) : '';
-$province = isset($_GET['province']) ? sanitize_text_field($_GET['province']) : '';
+$province_slug = isset($_GET['province']) ? sanitize_text_field($_GET['province']) : ''; // Lấy slug của province từ URL
 $university_slug = isset($_GET['university']) ? sanitize_text_field($_GET['university']) : '';
-$label = isset($_GET['label']) ? sanitize_text_field($_GET['label']) : '';
+$company_slug = isset($_GET['company']) ? sanitize_text_field($_GET['company']) : ''; // Lấy slug của công ty từ URL
 
 // Kiểm tra và thiết lập taxonomy tương ứng với post_type
 $taxonomies = array();
@@ -20,12 +20,13 @@ $university_name = '';
 if ($post_type === 'vietnam') {
     $taxonomies = array(
         'year_vietnam' => $year,
-        'province_vietnam' => $province,
-        'university_vietnam' => $university_slug
+        'province_vietnam' => $province_slug, // Tìm theo slug của tỉnh
+        'university_vietnam' => $university_slug,
+        'company_vietnam' => $company_slug // Tìm theo slug của công ty
     );
 
     if (!empty($university_slug)) {
-        $university_term = get_term_by('slug', $university_slug, 'university_vietnam'); // Thay 'university_vietnam' bằng taxonomy của bạn
+        $university_term = get_term_by('slug', $university_slug, 'university_vietnam');
         if ($university_term) {
             $university_name = $university_term->name;
         }
@@ -33,12 +34,13 @@ if ($post_type === 'vietnam') {
 } elseif ($post_type === 'laos') {
     $taxonomies = array(
         'year_laos' => $year,
-        'province_laos' => $province,
-        'university_laos' => $university_slug
+        'province_laos' => $province_slug, // Tìm theo slug của tỉnh
+        'university_laos' => $university_slug,
+        'company_laos' => $company_slug // Tìm theo slug của công ty
     );
 
     if (!empty($university_slug)) {
-        $university_term = get_term_by('slug', $university_slug, 'university_laos'); // Thay 'university_laos' bằng taxonomy của bạn
+        $university_term = get_term_by('slug', $university_slug, 'university_laos');
         if ($university_term) {
             $university_name = $university_term->name;
         }
@@ -46,12 +48,13 @@ if ($post_type === 'vietnam') {
 } elseif ($post_type === 'cambodia') {
     $taxonomies = array(
         'year_cambodia' => $year,
-        'province_cambodia' => $province,
-        'university_cambodia' => $university_slug
+        'province_cambodia' => $province_slug, // Tìm theo slug của tỉnh
+        'university_cambodia' => $university_slug,
+        'company_cambodia' => $company_slug // Tìm theo slug của công ty
     );
 
     if (!empty($university_slug)) {
-        $university_term = get_term_by('slug', $university_slug, 'university_cambodia'); // Thay 'university_cambodia' bằng taxonomy của bạn
+        $university_term = get_term_by('slug', $university_slug, 'university_cambodia');
         if ($university_term) {
             $university_name = $university_term->name;
         }
@@ -61,8 +64,15 @@ if ($post_type === 'vietnam') {
 // Tạo mảng args cho WP_Query
 $args = array(
     'post_type' => $post_type,
-    'posts_per_page' => -1,
+    'posts_per_page' => -1, // Giới hạn số bài viết trả về (thay đổi số lượng tùy ý)
     'tax_query' => array('relation' => 'AND'),
+    'meta_query' => array(
+        array(
+            'key' => 'recommended_work', // Tên custom field
+            'value' => 'recommended',    // Giá trị của custom field
+            'compare' => 'LIKE'
+        )
+    )
 );
 
 // Thêm các taxonomy vào tax_query nếu có
@@ -70,7 +80,7 @@ foreach ($taxonomies as $taxonomy => $term) {
     if (!empty($term)) {
         $args['tax_query'][] = array(
             'taxonomy' => $taxonomy,
-            'field' => 'slug',
+            'field' => 'slug', // Sử dụng 'slug' để tìm theo slug
             'terms' => $term,
         );
     }
@@ -87,12 +97,12 @@ $query = new WP_Query($args);
         <h4 class="title_recommended">
             Công việc đề xuất
         </h4>
-        <?php echo do_shortcode('[acf_recommended_work_slider]'); ?>
         <?php
         if ($query->have_posts()) : ?>
 
             <div class="content_list_job_filter">
                 <ul>
+                    <?php echo do_shortcode('[acf_recommended_work_slider]'); ?>
                     <?php while ($query->have_posts()) : $query->the_post(); ?>
                         <li>
                             <?php
@@ -104,8 +114,8 @@ $query = new WP_Query($args);
                             }
                             ?>
                             <a href="<?php the_permalink(); ?>">
-                                <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>" style="max-width:100%; height:auto;">
-                                <?php the_title(); ?>
+                                <p><img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>" style="max-width:100%; height:auto;"></p>
+                                <p><?php the_title(); ?></p>
                             </a>
                         </li>
                     <?php endwhile; ?>
@@ -120,17 +130,17 @@ $query = new WP_Query($args);
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const listItems = document.querySelectorAll('.page-list-job-filter li');
-
-            listItems.forEach(item => {
-                const hammer = new Hammer(item);
-
-                hammer.on('swipeleft', function () {
-                    window.location.href = item.querySelector('a').href;
-                });
-            });
-        });
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const listItems = document.querySelectorAll('.page-list-job-filter li');
+        //
+        //     listItems.forEach(item => {
+        //         const hammer = new Hammer(item);
+        //
+        //         hammer.on('swipeleft', function () {
+        //             window.location.href = item.querySelector('a').href;
+        //         });
+        //     });
+        // });
     </script>
 
 <?php

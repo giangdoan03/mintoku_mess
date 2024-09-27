@@ -43,13 +43,8 @@ if ($taxonomy) {
     $current_language = apply_filters('wpml_current_language', NULL);
 
     // Determine the correct custom field names based on the language
-    if ($current_language == 'vi') {
-        $content_field = 'content_job'; // English field
-        $sub_field = 'job_detail'; // Sub-field for English content
-    } else {
-        $content_field = 'cong_viec'; // Vietnamese field
-        $sub_field = 'chi_tiet'; // Sub-field for Vietnamese content
-    }
+    $content_field = 'cong_viec'; // English field
+    $sub_field = 'chi_tiet'; // Sub-field for English content
 
     // Check if the field has content
     if( have_rows($content_field) ): ?>

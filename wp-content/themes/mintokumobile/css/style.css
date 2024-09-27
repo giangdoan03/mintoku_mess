@@ -3,7 +3,7 @@ html {
     margin: 0;
     padding: 0;
     height: 100%;
-
+    overflow: hidden;
 }
 
 header,
@@ -1192,7 +1192,6 @@ button:hover {
     list-style: none;
     padding: 0;
     text-align: right;
-    margin-top: 30px;
 }
 
 .language-switcher li {
@@ -1242,7 +1241,7 @@ button:hover {
 
 .page-list-job-filter li {
     background-color: #ffffff; /* Màu nền trắng */
-    border: 1px solid #ddd; /* Đường viền nhẹ */
+    /*border: 1px solid #ddd; !* Đường viền nhẹ *!*/
     border-radius: 5px; /* Bo tròn góc */
     margin-bottom: 10px;
     padding: 15px;
@@ -1318,7 +1317,7 @@ button:hover {
 
 .content_list_job_filter li {
     background-color: #ffffff; /* Màu nền trắng */
-    border: 1px solid #ddd; /* Đường viền nhẹ */
+    /*border: 1px solid #ddd; !* Đường viền nhẹ *!*/
     border-radius: 5px; /* Bo tròn góc */
     margin-bottom: 10px;
     padding: 15px;
@@ -1348,6 +1347,10 @@ button:hover {
     text-align: center;
     margin: 0;
     margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
 .page-template-list-job .swiper-container-horizontal>.swiper-pagination-bullets, .page-template-list-job .swiper-pagination-custom, .swiper-pagination-fraction {
@@ -1377,7 +1380,7 @@ button:hover {
 /* Container để cuộn và snap */
 .content_list_job_filter {
     width: 100vw; /* Toàn bộ chiều rộng của màn hình */
-    height: 45vh;
+    height: 100vh;
     overflow-x: hidden; /* Ẩn cuộn ngang */
     overflow-y: scroll; /* Hiển thị cuộn dọc */
     scroll-snap-type: y mandatory; /* Snap dọc */
@@ -1396,7 +1399,7 @@ button:hover {
 /* Mục danh sách */
 .content_list_job_filter li {
     width: 100vw; /* Chiếm toàn bộ chiều rộng màn hình */
-    height: 45vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center; /* Căn giữa nội dung */
@@ -1498,6 +1501,15 @@ html, body {
     opacity: 1;
     transform: translateX(0);
 }
+.select2-container {
+    width: 100% !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px !important;
+}
+.select2-container--default .select2-selection--single {
+    border: 1px solid #ddd !important;
+}
 
 /* CSS cho hiệu ứng khi danh sách trượt ra */
 .page-list-job-filter.fade-out {
@@ -1506,9 +1518,34 @@ html, body {
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
+.select2-container .select2-selection--single {
+    height: 40px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 40px !important;
+}
+
+
+button#search_button {
+    margin-top: 20px;
+}
+
+
 
 /* Responsive design */
 @media (max-width: 768px) {
+
+    .title_list_job_filter {
+        top: 104px;
+    }
+
+    #header_s {
+        padding: 20px !important;
+        padding-top: 0 !important;
+        padding-right: 0 !important;
+        margin: 10px 0 !important;
+        margin-bottom: 40px !important;
+    }
 
 
     .title_list_job_filter h4 {
@@ -1620,7 +1657,7 @@ html, body {
     }
 
     .title_recommended {
-        padding-top: 45px;
+        padding-top: 15px;
     }
 
 }

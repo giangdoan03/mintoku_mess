@@ -2,155 +2,181 @@
 /**
  * The header for our theme
  *
- * This is the template that displays all of the <head> section and everything up until <div id="content">
- *
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- *
  * @package mintokumobile
  */
-
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="profile" href="https://gmpg.org/xfn/11">
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
 
-	<?php wp_head(); ?>
+    <?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'mintokumobile' ); ?></a>
-
+<div class="header">
+    <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'mintokumobile'); ?></a>
     <header id="header_s">
-        <div class="menu_language">
-            <?php
-            $current_language = ICL_LANGUAGE_CODE; // Lấy mã ngôn ngữ hiện tại
-            $languages = apply_filters('wpml_active_languages', NULL, 'skip_missing=0');
-
-            if (!empty($languages)) {
-                echo '<div class="custom-dropdown">';
-                echo '<button class="dropdown-button">';
-                foreach ($languages as $language) {
-                    if ($language['code'] == $current_language) {
-                        $flag_url = esc_url($language['country_flag_url']);
-                        // Hiển thị cờ, tên ngôn ngữ và mã ngôn ngữ
-                        echo '<img src="' . $flag_url . '" alt="' . esc_attr($language['native_name']) . ' flag" style="width: 20px; height: auto; margin-right: 5px;">';
-//                        echo esc_html($language['native_name']) . ' (' . esc_html($language['code']) . ')'; // In ra mã ngôn ngữ bên cạnh
-                        echo esc_html($language['native_name']); // In ra mã ngôn ngữ bên cạnh
-                    }
+        <div class="language-switcher">
+            <div class="current-language">
+                <span id="current-lang"></span>
+                <i class="arrow-down"></i> <!-- Thêm mũi tên chỉ xuống -->
+            </div>
+            <ul class="language-list sub-menu">
+                <?php
+                if (function_exists('pll_the_languages')) {
+                    pll_the_languages(array(
+                        'show_flags' => 1, // Hiển thị cờ quốc gia
+                        'show_names' => 1, // Hiển thị tên ngôn ngữ
+                        'hide_if_empty' => 0, // Hiển thị ngôn ngữ ngay cả khi không có bản dịch
+                        'display_names_as' => 'name', // Hiển thị tên ngôn ngữ dưới dạng slug
+                    ));
                 }
-                echo '</button>';
-                echo '<div class="dropdown-content">';
-                foreach ($languages as $language) {
-                    $url = esc_url($language['url']);
-                    $flag_url = esc_url($language['country_flag_url']); // WPML flag URL
-
-                    echo '<a href="' . $url . '">';
-                    // Hiển thị cờ, tên ngôn ngữ và mã ngôn ngữ cho mỗi mục
-                    echo '<img src="' . $flag_url . '" alt="' . esc_attr($language['native_name']) . ' flag" style="width: 20px; height: auto; margin-right: 5px;">';
-//                    echo esc_html($language['native_name']) . ' (' . esc_html($language['code']) . ')'; // In ra mã ngôn ngữ bên cạnh
-                    echo esc_html($language['native_name']); // In ra mã ngôn ngữ bên cạnh
-                    echo '</a>';
-                }
-                echo '</div>';
-                echo '</div>';
-            }
-            ?>
+                ?>
+            </ul>
         </div>
     </header>
+</div>
 
+<style>
+    /* CSS cho phần header */
+    #header_s {
+        background-color: #f5f5f5;
+        padding: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
 
-    <style>
-        /* Custom dropdown container */
-        .custom-dropdown {
-            position: relative;
-            display: inline-block;
-            font-family: Arial, sans-serif;
-        }
+    /* CSS cho phần chuyển ngôn ngữ */
+    .language-switcher {
+        position: relative;
+        display: inline-block;
+        width: 200px; /* Độ rộng của dropdown */
+        font-family: Arial, sans-serif;
+        cursor: pointer;
+    }
 
-        /* Dropdown button */
-        .dropdown-button {
-            background-color: #0073aa; /* Modern blue color */
-            color: white;
-            padding: 12px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
+    /* Hiển thị ngôn ngữ hiện tại */
+    .current-language {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        .dropdown-button img {
-            margin-right: 8px;
-        }
+    /* Thêm mũi tên chỉ xuống */
+    .arrow-down {
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+    }
 
-        .dropdown-button:hover {
-            background-color: #005f8d; /* Darker blue on hover */
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
+    /* Dropdown menu (ẩn ban đầu) */
+    .language-list {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        z-index: 100;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        /*max-height: 200px; !* Đặt giới hạn chiều cao cho dropdown *!*/
+        overflow-y: auto; /* Thêm thanh cuộn nếu có quá nhiều mục */
+    }
 
-        /* The dropdown content (hidden by default) */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            border-radius: 5px;
-            min-width: 180px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 11;
-            /*margin-top: 10px;*/
-            overflow: hidden;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            opacity: 0;
-            transform: translateY(10px);
-            right: 0px;
-        }
+    /* Các mục trong dropdown */
+    .language-list li {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        transition: background-color 0.3s;
+    }
 
-        /* Links inside the dropdown */
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            background-color: transparent;
-            transition: background-color 0.3s ease;
-        }
+    .language-list li:last-child {
+        border-bottom: none;
+    }
 
-        .dropdown-content a img {
-            /*border-radius: 50%;*/
-            margin-right: 10px;
-            width: 20px;
-            height: 20px;
-        }
+    .language-list li a {
+        text-decoration: none;
+        color: #333;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
 
-        /* Show the dropdown menu on hover */
-        .custom-dropdown:hover .dropdown-content {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .language-list li a img {
+        margin-right: 8px;
+        width: 24px;
+        height: auto;
+    }
 
-        /* Links hover effect */
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
+    /* Hiệu ứng hover */
+    .language-list li:hover {
+        background-color: #f1f1f1;
+    }
 
-        /* Smooth dropdown animation */
-        .custom-dropdown:hover .dropdown-content {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .menu_language {
-            text-align: right;
-        }
+    /* Hiển thị dropdown khi click */
+    .language-switcher.open .language-list {
+        display: block;
+    }
 
+    /* Kiểu cho ngôn ngữ hiện tại */
+    .language-switcher .current-lang {
+        background-color: #f5f5f5;
+    }
+</style>
 
-    </style>
+<?php wp_footer(); ?>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        // Gửi yêu cầu AJAX để lấy dữ liệu dịch từ bảng trong cơ sở dữ liệu
+        jQuery.ajax({
+            url: ajax_object.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'get_translation_json' // Tên action trong PHP
+            },
+            success: function(response) {
+                if (response.success) {
+                    var jsonData = JSON.parse(response.data.json_data);
+                    console.log("Dữ liệu dịch từ cơ sở dữ liệu:", jsonData);
+
+                    // Duyệt qua tất cả các phần tử có thuộc tính data-translate
+                    document.querySelectorAll('[data-translate]').forEach(function(el) {
+                        var key = el.getAttribute('data-translate');
+
+                        // Kiểm tra và thay thế văn bản nếu có key trong JSON
+                        if (jsonData[key]) {
+                            el.innerText = jsonData[key];
+                        }
+                    });
+                } else {
+                    console.log("Lỗi khi tải dữ liệu JSON:", response.data.message);
+                }
+            },
+            error: function() {
+                console.log("Lỗi khi gửi yêu cầu AJAX.");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

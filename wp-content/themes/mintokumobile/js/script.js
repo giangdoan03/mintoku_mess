@@ -261,6 +261,48 @@ jQuery(document).ready(function($) {
     }
 });
 
+jQuery(document).ready(function($) {
+    $('#university_search').on('input', function() {
+        var query = $(this).val();
+
+        $.ajax({
+            url: ajaxurl, // URL cho yêu cầu AJAX
+            type: 'POST',
+            data: {
+                action: 'get_universities', // Tên hành động
+                search_query: query
+            },
+            success: function(response) {
+                $('#university_checklist').html(response); // Hiển thị kết quả trong danh sách
+            }
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const languageSwitcher = document.querySelector('.language-switcher');
+    const currentLangElement = document.querySelector('#current-lang');
+    const subMenu = document.querySelector('.language-list');
+
+    // Lấy ngôn ngữ hiện tại từ mục được chọn và hiển thị nó
+    const currentLang = document.querySelector('.language-list li.current-lang');
+    if (currentLang) {
+        const currentFlag = currentLang.querySelector('img').outerHTML;
+        const currentText = currentLang.querySelector('span').textContent;
+        currentLangElement.innerHTML = `${currentFlag} ${currentText}`;
+    }
+
+    // Khi click vào current-lang, mở/đóng dropdown
+    languageSwitcher.addEventListener('click', function(event) {
+        subMenu.style.display = subMenu.style.display === 'block' ? 'none' : 'block';
+        event.stopPropagation();
+    });
+
+    // Ẩn dropdown khi click ra ngoài
+    document.addEventListener('click', function() {
+        subMenu.style.display = 'none';
+    });
+});
 
 
 

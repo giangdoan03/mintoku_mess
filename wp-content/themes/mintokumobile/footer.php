@@ -21,6 +21,8 @@
     <?php endif; ?>
 </footer><!-- #footer_s -->
 </div><!-- #page -->
+
+<?php wp_footer(); ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const backToTopButton = document.getElementById('back-to-top');
@@ -41,8 +43,33 @@
         });
     });
 
-</script>
-<?php wp_footer(); ?>
+    // Hàm tải và áp dụng bản dịch
+    async function fetchTranslations() {
+        try {
+            const response = await fetch('<?php echo get_template_directory_uri(); ?>/js/translations.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        } catch (error) {
+            console.error('Error fetching translations:', error);
+        }
+    }
 
+    async function setLanguage(language) {
+        try {
+            const translations = await fetchTranslations();
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+        } catch (error) {
+            console.error('Error setting language:', error);
+        }
+    }
+
+</script>
 </body>
 </html>
