@@ -3,7 +3,6 @@ html {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow-x: hidden;
 }
 
 header,
@@ -39,14 +38,7 @@ footer {
     bottom: 0;
 }
 
-.container {
-    height: calc(100vh - 70px);
-    /* Chiều cao còn lại sau khi trừ header và footer */
-    position: relative;
-    overflow: hidden;
-    /* Ẩn thanh cuộn */
-    /*background-color: #007BFF;*/
-}
+
 
 .wrapper {
     height: 100%;
@@ -757,11 +749,6 @@ body.loaded #loading-spinner {
     display: none;
 }
 
-/* Chuyển hiệu ứng mờ dần cho body */
-body {
-    opacity: 1;
-    transition: opacity 0.5s;
-}
 span.label_year {
     color: #000000;
     font-size: 30px;
@@ -1501,9 +1488,9 @@ html, body {
     opacity: 1;
     transform: translateX(0);
 }
-.select2-container {
-    width: 100% !important;
-}
+/*.select2-container {*/
+/*    width: 100% !important;*/
+/*}*/
 .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 40px !important;
 }
@@ -1529,7 +1516,147 @@ html, body {
 button#search_button {
     margin-top: 20px;
 }
+.page-list-company {
+    background-color: #f8f9fa;
+    padding: 40px 0;
+}
 
+.company-header .title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    color: #343a40;
+    text-align: center;
+}
+
+.page-template-page-list-company {
+
+}
+
+.list_company .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.list_company .col-md-4,
+.list_company .col-sm-6 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.list_company .box-company {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Đảm bảo các item có chiều cao bằng nhau */
+}
+
+.list_company .box-company:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.company-banner {
+    position: relative;
+}
+
+.company-banner .cover-wraper img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.company-banner .cover-wraper img:hover {
+    transform: scale(1.05);
+}
+
+.company-logo {
+    position: absolute;
+    bottom: -30px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.company-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.company-info {
+    padding: 20px;
+    flex-grow: 1; /* Đảm bảo phần nội dung công ty chiếm đầy chiều cao */
+}
+
+.company-info h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.company-info h3 a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+.company-info h3 a:hover {
+    color: #0056b3;
+}
+
+.company-description {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: 10px;
+    flex-grow: 1; /* Đảm bảo phần mô tả cũng chiếm đều chiều cao */
+}
+
+/* Bố cục cho màn hình lớn (PC) */
+@media (min-width: 768px) {
+    .container .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .container .col-md-4 {
+        width: calc(33.333% - 20px);
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+}
+
+/* Bố cục cho mobile (1 cột) */
+@media (max-width: 767px) {
+    .container .col-md-4, .container .col-sm-6 {
+        width: 100%;
+    }
+
+    .company-logo {
+        bottom: -20px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .company-info h3 {
+        font-size: 1.1rem;
+    }
+
+    .company-description {
+        font-size: 0.85rem;
+    }
+}
 
 
 /* Responsive design */

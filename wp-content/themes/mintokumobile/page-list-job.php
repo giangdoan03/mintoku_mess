@@ -51,10 +51,10 @@ get_header(); ?>
             </select>
 
             <!-- Year Dropdown -->
-            <label for="year_r" data-translate="select_year">Chọn năm:</label>
-            <select name="year_r" id="year_r" disabled>
-                <option value="" data-translate="select_year"><?php echo esc_html__('Chọn năm:', 'text-domain'); ?></option>
-            </select>
+<!--            <label for="year_r" data-translate="select_year">Chọn năm:</label>-->
+<!--            <select name="year_r" id="year_r" disabled>-->
+<!--                <option value="" data-translate="select_year">--><?php //echo esc_html__('Chọn năm:', 'text-domain'); ?><!--</option>-->
+<!--            </select>-->
 
             <!-- University Dropdown -->
             <label for="company" data-translate="select_company">Chọn công ty:</label>
