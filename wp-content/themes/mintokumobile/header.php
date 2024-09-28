@@ -19,7 +19,7 @@
 <?php wp_body_open(); ?>
 <div class="header">
     <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'mintokumobile'); ?></a>
-    <header id="header_s">
+    <header id="header_s" style="display: none">
         <div class="language-switcher">
             <div class="current-language">
                 <span id="current-lang"></span>
