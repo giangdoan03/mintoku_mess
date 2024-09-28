@@ -79,7 +79,7 @@ if ($taxonomy) {
             <?php
             $messenger_link = get_field('messenger_link_facebook', 'option');
             if ($messenger_link) {
-                echo '<a target="_blank" href="' . esc_url($messenger_link) . '" target="_blank"><i class="fab fa-facebook-messenger"></i>Ứng tuyển qua Messenger</a>';
+                echo '<a target="_blank" href="' . esc_url($messenger_link) . '"><i class="fab fa-facebook-messenger"></i>Ứng tuyển qua Messenger</a>';
             }
             ?>
         </div>
