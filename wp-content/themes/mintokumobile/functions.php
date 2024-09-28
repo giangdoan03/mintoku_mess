@@ -809,17 +809,6 @@ function display_acf_recommended_work_slider($atts)
         'posts_per_page' => -1
     );
 
-    // Nếu có giá trị 'university' (taxonomy slug), thêm điều kiện tax_query
-//    if (!empty($university)) {
-//        $args['tax_query'] = array(
-//            array(
-//                'taxonomy' => 'university_vietnam', // Tên của taxonomy
-//                'field'    => 'slug',       // Sử dụng slug để truy vấn
-//                'terms'    => $university,  // Giá trị slug lấy từ URL
-//            ),
-//        );
-//    }
-
     $query = new WP_Query($args);
 
     // Nếu có bài viết
@@ -828,6 +817,9 @@ function display_acf_recommended_work_slider($atts)
         ?>
         <li>
             <div class="box_slider" id="box_slider">
+                <h4 class="title_recommended">
+                    Công việc đề xuất
+                </h4>
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         <?php while ($query->have_posts()) : $query->the_post(); ?>

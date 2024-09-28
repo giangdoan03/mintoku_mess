@@ -87,9 +87,6 @@ $query = new WP_Query($args);
             <h4><?php echo $university_name . ' ' . $year; ?>
             </h4>
         </div>
-        <h4 class="title_recommended">
-            Công việc đề xuất
-        </h4>
         <?php
         if ($query->have_posts()) : ?>
 

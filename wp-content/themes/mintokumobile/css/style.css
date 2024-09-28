@@ -1663,7 +1663,7 @@ button#search_button {
 @media (max-width: 768px) {
 
     .title_list_job_filter {
-        top: 104px;
+        top: 0;
     }
 
     #header_s {
