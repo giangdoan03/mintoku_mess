@@ -370,7 +370,6 @@ get_header(); ?>
                             }
                         }
 
-                        console.log('resultHtml', resultHtml)
                         $('#search-results').html(resultHtml);
                     } else {
                         $('#search-results').html('<p>Không có bài viết nào.</p>');
