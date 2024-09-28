@@ -1623,6 +1623,46 @@ button#search_button {
     flex-grow: 1; /* Đảm bảo phần mô tả cũng chiếm đều chiều cao */
 }
 
+
+.message_link a {
+    background-color: #0084ff; /* Màu xanh Messenger */
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-align: center;
+}
+
+.message_link i {
+    margin-right: 10px;
+}
+
+.message_link a:hover {
+    background-color: #006bbd;
+    transform: translateY(-3px);
+}
+
+.message_link a:active {
+    transform: translateY(0);
+}
+
+.message_link a:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.5);
+}
+.message_link {
+    position: fixed;
+    bottom: 110px;
+    width: 100%;
+    text-align: center;
+}
+
 /* Bố cục cho màn hình lớn (PC) */
 @media (min-width: 768px) {
     .container .row {
@@ -1786,6 +1826,56 @@ button#search_button {
     .title_recommended {
         padding-top: 15px;
     }
+
+
+    .message_link a {
+        background-color: #0084ff; /* Màu xanh Messenger */
+        color: white;
+        text-decoration: none;
+        padding: 15px 30px;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        text-align: center;
+    }
+
+    .message_link i {
+        margin-right: 10px;
+    }
+
+    .message_link a:hover {
+        background-color: #006bbd;
+        transform: translateY(-3px);
+    }
+
+    .message_link a:active {
+        transform: translateY(0);
+    }
+
+    .message_link a:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.5);
+    }
+    .message_link {
+        position: fixed;
+        bottom: 110px;
+        width: 100%;
+        text-align: center;
+    }
+    /* Đảm bảo nút nằm chính giữa màn hình di động */
+    @media (max-width: 768px) {
+        .message_link {
+            position: fixed;
+            bottom: 110px;
+            width: 100%;
+            text-align: center;
+        }
+    }
+
 
 }
 

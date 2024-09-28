@@ -145,6 +145,10 @@ function enqueue_swiper_script()
     // Enqueue Flag Icons CSS
     wp_enqueue_style('flag-icons-css', 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css');
 
+
+    // Enqueue font awesome CSS
+    wp_enqueue_style('awesomes-css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
     // Enqueue jQuery
     wp_enqueue_script('jquery');
 
@@ -1069,6 +1073,19 @@ function my_get_translation_json()
 
 add_action('wp_ajax_get_translation_json', 'my_get_translation_json');
 add_action('wp_ajax_nopriv_get_translation_json', 'my_get_translation_json'); // Cho phép người dùng chưa đăng nhập cũng có thể lấy dữ liệu
+
+
+if( function_exists('acf_add_options_page') ) {
+
+    acf_add_options_page(array(
+        'page_title'    => 'Cài đặt chung',
+        'menu_title'    => 'Cài đặt chung',
+        'menu_slug'     => 'global-settings',
+        'capability'    => 'edit_posts',
+        'redirect'      => false
+    ));
+}
+
 
 
 

@@ -47,13 +47,13 @@ if ($taxonomy) {
     $sub_field = 'chi_tiet'; // Sub-field for English content
 
     // Check if the field has content
-    if( have_rows($content_field) ): ?>
+    if (have_rows($content_field)): ?>
 
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <?php
                 // Loop through the rows of the selected field
-                while ( have_rows($content_field) ) : the_row();
+                while (have_rows($content_field)) : the_row();
 
                     // Get the sub-field content
                     $wysiwyg_content = get_sub_field($sub_field);
@@ -74,6 +74,14 @@ if ($taxonomy) {
             <div class="box_btn_pagination">
                 <div class="swiper-pagination"></div>
             </div>
+        </div>
+        <div class="message_link">
+            <?php
+            $messenger_link = get_field('messenger_link_facebook', 'option');
+            if ($messenger_link) {
+                echo '<a target="_blank" href="' . esc_url($messenger_link) . '" target="_blank"><i class="fab fa-facebook-messenger"></i>Ứng tuyển qua Messenger</a>';
+            }
+            ?>
         </div>
 
     <?php else: ?>
