@@ -5,7 +5,7 @@
 <?php
 get_header(); ?>
 
-<main id="main" class="page-form-search xxxxxxxxxx">
+<main id="main" class="page-form-search">
     <section class="search-form">
         <h1>Tìm kiếm bài viết</h1>
         <label for="post_type">Chọn quốc gia:</label>

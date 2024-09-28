@@ -107,7 +107,6 @@ get_header(); ?>
 
     // Perform the search based on selected filters
     jQuery(document).ready(function ($) {
-        console.log('xxxxxxxxxx')
         //const language = '<?php //echo ICL_LANGUAGE_CODE; ?>//'; // PHP variable
         //setLanguage(language);
         // Function to update the taxonomy dropdown based on post type
@@ -230,8 +229,6 @@ get_header(); ?>
             var universityId = $(this).val(); // Lấy ID của trường đại học
             var universitySlug = $(this).find('option:selected').data('slug'); // Lấy slug của trường đại học
 
-            console.log('University ID:', universityId);
-            console.log('University Slug:', universitySlug);
 
             // Gọi hàm updateUrlParams với slug của trường đại học
             updateUrlParams('university', universitySlug);
@@ -257,7 +254,6 @@ get_header(); ?>
 
             var selectedOptionProvince = $('#province-select option:selected');
             var selectedSlugProvince = selectedOptionProvince.data('slug'); // Lấy giá trị của data-slug
-            console.log('selectedSlug',selectedSlugProvince)
 
             if (!postType) {
                 $('#post_type_error').show();
@@ -292,7 +288,6 @@ get_header(); ?>
                     search_query: searchQuery
                 },
                 success: function (response) {
-                    console.log('response',response)
                     if (response.success) {
                         var groupedResults = {};
 
@@ -333,9 +328,7 @@ get_header(); ?>
                         for (var university in groupedResults) {
                             if (groupedResults.hasOwnProperty(university)) {
                                 groupedResults[university].forEach(function (item) {
-                                    console.log('item',item)
-                                    var customLink = baseURL + '/jobs/?year_r=' + item.year +
-                                        '&region=' + item.region;
+                                    var customLink = baseURL + '/jobs/?year_r=' + item.year + '&region=' + item.region;
 
                                     // Thêm province và university nếu có
                                     if (item.province_slug) {
@@ -432,7 +425,6 @@ get_header(); ?>
 
         // Nếu đã có giá trị province trên URL, tự động load danh sách trường đại học
         if (selectedProvinceSlug) {
-            console.log('Selected Province Slug from URL:', selectedProvinceSlug);
 
             // Lấy ID của tỉnh dựa trên slug trong dropdown (dựa vào data-slug)
             var provinceOption = $('#province-select option[data-slug="' + selectedProvinceSlug + '"]');

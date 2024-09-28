@@ -133,7 +133,8 @@ if (defined('JETPACK__VERSION')) {
     require get_template_directory() . '/inc/jetpack.php';
 }
 
-function enqueue_swiper_script() {
+function enqueue_swiper_script()
+{
     // Enqueue Swiper CSS và các file style khác
     wp_enqueue_style('swiper-css', 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css');
     wp_enqueue_style('style-css', get_template_directory_uri() . '/css/style.css');
@@ -289,7 +290,6 @@ function create_year_taxonomy()
 add_action('init', 'create_year_taxonomy');
 
 
-
 function create_university_taxonomy()
 {
 
@@ -349,10 +349,10 @@ function create_company_taxonomy()
 add_action('init', 'create_company_taxonomy');
 
 
-
 // Thêm vào functions.php
 add_filter('query_vars', 'add_custom_query_vars');
-function add_custom_query_vars($vars) {
+function add_custom_query_vars($vars)
+{
     $vars[] = 'year_r';
     $vars[] = 'province_vietnam';
     $vars[] = 'university';
@@ -360,9 +360,9 @@ function add_custom_query_vars($vars) {
 }
 
 
-// Xử lý AJAX tìm kiếm bài viết
 // Xử lý Ajax để nạp dữ liệu cho các trường chọn (province, university, year)
-function ajax_load_filters() {
+function ajax_load_filters()
+{
     $post_type = isset($_GET['post_type']) ? sanitize_text_field($_GET['post_type']) : '';
 
     if ($post_type === 'vietnam') {
@@ -393,20 +393,19 @@ function ajax_load_filters() {
 
     wp_die();
 }
+
 add_action('wp_ajax_nopriv_load_filters', 'ajax_load_filters');
 add_action('wp_ajax_load_filters', 'ajax_load_filters');
 
 // Xử lý Ajax để tìm kiếm bài viết theo các điều kiện
-function ajax_search_posts() {
+function ajax_search_posts()
+{
     // Lấy các tham số từ URL
     $post_type = isset($_GET['post_type']) ? sanitize_text_field($_GET['post_type']) : 'vietnam';
     $province_slug = isset($_GET['province_slug']) ? sanitize_text_field($_GET['province_slug']) : '';
     $university_slug = isset($_GET['university_slug']) ? sanitize_text_field($_GET['university_slug']) : '';
     $year_slug = isset($_GET['year_slug']) ? sanitize_text_field($_GET['year_slug']) : '';
 
-
-//    var_dump($post_type,$province_slug,$university_slug,$year_slug);
-//    die();
     // Kiểm tra xem post_type có hợp lệ không
     if (!in_array($post_type, array('vietnam', 'laos', 'cambodia'))) {
         wp_send_json_error('Post type không hợp lệ.');
@@ -463,11 +462,13 @@ function ajax_search_posts() {
 
     wp_die();
 }
+
 add_action('wp_ajax_nopriv_search_posts', 'ajax_search_posts');
 add_action('wp_ajax_search_posts', 'ajax_search_posts');
 
 
-function search_jobs() {
+function search_jobs()
+{
     $post_type = sanitize_text_field($_GET['region']);
     $province_id = sanitize_text_field($_GET['province']);
     $university = sanitize_text_field($_GET['university']);
@@ -582,14 +583,13 @@ function search_jobs() {
 
     wp_send_json_error();
 }
+
 add_action('wp_ajax_search_jobs', 'search_jobs');
 add_action('wp_ajax_nopriv_search_jobs', 'search_jobs');
 
 
-
-
-
-function get_taxonomy_terms() {
+function get_taxonomy_terms()
+{
     // Sanitize and retrieve the parameters
     $post_type = sanitize_text_field($_GET['region']);
 
@@ -622,28 +622,28 @@ function get_taxonomy_terms() {
 
         // Filter provinces if a specific province is selected
         if ($selected_province) {
-            $taxonomy_data['provinces'] = array_filter($taxonomy_data['provinces'], function($term) use ($selected_province) {
+            $taxonomy_data['provinces'] = array_filter($taxonomy_data['provinces'], function ($term) use ($selected_province) {
                 return $term->slug === $selected_province;
             });
         }
 
         // Filter universities if a specific university is selected
         if ($selected_university) {
-            $taxonomy_data['universities'] = array_filter($taxonomy_data['universities'], function($term) use ($selected_university) {
+            $taxonomy_data['universities'] = array_filter($taxonomy_data['universities'], function ($term) use ($selected_university) {
                 return $term->slug === $selected_university;
             });
         }
 
         // Filter years if a specific year is selected
         if ($selected_year) {
-            $taxonomy_data['years'] = array_filter($taxonomy_data['years'], function($term) use ($selected_year) {
+            $taxonomy_data['years'] = array_filter($taxonomy_data['years'], function ($term) use ($selected_year) {
                 return $term->slug === $selected_year;
             });
         }
 
         // Filter years if a specific year is selected
         if ($selected_year) {
-            $taxonomy_data['company'] = array_filter($taxonomy_data['company'], function($term) use ($selected_year) {
+            $taxonomy_data['company'] = array_filter($taxonomy_data['company'], function ($term) use ($selected_year) {
                 return $term->slug === $selected_year;
             });
         }
@@ -660,9 +660,9 @@ add_action('wp_ajax_get_taxonomy_terms', 'get_taxonomy_terms');
 add_action('wp_ajax_nopriv_get_taxonomy_terms', 'get_taxonomy_terms');
 
 
-
 // Thêm field để chọn province_id khi tạo term
-function add_province_id_field_to_university_add() {
+function add_province_id_field_to_university_add()
+{
     ?>
     <div class="form-field">
         <label for="province_id"><?php _e('Chọn Tỉnh'); ?></label>
@@ -678,11 +678,13 @@ function add_province_id_field_to_university_add() {
     </div>
     <?php
 }
+
 add_action('university_vietnam_add_form_fields', 'add_province_id_field_to_university_add', 10, 2);
 
 
 // Thêm field để chọn province_id khi chỉnh sửa term
-function add_province_id_field_to_university_edit($term) {
+function add_province_id_field_to_university_edit($term)
+{
     // Lấy giá trị province_id đã được lưu cho term hiện tại
     $province_id = get_term_meta($term->term_id, 'province_id', true);
     ?>
@@ -704,27 +706,30 @@ function add_province_id_field_to_university_edit($term) {
     </tr>
     <?php
 }
+
 add_action('university_vietnam_edit_form_fields', 'add_province_id_field_to_university_edit', 10, 2);
 
 
 // Lưu lại province_id khi tạo hoặc chỉnh sửa term
-function save_province_id_for_university($term_id) {
+function save_province_id_for_university($term_id)
+{
     if (isset($_POST['province_id']) && !empty($_POST['province_id'])) {
         update_term_meta($term_id, 'province_id', intval($_POST['province_id']));
     } else {
         delete_term_meta($term_id, 'province_id'); // Xóa nếu không có giá trị được chọn
     }
 }
+
 add_action('created_university_vietnam', 'save_province_id_for_university', 10, 2);
 add_action('edited_university_vietnam', 'save_province_id_for_university', 10, 2);
-
 
 
 // Xử lý AJAX để lấy danh sách các trường đại học theo tỉnh
 add_action('wp_ajax_get_universities_by_province', 'get_universities_by_province');
 add_action('wp_ajax_nopriv_get_universities_by_province', 'get_universities_by_province');
 
-function get_universities_by_province() {
+function get_universities_by_province()
+{
     // Kiểm tra nếu province_id được gửi từ yêu cầu AJAX
     if (isset($_POST['province_id']) && !empty($_POST['province_id'])) {
         $province_id = intval($_POST['province_id']);
@@ -741,11 +746,6 @@ function get_universities_by_province() {
                 )
             )
         ));
-
-//        foreach ($universities as $university) {
-//            echo 'University: ' . $university->name . '<br>';
-//        }
-
 
         if (!empty($universities)) {
             // Tạo một mảng chứa dữ liệu để trả về trong phản hồi AJAX
@@ -773,7 +773,8 @@ function get_universities_by_province() {
     }
 }
 
-function display_acf_recommended_work_slider($atts) {
+function display_acf_recommended_work_slider($atts)
+{
     // Lấy giá trị 'region' từ URL
     $region = isset($_GET['region']) ? sanitize_text_field($_GET['region']) : '';
 
@@ -858,9 +859,11 @@ function display_acf_recommended_work_slider($atts) {
         return '<p>No recommended work found.</p>';
     }
 }
+
 add_shortcode('acf_recommended_work_slider', 'display_acf_recommended_work_slider');
 
-function enqueue_swiper_assets_for_acf() {
+function enqueue_swiper_assets_for_acf()
+{
 //    // Swiper CSS
 //    wp_enqueue_style('swiper-css', 'https://unpkg.com/swiper/swiper-bundle.min.css');
 //
@@ -904,20 +907,25 @@ function enqueue_swiper_assets_for_acf() {
         });
     ");
 }
+
 add_action('wp_enqueue_scripts', 'enqueue_swiper_assets_for_acf');
 
 
 // Xóa meta box mặc định của taxonomy
-function remove_taxonomy_meta_box($taxonomy) {
+function remove_taxonomy_meta_box($taxonomy)
+{
     remove_meta_box($taxonomy . 'div', 'vietnam', 'side');
 }
 
 // Hàm thêm meta box tùy chỉnh chung
-function add_custom_taxonomy_meta_box($taxonomy, $label) {
+function add_custom_taxonomy_meta_box($taxonomy, $label)
+{
     add_meta_box(
         $taxonomy . '_taxonomy_meta_box', // ID của meta box
         $label, // Tiêu đề của meta box
-        function($post) use ($taxonomy) { render_custom_taxonomy_meta_box($post, $taxonomy); }, // Hàm render nội dung
+        function ($post) use ($taxonomy) {
+            render_custom_taxonomy_meta_box($post, $taxonomy);
+        }, // Hàm render nội dung
         'vietnam', // Post type
         'side', // Vị trí
         'default' // Độ ưu tiên
@@ -925,7 +933,8 @@ function add_custom_taxonomy_meta_box($taxonomy, $label) {
 }
 
 // Hàm render nội dung cho meta box
-function render_custom_taxonomy_meta_box($post, $taxonomy) {
+function render_custom_taxonomy_meta_box($post, $taxonomy)
+{
     // Lấy danh sách các terms của taxonomy
     $terms = get_terms(array(
         'taxonomy' => $taxonomy,
@@ -958,7 +967,8 @@ function render_custom_taxonomy_meta_box($post, $taxonomy) {
 }
 
 // Hàm lưu dữ liệu được chọn từ meta box
-function save_custom_taxonomy_meta_box($post_id, $taxonomy) {
+function save_custom_taxonomy_meta_box($post_id, $taxonomy)
+{
     // Kiểm tra bảo mật với nonce field
     if (!isset($_POST[$taxonomy . '_meta_box_nonce']) || !wp_verify_nonce($_POST[$taxonomy . '_meta_box_nonce'], 'save_' . $taxonomy . '_meta_box')) {
         return;
@@ -979,13 +989,14 @@ function save_custom_taxonomy_meta_box($post_id, $taxonomy) {
 }
 
 // Hàm chung để thêm script tìm kiếm
-function add_custom_search_script($taxonomy) {
+function add_custom_search_script($taxonomy)
+{
     ?>
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $('#search_<?php echo esc_js($taxonomy); ?>_taxonomy').on('keyup', function() {
+        jQuery(document).ready(function ($) {
+            $('#search_<?php echo esc_js($taxonomy); ?>_taxonomy').on('keyup', function () {
                 var keyword = $(this).val().toLowerCase();
-                $('#<?php echo esc_js($taxonomy); ?>-taxonomy-list div').each(function() {
+                $('#<?php echo esc_js($taxonomy); ?>-taxonomy-list div').each(function () {
                     var term = $(this).text().toLowerCase();
                     if (term.indexOf(keyword) > -1) {
                         $(this).show();
@@ -998,37 +1009,47 @@ function add_custom_search_script($taxonomy) {
     </script>
     <?php
 }
+
 // Xóa meta box mặc định của cả 'university_vietnam' và 'company_vietnam'
-function remove_taxonomy_meta_boxes() {
+function remove_taxonomy_meta_boxes()
+{
     remove_taxonomy_meta_box('university_vietnam');
     remove_taxonomy_meta_box('company_vietnam');
 }
+
 add_action('admin_menu', 'remove_taxonomy_meta_boxes');
 
 // Thêm các meta box tùy chỉnh
-function add_all_custom_meta_boxes() {
+function add_all_custom_meta_boxes()
+{
     add_custom_taxonomy_meta_box('university_vietnam', __('Chọn trường đại học', 'textdomain'));
     add_custom_taxonomy_meta_box('company_vietnam', __('Chọn công ty', 'textdomain'));
 }
+
 add_action('add_meta_boxes', 'add_all_custom_meta_boxes');
 
 // Lưu dữ liệu cho từng taxonomy
-function save_all_taxonomy_meta_boxes($post_id) {
+function save_all_taxonomy_meta_boxes($post_id)
+{
     save_custom_taxonomy_meta_box($post_id, 'university_vietnam');
     save_custom_taxonomy_meta_box($post_id, 'company_vietnam');
 }
+
 add_action('save_post', 'save_all_taxonomy_meta_boxes');
 
 // Thêm script tìm kiếm cho cả hai taxonomy
-function add_all_search_scripts() {
+function add_all_search_scripts()
+{
     add_custom_search_script('university_vietnam');
     add_custom_search_script('company_vietnam');
 }
+
 add_action('admin_footer', 'add_all_search_scripts');
 
 
 // Hàm xử lý yêu cầu AJAX và trả về dữ liệu dịch từ bảng trong cơ sở dữ liệu
-function my_get_translation_json() {
+function my_get_translation_json()
+{
     global $wpdb;
 
     // Lấy ngôn ngữ hiện tại (sử dụng Polylang hoặc WPML)
@@ -1053,6 +1074,7 @@ function my_get_translation_json() {
         wp_send_json_error(array('message' => 'Không có dữ liệu JSON trong cơ sở dữ liệu'));
     }
 }
+
 add_action('wp_ajax_get_translation_json', 'my_get_translation_json');
 add_action('wp_ajax_nopriv_get_translation_json', 'my_get_translation_json'); // Cho phép người dùng chưa đăng nhập cũng có thể lấy dữ liệu
 
