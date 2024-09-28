@@ -66,13 +66,6 @@ $args = array(
     'post_type' => $post_type,
     'posts_per_page' => -1, // Giới hạn số bài viết trả về (thay đổi số lượng tùy ý)
     'tax_query' => array('relation' => 'AND'),
-    'meta_query' => array(
-        array(
-            'key' => 'recommended_work', // Tên custom field
-            'value' => 'recommended',    // Giá trị của custom field
-            'compare' => 'LIKE'
-        )
-    )
 );
 
 // Thêm các taxonomy vào tax_query nếu có

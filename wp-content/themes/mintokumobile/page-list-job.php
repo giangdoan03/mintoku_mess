@@ -292,6 +292,7 @@ get_header(); ?>
                     search_query: searchQuery
                 },
                 success: function (response) {
+                    console.log('response',response)
                     if (response.success) {
                         var groupedResults = {};
 
@@ -310,6 +311,7 @@ get_header(); ?>
                                     label: post.university, // Lấy slug của province
                                     province_slug: post.province_slug, // Lấy slug của province
                                     company: company,
+                                    company_name: post.company_name
                                 });
                             });
                         });
@@ -331,26 +333,44 @@ get_header(); ?>
                         for (var university in groupedResults) {
                             if (groupedResults.hasOwnProperty(university)) {
                                 groupedResults[university].forEach(function (item) {
-                                    if (university && university !== 'null' && item.year && item.year !== 'null') {
-                                        if (item.university_slug && item.university_slug !== 'null') {
+                                    console.log('item',item)
+                                    var customLink = baseURL + '/jobs/?year_r=' + item.year +
+                                        '&region=' + item.region;
+
+                                    // Thêm province và university nếu có
+                                    if (item.province_slug) {
+                                        customLink += '&province=' + item.province_slug;
+                                    }
+                                    if (item.university_slug) {
+                                        customLink += '&university=' + item.university_slug;
+                                    }
+
+                                    // Thêm company nếu có
+                                    if (item.company && item.company !== 'null') {
+                                        customLink += '&company=' + item.company;
+                                    }
+
+                                    if (!seenLinks[customLink]) {
+                                        seenLinks[customLink] = true;
+
+                                        // Kiểm tra nếu chỉ có region
+                                        if (!item.university_slug && !item.province_slug && (!item.company || item.company === 'null')) {
+                                            resultHtml += '<p><a href="' + customLink + '">List Jobs - ' + item.year + '</a></p>';
+                                        } else {
+                                            // Hiển thị bình thường nếu có đủ thông tin khác
                                             if (item.company && item.company !== 'null') {
-                                                var customLink = baseURL + '/jobs/?year_r=' + item.year +
-                                                    '&region=' + item.region +
-                                                    '&province=' + item.province_slug +
-                                                    '&university=' + item.university_slug +
-                                                    '&company=' + item.company;
-                                                if (!seenLinks[customLink]) {
-                                                    seenLinks[customLink] = true;
-                                                    resultHtml += '<p><a href="' + customLink + '">' + university + ' - ' + item.year + ' - ' + item.company + '</a></p>';
-                                                }
+                                                resultHtml += '<p><a href="' + customLink + '">' + university + ' - ' + item.year + ' - ' + item.company_name + '</a></p>';
+                                            } else {
+                                                resultHtml += '<p><a href="' + customLink + '">' + university + ' - ' + item.year + '</a></p>';
                                             }
                                         }
                                     }
                                 });
+
                             }
                         }
 
-
+                        console.log('resultHtml', resultHtml)
                         $('#search-results').html(resultHtml);
                     } else {
                         $('#search-results').html('<p>Không có bài viết nào.</p>');
