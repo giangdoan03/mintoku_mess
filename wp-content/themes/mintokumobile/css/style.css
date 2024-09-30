@@ -1464,6 +1464,7 @@ html, body {
     font-size: 18px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     z-index: 1000; /* Đảm bảo nút nằm trên tất cả các phần tử khác */
+    background-color: rgba(0, 123, 255, 0.6);
 }
 /* Đặt trạng thái ban đầu cho trang chi tiết (ẩn và di chuyển sang trái) */
 .fade-out {
