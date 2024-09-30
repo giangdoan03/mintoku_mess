@@ -15,8 +15,8 @@ get_header(); ?>
             <select name="region" id="post_type">
                 <option value="" data-translate="select_post_type" ><?php echo esc_html__('Chọn loại bài viết:', 'text-domain'); ?></option>
                 <option value="vietnam"><?php echo esc_html__('Việt Nam', 'text-domain'); ?></option>
-                <option value="laos"><?php echo esc_html__('Lào', 'text-domain'); ?></option>
-                <option value="cambodia"><?php echo esc_html__('Campuchia', 'text-domain'); ?></option>
+<!--                <option value="laos">--><?php //echo esc_html__('Lào', 'text-domain'); ?><!--</option>-->
+<!--                <option value="cambodia">--><?php //echo esc_html__('Campuchia', 'text-domain'); ?><!--</option>-->
             </select>
             <span id="post_type_error" style="color: red; display: none;" data-translate="error_no_post_type"></span>
 

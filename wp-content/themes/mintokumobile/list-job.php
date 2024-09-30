@@ -92,7 +92,7 @@ $query = new WP_Query($args);
 
             <div class="content_list_job_filter">
                 <ul>
-                    <?php echo do_shortcode('[acf_recommended_work_slider]'); ?>
+<!--                    --><?php //echo do_shortcode('[acf_recommended_work_slider]'); ?>
                     <?php while ($query->have_posts()) : $query->the_post(); ?>
                         <li>
                             <?php

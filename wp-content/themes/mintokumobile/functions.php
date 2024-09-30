@@ -177,8 +177,8 @@ function create_custom_post_types()
     // Vietnam
     register_post_type('vietnam', array(
         'labels' => array(
-            'name' => __('Vietnam Jobs'),
-            'singular_name' => __('Vietnam Jobs')
+            'name' => __('Jobs'),
+            'singular_name' => __('Jobs')
         ),
         'public' => true,
         'has_archive' => true,
@@ -188,28 +188,28 @@ function create_custom_post_types()
     ));
 
     // Laos
-    register_post_type('laos', array(
-        'labels' => array(
-            'name' => __('Laos Jobs'),
-            'singular_name' => __('Laos Jobs')
-        ),
-        'public' => true,
-        'has_archive' => true,
-        'rewrite' => array('slug' => 'laos', 'with_front' => true),
-        'supports' => array('title', 'editor', 'thumbnail'),
-    ));
+//    register_post_type('laos', array(
+//        'labels' => array(
+//            'name' => __('Laos Jobs'),
+//            'singular_name' => __('Laos Jobs')
+//        ),
+//        'public' => true,
+//        'has_archive' => true,
+//        'rewrite' => array('slug' => 'laos', 'with_front' => true),
+//        'supports' => array('title', 'editor', 'thumbnail'),
+//    ));
 
     // Cambodia
-    register_post_type('cambodia', array(
-        'labels' => array(
-            'name' => __('Cambodia Jobs'),
-            'singular_name' => __('Cambodia Jobs')
-        ),
-        'public' => true,
-        'has_archive' => true,
-        'rewrite' => array('slug' => 'cambodia', 'with_front' => true),
-        'supports' => array('title', 'editor', 'thumbnail'),
-    ));
+//    register_post_type('cambodia', array(
+//        'labels' => array(
+//            'name' => __('Cambodia Jobs'),
+//            'singular_name' => __('Cambodia Jobs')
+//        ),
+//        'public' => true,
+//        'has_archive' => true,
+//        'rewrite' => array('slug' => 'cambodia', 'with_front' => true),
+//        'supports' => array('title', 'editor', 'thumbnail'),
+//    ));
 }
 
 add_action('init', 'create_custom_post_types');
