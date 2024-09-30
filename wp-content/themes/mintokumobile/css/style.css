@@ -148,7 +148,7 @@ footer {
 
 .swiper-container {
     position: relative;
-    width: 90vw;
+    width: 95vw;
     /*height: 200px;*/
 }
 div#post-details {
@@ -518,6 +518,13 @@ ul li a:hover {
     font-weight: bold;
 }
 
+.swiper-button-next {
+    right: 0;
+}
+.swiper-button-prev {;
+    left: 0;
+}
+
 .swiper-button-prev:hover,
 .swiper-button-next:hover {
     background-color: rgba(0, 86, 179, 0.8); /* Darker blue background on hover */
@@ -701,9 +708,9 @@ footer {
     color: #666;
     text-align: center;
 }
-.single .content-area {
-    padding: 10px;
-}
+/*.single .content-area {*/
+/*    padding: 10px;*/
+/*}*/
 
 body {
     opacity: 1;
@@ -1807,7 +1814,14 @@ button#search_button {
         width: 100%;
     }
     .box_btn_pagination {
-
+        position: fixed;
+        bottom: -31px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
     }
     .box_btn_pagination .swiper-pagination-bullet {
         margin: 5px;
@@ -1829,18 +1843,18 @@ button#search_button {
 
 
     .message_link a {
-        background-color: #0084ff; /* Màu xanh Messenger */
+        background-color: #0084ff;
         color: white;
         text-decoration: none;
-        padding: 15px 30px;
         border-radius: 50px;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         display: inline-flex;
         align-items: center;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: background-color 0.3s ease, transform 0.3s ease;
         text-align: center;
+        padding: 14px 8px;
     }
 
     .message_link i {
@@ -1870,11 +1884,16 @@ button#search_button {
     @media (max-width: 768px) {
         .message_link {
             position: fixed;
-            bottom: 110px;
-            width: 100%;
+            bottom: 24px;
             text-align: center;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9;
+            padding: 0;
+            width: 73%;
         }
     }
+
 
 
 }
