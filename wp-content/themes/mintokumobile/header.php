@@ -145,37 +145,37 @@
 
 <?php wp_footer(); ?>
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function() {
-        // Gửi yêu cầu AJAX để lấy dữ liệu dịch từ bảng trong cơ sở dữ liệu
-        jQuery.ajax({
-            url: ajax_object.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'get_translation_json' // Tên action trong PHP
-            },
-            success: function(response) {
-                if (response.success) {
-                    var jsonData = JSON.parse(response.data.json_data);
-                    console.log("Dữ liệu dịch từ cơ sở dữ liệu:", jsonData);
-
-                    // Duyệt qua tất cả các phần tử có thuộc tính data-translate
-                    document.querySelectorAll('[data-translate]').forEach(function(el) {
-                        var key = el.getAttribute('data-translate');
-
-                        // Kiểm tra và thay thế văn bản nếu có key trong JSON
-                        if (jsonData[key]) {
-                            el.innerText = jsonData[key];
-                        }
-                    });
-                } else {
-                    console.log("Lỗi khi tải dữ liệu JSON:", response.data.message);
-                }
-            },
-            error: function() {
-                console.log("Lỗi khi gửi yêu cầu AJAX.");
-            }
-        });
-    });
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     // Gửi yêu cầu AJAX để lấy dữ liệu dịch từ bảng trong cơ sở dữ liệu
+    //     jQuery.ajax({
+    //         url: ajax_object.ajax_url,
+    //         type: 'POST',
+    //         data: {
+    //             action: 'get_translation_json' // Tên action trong PHP
+    //         },
+    //         success: function(response) {
+    //             if (response.success) {
+    //                 var jsonData = JSON.parse(response.data.json_data);
+    //                 console.log("Dữ liệu dịch từ cơ sở dữ liệu:", jsonData);
+    //
+    //                 // Duyệt qua tất cả các phần tử có thuộc tính data-translate
+    //                 document.querySelectorAll('[data-translate]').forEach(function(el) {
+    //                     var key = el.getAttribute('data-translate');
+    //
+    //                     // Kiểm tra và thay thế văn bản nếu có key trong JSON
+    //                     if (jsonData[key]) {
+    //                         el.innerText = jsonData[key];
+    //                     }
+    //                 });
+    //             } else {
+    //                 console.log("Lỗi khi tải dữ liệu JSON:", response.data.message);
+    //             }
+    //         },
+    //         error: function() {
+    //             console.log("Lỗi khi gửi yêu cầu AJAX.");
+    //         }
+    //     });
+    // });
 </script>
 
 </body>

@@ -1414,6 +1414,48 @@ button:hover {
 /* Hiệu ứng hover cho liên kết */
 .content_list_job_filter a:hover {
     color: #0056b3; /* Màu liên kết khi di chuột qua */
+    text-decoration: none;
+}
+
+
+.job-item {
+    text-decoration: none;
+    color: inherit;
+}
+
+.company-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.logo_company img {
+    width: 80px; /* Điều chỉnh kích thước logo */
+    height: 80px;
+    margin-right: 10px;
+    border-radius: 50%; /* Làm logo thành hình tròn */
+    object-fit: contain; /* Giúp logo giữ tỉ lệ khi bị co lại */
+}
+
+.company_name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.job-item img {
+    border-radius: 5px; /* Làm tròn các góc của ảnh đại diện bài viết */
+}
+
+.job-item p {
+    margin: 10px 0;
+}
+
+.job-item:hover {
+    background-color: #f8f8f8; /* Thêm hiệu ứng hover */
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 

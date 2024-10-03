@@ -302,6 +302,7 @@ get_header(); ?>
                                     link: post.link,
                                     university_slug: post.university_slug,
                                     province: post.province, // Lấy slug của province
+                                    province_name: post.province_name, // Lấy name của province
                                     region: post.region, // Lấy slug của province
                                     label: post.university, // Lấy slug của province
                                     province_slug: post.province_slug, // Lấy slug của province
@@ -326,6 +327,7 @@ get_header(); ?>
                         var seenLinks = {};
 
                         for (var university in groupedResults) {
+                            console.log('groupedResults', groupedResults)
                             if (groupedResults.hasOwnProperty(university)) {
                                 groupedResults[university].forEach(function (item) {
                                     var customLink = baseURL + '/jobs/?year_r=' + item.year + '&region=' + item.region;
@@ -348,13 +350,17 @@ get_header(); ?>
 
                                         // Kiểm tra nếu chỉ có region
                                         if (!item.university_slug && !item.province_slug && (!item.company || item.company === 'null')) {
-                                            resultHtml += '<p><a href="' + customLink + '">List Jobs - ' + item.year + '</a></p>';
+                                            resultHtml += '<p><a href="' + customLink + '">Jobs Fair ' + item.year + '</a></p>';
                                         } else {
                                             // Hiển thị bình thường nếu có đủ thông tin khác
                                             if (item.company && item.company !== 'null') {
-                                                resultHtml += '<p><a href="' + customLink + '">' + university + ' - ' + item.year + ' - ' + item.company_name + '</a></p>';
+                                                if(university !== '') {
+                                                    resultHtml += '<p><a href="' + customLink + '">Jobs Fair' + ' - ' + item.province_name + ' - ' + university + ' - ' + item.year + ' - ' + item.company_name + '</a></p>';
+                                                }
                                             } else {
-                                                resultHtml += '<p><a href="' + customLink + '">' + university + ' - ' + item.year + '</a></p>';
+                                                if(university !== '') {
+                                                    resultHtml += '<p><a href="' + customLink + '">Jobs Fair' + ' - ' + item.province_name + ' - ' + university + ' - ' + item.year + '</a></p>';
+                                                }
                                             }
                                         }
                                     }

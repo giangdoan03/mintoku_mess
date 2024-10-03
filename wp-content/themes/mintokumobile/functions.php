@@ -567,6 +567,9 @@ function search_jobs()
                 $post_company_name = $company_term->name; // Lấy tên của company
             }
 
+            // Lấy thông tin về province_name dựa trên province_id
+            $province_term = get_term_by('id', $province_id, 'province_vietnam');
+            $province_name = $province_term ? $province_term->name : ''; // Lấy tên của province
 
             $posts[] = array(
                 'title' => get_the_title(),
@@ -575,6 +578,7 @@ function search_jobs()
                 'university_slug' => $university_slug,
                 'year_vietnam' => $post_years,
                 'province' => $province_id,
+                'province_name' => $province_name, // Thêm province_name vào mảng trả về
                 'province_slug' => $province_slug,
                 'company_slug' => $post_company,
                 'region' => $post_type,
@@ -584,6 +588,7 @@ function search_jobs()
 
         wp_send_json_success($posts);
     }
+
 
     wp_send_json_error();
 }

@@ -84,29 +84,66 @@ $query = new WP_Query($args);
 ?>
     <div id="content" class="page-list-job-filter">
         <div class="title_list_job_filter">
-            <h4><?php echo $university_name . ' ' . $year; ?>
-            </h4>
+            <h4><?php echo esc_html($university_name) . ' ' . esc_html($year); ?></h4>
         </div>
-        <?php
-        if ($query->have_posts()) : ?>
-
+        <?php if ($query->have_posts()) : ?>
             <div class="content_list_job_filter">
                 <ul>
-<!--                    --><?php //echo do_shortcode('[acf_recommended_work_slider]'); ?>
                     <?php while ($query->have_posts()) : $query->the_post(); ?>
                         <li>
                             <?php
-                            // Get the featured image URL
+                            // Lấy URL của ảnh đại diện bài viết (featured image)
                             $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'medium');
-                            // Use a placeholder if no featured image is set
+                            // Sử dụng ảnh thay thế nếu không có ảnh đại diện
                             if (!$thumbnail_url) {
                                 $thumbnail_url = 'https://placehold.co/600x400';
                             }
+
+                            // Lấy các term của taxonomy company_vietnam liên quan đến bài viết
+                            $company_terms = wp_get_post_terms(get_the_ID(), 'company_vietnam', array('fields' => 'all'));
+                            $company_image_url = '';
+                            $company_name = ''; // Biến để lưu tên công ty
+
+                            // Kiểm tra và lấy ảnh từ term meta (nếu có)
+                            if (!empty($company_terms)) {
+                                $company_term_id = $company_terms[0]->term_id;
+                                $company_name = $company_terms[0]->name; // Lấy tên của công ty
+
+                                // Lấy ID của ảnh từ custom field 'company_image'
+                                $company_image_id = get_term_meta($company_term_id, 'company_image', true);
+
+                                // Nếu có ID của ảnh, chuyển đổi thành URL
+                                if (!empty($company_image_id)) {
+                                    $company_image_url = wp_get_attachment_url($company_image_id);
+                                }
+
+                                // Nếu không có URL của ảnh, sử dụng ảnh mặc định
+                                if (!$company_image_url) {
+                                    $company_image_url = 'https://placehold.co/100x100';
+                                }
+                            }
+
                             ?>
-                            <a href="<?php the_permalink(); ?>">
+                            <a href="<?php the_permalink(); ?>" class="job-item">
+                                <!-- Hiển thị ảnh đại diện bài viết -->
                                 <p><img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>" style="max-width:100%; height:auto;"></p>
+
+                                <!-- Hiển thị tiêu đề -->
                                 <p><?php the_title(); ?></p>
+                                <!-- Hiển thị ảnh từ taxonomy company_vietnam -->
+                                <?php if ($company_image_url) : ?>
+                                    <div class="company-info">
+                                        <p class="logo_company">
+                                            <img src="<?php echo esc_url($company_image_url); ?>" alt="Company Image">
+                                        </p>
+                                        <!-- Hiển thị tên công ty -->
+                                        <?php if ($company_name) : ?>
+                                            <p class="company_name"><?php echo esc_html($company_name); ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
                             </a>
+
                         </li>
                     <?php endwhile; ?>
                 </ul>
@@ -115,6 +152,9 @@ $query = new WP_Query($args);
             <p>Không có công việc nào phù hợp.</p>
         <?php endif; ?>
     </div>
+
+
+
 
     <!-- JavaScript remains the same -->
 
