@@ -1427,6 +1427,7 @@ button:hover {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    justify-content: center;
 }
 
 .logo_company img {
