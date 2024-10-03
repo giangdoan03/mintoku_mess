@@ -376,10 +376,10 @@ get_header(); ?>
         }
 
         // Update dropdowns when post type changes
-        $('#post_type').change(function () {
-            var selectedPostType = $(this).val();
-            updateProvinceDropdown(selectedPostType);
-        });
+        // $('#post_type').change(function () {
+        //     var selectedPostType = $(this).val();
+        //     updateProvinceDropdown(selectedPostType);
+        // });
 
         // Get URL parameters on page load
         var urlParams = new URLSearchParams(window.location.search);
