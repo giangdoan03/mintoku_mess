@@ -51,6 +51,9 @@ if ($taxonomy) {
 
         <div class="swiper-container">
             <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab consequatur debitis delectus, earum et reprehenderit vel velit. Accusamus asperiores delectus dolores dolorum explicabo, ipsa iusto modi nam officiis rem temporibus.</h1>
+                </div>
                 <?php
                 // Loop through the rows of the selected field
                 while (have_rows($content_field)) : the_row();
@@ -87,7 +90,32 @@ if ($taxonomy) {
     <?php else: ?>
         <p>No content available</p>
     <?php endif; ?>
-</div>
+<!--    --><?php //if( have_rows('your_flexible_content_field') ): ?>
+<!--        --><?php //while( have_rows('your_flexible_content_field') ): the_row(); ?>
+<!--            --><?php //if( get_row_layout() == 'item_dac_biet' ): // Layout cho item đầu tiên ?>
+<!--                --><?php
+//                $sub_field_1 = get_sub_field('1');
+//                $sub_field_2 = get_sub_field('2');
+//                $sub_field_3 = get_sub_field('3');
+//                ?>
+<!--                <div class="custom-item item_f">-->
+<!--                    <h2>--><?php //echo $sub_field_1; ?><!--</h2>-->
+<!--                    <p>--><?php //echo $sub_field_2; ?><!--</p>-->
+<!--                    <p>--><?php //echo $sub_field_3; ?><!--</p>-->
+<!--                </div>-->
+<!---->
+<!--            --><?php //elseif( get_row_layout() == 'item_binh_thuong' ): // Layout cho các item khác ?>
+<!--                --><?php
+//                $sub_field_1 = get_sub_field('binh_thuong');
+//                ?>
+<!--                <div class="item_f">-->
+<!--                    <h2>--><?php //echo $sub_field_1; ?><!--</h2>-->
+<!--                </div>-->
+<!--            --><?php //endif; ?>
+<!--        --><?php //endwhile; ?>
+<!--    --><?php //endif; ?>
+<!---->
+<!--</div>-->
 
 <?php get_footer(); ?>
 

@@ -148,7 +148,7 @@ footer {
 
 .swiper-container {
     position: relative;
-    width: 95vw;
+    /*width: 95vw;*/
     /*height: 200px;*/
 }
 div#post-details {
@@ -1142,7 +1142,7 @@ button:hover {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 15px;
 }
 
 /* Kiểu chữ cho tiêu đề */
@@ -1238,7 +1238,7 @@ button:hover {
     /*border: 1px solid #ddd; !* Đường viền nhẹ *!*/
     border-radius: 5px; /* Bo tròn góc */
     margin-bottom: 10px;
-    padding: 15px;
+    /*padding: 15px 0;*/
     transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
 }
 
@@ -1250,8 +1250,6 @@ button:hover {
 /* Liên kết */
 .page-list-job-filter a {
     text-decoration: none; /* Loại bỏ gạch chân */
-    color: #0073e6; /* Màu liên kết */
-    font-weight: bold;
 }
 
 .page-list-job-filter a:hover {
@@ -1262,11 +1260,56 @@ button:hover {
 .page-list-job-filter p {
     font-size: 18px;
     color: #777;
-    text-align: center; /* Căn giữa */
 }
 .title_recommended {
-    text-align: center;
     margin-bottom: 0;
+    margin: 0;
+}
+.content_p {
+    padding: 10px 13px;
+    background: #ffffff;
+}
+
+.tag_item {
+    display: inline-block;
+    padding: 3px 7px;
+    font-size: 1.8vw;
+    text-align: center;
+    border-radius: 20px;
+    background: transparent;
+    border: 1px solid transparent;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+.tag_item:nth-child(1){
+    color: #3fa1d7;
+    background-image: linear-gradient(white, white), linear-gradient(to right, #3fa1d7, #1fd7e1); /* Gradient viền */
+}
+.tag_item:nth-child(2){
+    color: #d581c5;
+    background-image: linear-gradient(white, white), linear-gradient(to right, #d581c5, #f7a8d4); /* Gradient viền */
+}
+.tag_item:nth-child(3){
+    color: #ebba7c;
+    background-image: linear-gradient(white, white), linear-gradient(to right, #ebba7c, #f7d698); /* Gradient viền */
+}
+.tag_item:nth-child(4){
+    color: #1f70d8;
+    background-image: linear-gradient(white, white), linear-gradient(to right, #1f70d8, #7fd1f3); /* Gradient viền */
+}
+
+span.label_text {
+    background: #c1272d;
+    color: #ffffff;
+    display: inline-block;
+    padding: 0 3px;
+    font-weight: 600;
+}
+span.salary_text {
+    color: #c1272d;
+    display: inline-block;
+    font-weight: 600;
 }
 
 
@@ -1280,9 +1323,9 @@ button:hover {
     box-sizing: border-box; /* Bao gồm padding và border vào kích thước tổng */
     position: relative; /* Để tiêu đề có thể cố định */
 }
-.box_slider {
-    margin-bottom: 50px;
-}
+/*.box_slider {*/
+/*    margin-bottom: 50px;*/
+/*}*/
 /* Tiêu đề */
 .title_list_job_filter {
     position: sticky;
@@ -1314,7 +1357,6 @@ button:hover {
     /*border: 1px solid #ddd; !* Đường viền nhẹ *!*/
     border-radius: 5px; /* Bo tròn góc */
     margin-bottom: 10px;
-    padding: 15px;
     transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
 }
 
@@ -1327,7 +1369,6 @@ button:hover {
 .content_list_job_filter a {
     text-decoration: none; /* Loại bỏ gạch chân */
     color: #0073e6; /* Màu liên kết */
-    font-weight: bold;
 }
 
 .content_list_job_filter a:hover {
@@ -1336,32 +1377,73 @@ button:hover {
 
 /* Thông báo không có công việc */
 .page-list-job-filter p {
-    font-size: 18px;
-    color: #777;
-    text-align: center;
+    font-size: 2vw;
+    color: #000000;
     margin: 0;
-    margin-bottom: 10px;
+    height: 100%;
+}
+.page-list-job-filter .title_job {
+    font-size: 18px;
+    color: #ffffff;
+    background: #29abe2;
+    padding-left: 15px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
 }
-
 .page-template-list-job .swiper-container-horizontal>.swiper-pagination-bullets, .page-template-list-job .swiper-pagination-custom, .swiper-pagination-fraction {
     bottom: -6px;
 }
 
+.jobs_recommend img {
+    width: 100%;
+    display: block;
+}
+.border_black {
+    border: 5px solid #0b1142;
+}
+.border_purple {
+    border: 5px solid #343f70;
+}
+.logo_mintoku_mess img {
+    display: block;
+    padding: 0 35px;
+}
+.box_slider .avatar_job {
+    padding: 10px;
+    padding-bottom: 0;
+    background: #fff;
+}
+
+.content_list_job_filter .avatar_job img {
+    width: 35vw;
+}
+    /* Danh sách */
+.content_list_job_filter ul {
+    list-style: none; /* Loại bỏ dấu chấm đầu dòng */
+    padding: 0;
+    margin: 0;
+}
+
+.job_info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo_mintoku_mess {
+    display: flex;
+    justify-content: center;
+    background: #f0ffff;
+}
+
+.block_jobs_recommended {
+    background: #f0ffff;
+    padding-bottom: 120px;
+}
 
 /* Container để cuộn và snap */
 .content_list_job_filter {
-    width: 100vw; /* Toàn bộ chiều rộng của màn hình */
-    height: 100vh; /* Toàn bộ chiều cao của màn hình */
-    overflow-x: hidden; /* Ẩn cuộn ngang */
-    overflow-y: scroll; /* Hiển thị cuộn dọc */
-    scroll-snap-type: y mandatory; /* Snap dọc */
-    -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
-    display: flex;
-    flex-direction: column;
+    /*margin-top: 110px;*/
 }
 
 /* Danh sách */
@@ -1371,44 +1453,83 @@ button:hover {
     margin: 0;
 }
 
-/* Container để cuộn và snap */
-.content_list_job_filter {
-    width: 100vw; /* Toàn bộ chiều rộng của màn hình */
-    height: 100vh;
-    overflow-x: hidden; /* Ẩn cuộn ngang */
-    overflow-y: scroll; /* Hiển thị cuộn dọc */
-    scroll-snap-type: y mandatory; /* Snap dọc */
-    -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
-    display: flex;
-    flex-direction: column;
+.bl_dot .swiper-pagination-clickable .swiper-pagination-bullet {
+    background: url(../images/icon_dot.png);
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: 100%;
+    margin-left: 5px;
 }
 
-/* Danh sách */
-.content_list_job_filter ul {
-    list-style: none; /* Loại bỏ dấu chấm đầu dòng */
-    padding: 0;
-    margin: 0;
+.bl_dot:before {
+    content: '';
+    background: url(../images/human_left.png);
+    background-repeat: no-repeat;
+    display: block;
+    width: 100px;
+    height: 100px;
+    background-size: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -119px;
+}
+.bl_dot:after {
+    content: '';
+    background: url(../images/human_right.png);
+    background-repeat: no-repeat;
+    display: block;
+    width: 84px;
+    height: 100px;
+    background-size: 100%;
+    position: absolute;
+    right: 0;
+    bottom: -95px;
+    z-index: 9;
+}
+span.label_job_recommended {
+    background: #ffffff;
+    color: #29abe2;
+    border-radius: 20px;
+    font-size: 16px;
+    padding: 2px 4px;
+    margin-right: 6px;
+    font-weight: 600;
+}
+.content_p .job_info .hashtag {
+    margin-bottom: 5px;
+}
+.salary {
+    font-size: 2.2vw;
 }
 
-/* Mục danh sách */
-.content_list_job_filter li {
-    width: 100vw; /* Chiếm toàn bộ chiều rộng màn hình */
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Căn giữa nội dung */
-    background-color: #ffffff; /* Màu nền */
-    border-bottom: 1px solid #ddd; /* Đường viền dưới */
-    scroll-snap-align: start; /* Căn chỉnh khi cuộn */
-    box-sizing: border-box; /* Bao gồm padding và border trong kích thước */
+.swiper-pagination-bullet {
+    opacity: .6;
+}
+.swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+.bl_dot .swiper-pagination{
+    width: 100%;
+    transform: translateX(-50%);
+    left: 50%;
+    bottom: -20%;
+}
+
+#box_slider {
+    position: relative;
+    background: #fff;
+}
+
+.text_info_job .company_name {
+    padding-left: 10px;
 }
 
 /* Liên kết */
 .content_list_job_filter a {
     text-decoration: none; /* Loại bỏ gạch chân */
     color: #0073e6; /* Màu liên kết */
-    font-weight: bold;
-    text-align: center; /* Căn giữa văn bản */
 }
 
 /* Hiệu ứng hover cho liên kết */
@@ -1425,17 +1546,42 @@ button:hover {
 
 .company-info {
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    justify-content: center;
+}
+.content_list_job_filter .job_content {
+    padding-left: 15px;
+}
+.logo_company img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+.content_list_job_filter .job_content {
+    padding-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-right: 15px;
+}
+.content_list_job_filter .job_content .text_info_job{
+    width: 60%;
+    padding-right: 10px;
 }
 
-.logo_company img {
-    width: 80px; /* Điều chỉnh kích thước logo */
-    height: 80px;
-    margin-right: 10px;
-    border-radius: 50%; /* Làm logo thành hình tròn */
-    object-fit: contain; /* Giúp logo giữ tỉ lệ khi bị co lại */
+.content_list_job_filter .job_content .summary_job p {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 2vw;
+}
+
+.content_list_job_filter .text_desc .hashtag {
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+.content_list_job_filter .text_desc .salary {
+    margin-bottom: 6px;
 }
 
 .company_name {
@@ -1444,12 +1590,8 @@ button:hover {
     margin: 0;
 }
 
-.job-item img {
-    border-radius: 5px; /* Làm tròn các góc của ảnh đại diện bài viết */
-}
-
 .job-item p {
-    margin: 10px 0;
+    /*margin: 10px 0;*/
 }
 
 .job-item:hover {
@@ -1647,7 +1789,6 @@ button#search_button {
 }
 
 .company-info {
-    padding: 20px;
     flex-grow: 1; /* Đảm bảo phần nội dung công ty chiếm đầy chiều cao */
 }
 

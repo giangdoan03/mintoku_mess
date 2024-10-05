@@ -794,29 +794,43 @@ function display_acf_recommended_work_slider($atts)
     switch ($region) {
         case 'vietnam':
             $post_type = 'vietnam';
+            $taxonomy = 'company_vietnam'; // Taxonomy liên quan đến post type 'vietnam'
             break;
         case 'laos':
             $post_type = 'laos';
+            $taxonomy = 'company_laos'; // Taxonomy cho post type 'laos'
             break;
         case 'cambodia':
             $post_type = 'cambodia';
+            $taxonomy = 'company_cambodia'; // Taxonomy cho post type 'cambodia'
             break;
         default:
             $post_type = 'post'; // Loại post mặc định nếu không có region
+            $taxonomy = ''; // Không có taxonomy nếu không có region
     }
 
-    // Thiết lập query arguments
+    // Tạo mảng args cho WP_Query
     $args = array(
         'post_type' => $post_type,
+        'posts_per_page' => -1, // Lấy tất cả bài viết
         'meta_query' => array(
+            'relation' => 'OR',
             array(
-                'key' => 'recommended_work', // Tên custom field
-                'value' => 'recommended', // Giá trị của custom field (lựa chọn đã chọn)
-                'compare' => 'LIKE'
-            )
+                'key' => 'recommended_work', // Custom field 'recommended_work'
+                'value' => 'recommended', // Giá trị 'recommended' được chọn
+                'compare' => 'LIKE', // Sử dụng LIKE để so sánh
+            ),
+            array(
+                'key' => 'recommended_work',
+                'compare' => 'NOT EXISTS', // Bao gồm cả những bài không có 'recommended_work'
+            ),
         ),
-        'posts_per_page' => -1
+        'orderby' => array(
+            'meta_value' => 'DESC', // Sắp xếp bài viết có 'recommended_work' lên đầu
+            'date' => 'DESC', // Sau đó sắp xếp theo ngày đăng
+        )
     );
+
 
     $query = new WP_Query($args);
 
@@ -824,35 +838,71 @@ function display_acf_recommended_work_slider($atts)
     if ($query->have_posts()) {
         ob_start();
         ?>
-        <li>
-            <div class="box_slider" id="box_slider">
-                <h4 class="title_recommended">
-                    Công việc đề xuất
-                </h4>
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        <?php while ($query->have_posts()) : $query->the_post(); ?>
-                            <div class="swiper-slide">
-                                <a href="<?php the_permalink(); ?>">
+        <div class="box_slider jobs_recommend" id="box_slider">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <?php while ($query->have_posts()) : $query->the_post(); ?>
+                        <div class="swiper-slide">
+                            <a href="<?php the_permalink(); ?>">
+                                <?php
+                                echo '<div class="avatar_job">';
+                                // Kiểm tra nếu có ảnh đại diện bài viết
+                                if (has_post_thumbnail()) {
+                                    // Hiển thị ảnh đại diện của bài viết
+                                    the_post_thumbnail('medium');
+                                } else {
+                                    // Hiển thị ảnh mặc định nếu không có ảnh đại diện
+                                    echo '<img src="https://placehold.co/600x300" alt="Placeholder">';
+                                }
+                                echo '</div>';
+                                ?>
+                            </a>
+                            <p class="title_job"><?php the_title(); ?></p>
+                            <div class="content_p">
+                                <div class="job_info">
+                                    <div class="text_desc">
+                                        <div class="hashtag">
+                                            <a class="tag_item" href="#">土日祝休み</a>
+                                            <a class="tag_item" href="#">昇給賞与あり</a>
+                                            <a class="tag_item" href="#">個室あり</a>
+                                            <a class="tag_item" href="#">夜勤あり</a>
+                                        </div>
+                                        <div class="salary">
+                                            <span class="label_text">時給</span> <span class="salary_text">1200 円</span>
+                                        </div>
+                                    </div>
                                     <?php
-                                    // Kiểm tra nếu có ảnh đại diện
-                                    if (has_post_thumbnail()) {
-                                        // Hiển thị ảnh đại diện
-                                        the_post_thumbnail('medium');
-                                    } else {
-                                        // Hiển thị ảnh mặc định nếu không có ảnh đại diện
-                                        echo '<img src="https://placehold.co/600x300" alt="Placeholder">';
+                                    // Kiểm tra nếu có ảnh đại diện từ taxonomy
+                                    $terms = get_the_terms(get_the_ID(), $taxonomy);
+                                    if ($terms && !is_wp_error($terms)) {
+                                        // Chỉ lấy term đầu tiên (nếu có nhiều term)
+                                        $term = $terms[0];
+
+                                        // Lấy ACF field (nếu đã tạo) từ taxonomy 'company_vietnam'
+                                        $company_logo = get_field('company_image', $term); // 'company_logo' là custom field cho ảnh
+                                        if ($company_logo) {
+                                            echo '<div class="logo_company">';
+                                            echo '<img src="' . esc_url($company_logo['url']) . '" alt="' . esc_attr($company_logo['alt']) . '">';
+                                            echo '</div>';
+                                        }
                                     }
                                     ?>
-                                    <p><?php the_title(); ?></p>
-                                </a>
+                                </div>
+                                <div class="summary_job">
+                                    <p>賞与昇給あり♪人気の土日祝休み♪ワンルーム社宅完備！インドネシアの先輩が活躍中！
+                                        体力に自信のある先輩スタッフが活躍しています。
+                                        手に職をつけたい方や、塗装の技術を磨きたい方が活躍しています。</p>
+                                </div>
                             </div>
-                        <?php endwhile; ?>
-                    </div>
-                    <div class="swiper-pagination"></div>
+                        </div>
+                    <?php endwhile; ?>
                 </div>
+
             </div>
-        </li>
+            <div class="bl_dot">
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
         <?php
         wp_reset_postdata();
         return ob_get_clean();
@@ -862,6 +912,7 @@ function display_acf_recommended_work_slider($atts)
 }
 
 add_shortcode('acf_recommended_work_slider', 'display_acf_recommended_work_slider');
+
 
 function enqueue_swiper_assets_for_acf()
 {
@@ -893,7 +944,7 @@ function enqueue_swiper_assets_for_acf()
                     },
                     // Khi màn hình >= 768px
                     768: {
-                        slidesPerView: 2, // Hiển thị 2 slide trên màn hình tablet
+                        slidesPerView: 1, // Hiển thị 2 slide trên màn hình tablet
                         spaceBetween: 20,
                     },
                     // Khi màn hình >= 1024px
@@ -1080,16 +1131,101 @@ add_action('wp_ajax_get_translation_json', 'my_get_translation_json');
 add_action('wp_ajax_nopriv_get_translation_json', 'my_get_translation_json'); // Cho phép người dùng chưa đăng nhập cũng có thể lấy dữ liệu
 
 
-if( function_exists('acf_add_options_page') ) {
+if (function_exists('acf_add_options_page')) {
 
     acf_add_options_page(array(
-        'page_title'    => 'Cài đặt chung',
-        'menu_title'    => 'Cài đặt chung',
-        'menu_slug'     => 'global-settings',
-        'capability'    => 'edit_posts',
-        'redirect'      => false
+        'page_title' => 'Cài đặt chung',
+        'menu_title' => 'Cài đặt chung',
+        'menu_slug' => 'global-settings',
+        'capability' => 'edit_posts',
+        'redirect' => false
     ));
 }
+
+// Thêm một cột mới cho custom field 'recommended_work'
+// Thêm cột mới cho custom field 'recommended_work' vào vị trí thứ 3
+function add_recommended_work_column($columns) {
+    // Tạo mảng mới để sắp xếp lại thứ tự các cột
+    $new_columns = array();
+
+    // Lặp qua các cột hiện tại và thêm cột mới vào vị trí mong muốn
+    foreach ($columns as $key => $value) {
+        $new_columns[$key] = $value;
+
+        // Đặt cột 'recommended_work' sau cột 'title' (hoặc sau cột thứ 2 khác)
+        if ($key == 'title') {
+            $new_columns['recommended_work'] = __('Recommended Work', 'textdomain'); // Đặt cột ở vị trí thứ 3
+        }
+    }
+
+    return $new_columns;
+}
+add_filter('manage_vietnam_posts_columns', 'add_recommended_work_column');
+
+// Hiển thị giá trị của custom field 'recommended_work' trong cột vừa thêm
+function show_recommended_work_column($column, $post_id) {
+    if ($column === 'recommended_work') {
+        $recommended = get_post_meta($post_id, 'recommended_work', true);
+
+        // Kiểm tra xem giá trị trả về có phải là mảng không
+        if (is_array($recommended)) {
+            // Xử lý mảng (ví dụ: nối các giá trị lại để hiển thị)
+            echo implode(', ', $recommended);
+        } elseif ($recommended) {
+            // Nếu không phải mảng, kiểm tra và hiển thị giá trị
+            if ($recommended === 'recommended') {
+                echo '<span style="color: green;">Checked</span>'; // Hiển thị "Checked" nếu giá trị là 'recommended'
+            } else {
+                echo '<span style="color: orange;">' . esc_html($recommended) . '</span>'; // Hiển thị giá trị khác nếu có
+            }
+        } else {
+            echo '<span style="color: red;">Not Checked</span>'; // Hiển thị "Not Checked" nếu không có giá trị
+        }
+    }
+}
+
+
+add_action('manage_vietnam_posts_custom_column', 'show_recommended_work_column', 10, 2);
+
+// Làm cho cột 'recommended_work' sắp xếp được
+function sortable_recommended_work_column($columns) {
+    $columns['recommended_work'] = 'recommended_work';
+    return $columns;
+}
+add_filter('manage_edit-vietnam_sortable_columns', 'sortable_recommended_work_column');
+
+// Xử lý sắp xếp theo giá trị custom field 'recommended_work'
+function sort_recommended_work_column($query) {
+    if (!is_admin() || !$query->is_main_query()) {
+        return;
+    }
+
+    // Kiểm tra xem có đang ở màn hình post type 'vietnam' không
+    global $pagenow;
+    if ($pagenow == 'edit.php' && isset($_GET['post_type']) && $_GET['post_type'] == 'vietnam') {
+
+        // Sắp xếp các bài viết theo giá trị 'recommended_work'
+        // Nếu người dùng chọn sắp xếp theo cột 'recommended_work'
+        if (isset($_GET['orderby']) && $_GET['orderby'] == 'recommended_work') {
+            $query->set('meta_key', 'recommended_work');
+            $query->set('orderby', array(
+                'meta_value' => 'DESC',  // Sắp xếp bài có recommended lên đầu
+                'date' => 'DESC'  // Sau đó sắp xếp theo ngày đăng
+            ));
+        }
+
+        // Nếu không có tùy chọn sắp xếp nào, mặc định sắp xếp theo 'recommended_work'
+        if (!isset($_GET['orderby'])) {
+            $query->set('meta_key', 'recommended_work');
+            $query->set('orderby', array(
+                'meta_value' => 'DESC',  // Sắp xếp bài có recommended lên đầu
+                'date' => 'DESC'  // Sau đó sắp xếp theo ngày đăng
+            ));
+        }
+    }
+}
+add_action('pre_get_posts', 'sort_recommended_work_column');
+
 
 
 
