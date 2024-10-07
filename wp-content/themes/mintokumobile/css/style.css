@@ -1273,7 +1273,7 @@ button:hover {
 .tag_item {
     display: inline-block;
     padding: 3px 7px;
-    font-size: 1.8vw;
+    font-size: 1.3vw;
     text-align: center;
     border-radius: 20px;
     background: transparent;
@@ -1281,7 +1281,9 @@ button:hover {
     background-origin: border-box;
     background-clip: padding-box, border-box;
 }
-
+.hashtag {
+    line-height: 0.6;
+}
 .tag_item:nth-child(1){
     color: #3fa1d7;
     background-image: linear-gradient(white, white), linear-gradient(to right, #3fa1d7, #1fd7e1); /* Gradient viền */
@@ -1377,10 +1379,9 @@ span.salary_text {
 
 /* Thông báo không có công việc */
 .page-list-job-filter p {
-    font-size: 2vw;
+    font-size: 1.5vw;
     color: #000000;
     margin: 0;
-    height: 100%;
 }
 .page-list-job-filter .title_job {
     font-size: 16px;
@@ -1505,10 +1506,11 @@ span.label_job_recommended {
     top: 2px;
 }
 .content_p .job_info .hashtag {
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
 }
 .salary {
     font-size: 2.2vw;
+    padding: 7px 0;
 }
 
 .swiper-pagination-bullet {
@@ -1531,7 +1533,7 @@ span.label_job_recommended {
 }
 
 .text_info_job .company_name {
-    padding-left: 10px;
+    padding-left: 5px;
 }
 
 /* Liên kết */
@@ -1551,28 +1553,43 @@ span.label_job_recommended {
     text-decoration: none;
     color: inherit;
 }
-
 .company-info {
     display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+.company-info-recommended {
+    display: block;
 }
 .content_list_job_filter .job_content {
     padding-left: 15px;
 }
 .logo_company img {
     width: 40px;
-    height: 40px;
     object-fit: contain;
 }
+.logo_company.logo_company_recommended {
+    display: flex;
+    align-items: center;
+    height: 30px;
+}
 .content_list_job_filter .job_content {
-    padding-left: 15px;
+    padding-left: 10px;
     display: flex;
     justify-content: space-between;
-    padding-top: 10px;
-    padding-right: 15px;
+    padding-top: 7px;
+    padding-right: 10px;
 }
 .content_list_job_filter .job_content .text_info_job{
-    width: 60%;
+    width: 90%;
     padding-right: 10px;
+}
+.text_info_job.text_info_job_recommended {
+    width: 62% !important;
+}
+img.avatar_job.avatar_job_not_recommended {
+    position: relative;
+    top: -28px;
 }
 
 .content_list_job_filter .job_content .summary_job p {
@@ -1796,9 +1813,7 @@ button#search_button {
     object-fit: contain;
 }
 
-.company-info {
-    flex-grow: 1; /* Đảm bảo phần nội dung công ty chiếm đầy chiều cao */
-}
+
 
 .company-info h3 {
     font-size: 1.25rem;
@@ -1861,6 +1876,12 @@ button#search_button {
     bottom: 110px;
     width: 100%;
     text-align: center;
+}
+
+.bl_logo {
+    display: flex;
+    align-items: center;
+    height: 34px;
 }
 
 /* Bố cục cho màn hình lớn (PC) */
@@ -2086,8 +2107,6 @@ button#search_button {
             width: 73%;
         }
     }
-
-
 
 }
 

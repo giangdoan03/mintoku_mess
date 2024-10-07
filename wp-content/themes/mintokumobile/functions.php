@@ -881,8 +881,9 @@ function display_acf_recommended_work_slider($atts)
                                         // Lấy ACF field (nếu đã tạo) từ taxonomy 'company_vietnam'
                                         $company_logo = get_field('company_image', $term); // 'company_logo' là custom field cho ảnh
                                         if ($company_logo) {
-                                            echo '<div class="logo_company">';
+                                            echo '<div class="logo_company logo_company_recommended">';
                                             echo '<img src="' . esc_url($company_logo['url']) . '" alt="' . esc_attr($company_logo['alt']) . '">';
+                                            echo '<p>' . esc_html($term->name) . '</p>'; // Hiển thị tên công ty
                                             echo '</div>';
                                         }
                                     }
