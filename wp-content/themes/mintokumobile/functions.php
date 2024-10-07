@@ -812,7 +812,7 @@ function display_acf_recommended_work_slider($atts)
     // Tạo mảng args cho WP_Query
     $args = array(
         'post_type' => $post_type,
-        'posts_per_page' => -1, // Lấy tất cả bài viết
+        'posts_per_page' => 3, // Lấy tất cả bài viết
         'meta_query' => array(
             'relation' => 'OR',
             array(

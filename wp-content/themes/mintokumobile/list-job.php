@@ -92,14 +92,16 @@ foreach ($taxonomies as $taxonomy => $term) {
 
 // Thực hiện WP_Query
 $query = new WP_Query($args);
+
+// Khởi tạo biến đếm bài viết recommended_work
+$recommended_count = 0;
+$max_recommended = 3; // Giới hạn số lượng bài viết recommended_work là 3
+
 ?>
     <div id="content" class="page-list-job-filter">
         <div class="logo_mintoku_mess">
             <img src="<?php echo get_template_directory_uri(); ?>/images/logo_mintoku_mess.png" alt="company mintoku mess">
         </div>
-<!--        <div class="title_list_job_filter">-->
-<!--            <h4>--><?php //echo esc_html($university_name) . ' ' . esc_html($year); ?><!--</h4>-->
-<!--        </div>-->
         <div class="block_jobs_recommended">
             <div class="container">
                 <div class="border_black">
@@ -113,6 +115,19 @@ $query = new WP_Query($args);
             <div class="content_list_job_filter">
                 <ul>
                     <?php while ($query->have_posts()) : $query->the_post(); ?>
+                        <?php
+                        // Kiểm tra custom field 'recommended_work'
+                        $recommended = get_post_meta(get_the_ID(), 'recommended_work', false);
+                        $is_recommended = (is_array($recommended) && isset($recommended[0][0]) && $recommended[0][0] === 'recommended');
+
+                        // Nếu bài viết có 'recommended_work' và chưa đủ 3 bài viết recommended, hiển thị bài viết
+                        if ($is_recommended && $recommended_count < $max_recommended) {
+                            $recommended_count++; // Tăng biến đếm bài viết recommended
+                        } elseif ($is_recommended && $recommended_count >= $max_recommended) {
+                            // Nếu đã đủ 3 bài recommended, bỏ qua bài viết recommended tiếp theo
+                            continue;
+                        }
+                        ?>
                         <li>
                             <?php
                             // Lấy URL của ảnh đại diện bài viết (featured image)
@@ -145,28 +160,19 @@ $query = new WP_Query($args);
                                     $company_image_url = 'https://placehold.co/100x100';
                                 }
                             }
-
                             ?>
                             <a href="<?php the_permalink(); ?>" class="job-item">
                                 <!-- Hiển thị tiêu đề -->
                                 <p class="title_job">
                                     <?php
-                                    // Lấy giá trị của custom field 'recommended_work'
-                                    $recommended = get_post_meta(get_the_ID(), 'recommended_work', false); // Trả về mảng giá trị
-
-                                    // Kiểm tra nếu mảng lồng có giá trị đầu tiên là 'recommended'
-                                    if (is_array($recommended) && isset($recommended[0][0]) && $recommended[0][0] === 'recommended') {
+                                    if ($is_recommended) {
                                         echo '<span class="label_job_recommended">おすすめ求人</span>';
                                     }
-                                    echo '<span>';
-                                    // Hiển thị tiêu đề bài viết
+                                    echo '<span class="text">';
                                     the_title();
                                     echo '</span>';
                                     ?>
                                 </p>
-
-
-
                                 <div class="job_content">
                                     <div class="text_info_job">
                                         <?php if ($company_image_url) : ?>
@@ -200,10 +206,8 @@ $query = new WP_Query($args);
                                         </div>
                                     </div>
                                     <p class="avatar_job"><img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>" style="max-width:100%; height:auto;"></p>
-                                    <!-- Hiển thị ảnh từ taxonomy company_vietnam -->
                                 </div>
                             </a>
-
                         </li>
                     <?php endwhile; ?>
                 </ul>
