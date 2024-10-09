@@ -1228,6 +1228,48 @@ function sort_recommended_work_column($query) {
 add_action('pre_get_posts', 'sort_recommended_work_column');
 
 
+function set_default_values_on_save( $post_id ) {
+    // Kiểm tra nếu không phải là autosave hoặc nếu dữ liệu đã tồn tại
+    if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
+        return;
+    }
+
+    // Lấy giá trị hiện tại của job_info
+    $job_info = get_field('job_info', $post_id);
+
+    // Nếu job_info trống hoặc chưa có giá trị
+    if( empty($job_info) ) {
+        // Thiết lập giá trị mặc định cho slide_1 và mo_ta
+        $job_info = array(
+            array(
+                'acf_fc_layout' => 'slide_1',
+                'mo_ta' => array(
+                    array(
+                        'tieu_de'  => 'Tiêu đề mặc định 1',
+                        'noi_dung' => 'Nội dung mặc định 1',
+                    ),
+                    array(
+                        'tieu_de'  => 'Tiêu đề mặc định 2',
+                        'noi_dung' => 'Nội dung mặc định 2',
+                    ),
+                    array(
+                        'tieu_de'  => 'Tiêu đề mặc định 3',
+                        'noi_dung' => 'Nội dung mặc định 3',
+                    ),
+                    array(
+                        'tieu_de'  => 'Tiêu đề mặc định 4',
+                        'noi_dung' => 'Nội dung mặc định 4',
+                    ),
+                )
+            )
+        );
+
+        // Cập nhật giá trị cho job_info
+        update_field('job_info', $job_info, $post_id);
+    }
+}
+
+add_action('acf/save_post', 'set_default_values_on_save', 20);
 
 
 

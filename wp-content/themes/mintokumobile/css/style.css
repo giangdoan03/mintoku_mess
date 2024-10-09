@@ -1945,6 +1945,20 @@ button#search_button {
     right: 0;
 }
 
+.noi-dung-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.noi-dung-field strong {
+    width: 80%;
+}
+.noi-dung-field p {
+    width: 100%;
+    margin: 0;
+}
+
 /* Bố cục cho màn hình lớn (PC) */
 @media (min-width: 768px) {
     .container .row {

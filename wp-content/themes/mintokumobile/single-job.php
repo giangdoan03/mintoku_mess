@@ -39,89 +39,125 @@ if ($taxonomy) {
 
                         <?php if (get_row_layout() == 'slide_1'): ?>
                             <div class="slide slide-1 swiper-slide">
-                                <?php if (have_rows('mo_ta')): ?>
-                                    <?php while (have_rows('mo_ta')): the_row(); ?>
-                                        <div class="mo-ta-item">
-                                            <h3><?php the_sub_field('tieu_de'); ?></h3>
-                                            <p><?php the_sub_field('noi_dung'); ?></p>
-                                        </div>
-                                    <?php endwhile; ?>
-                                <?php endif; ?>
+                                <?php
+                                // Lấy nội dung của Flexible Content
+                                $slides = get_field('job_info'); // 'job_info' là tên của Flexible Content field chứa các slide
+
+                                // Kiểm tra nếu có các slide
+                                if( $slides ) {
+                                    // Lặp qua các layout của Flexible Content
+                                    foreach( $slides as $slide ) {
+                                        // Kiểm tra nếu layout là slide_2
+                                        if( $slide['acf_fc_layout'] === 'slide_1' ) {
+                                            // Lặp qua các field từ noi_dung_1 đến noi_dung_15
+                                            for( $i = 1; $i <= 5; $i++ ) {
+                                                $field_name = 'noi_dung_' . $i;
+
+                                                // Lấy thông tin chi tiết của field (bao gồm cả label)
+                                                $field_object = get_sub_field_object($field_name);
+
+                                                if( !empty($slide[$field_name]) && $field_object ) {
+                                                    // Hiển thị label và value của các trường noi_dung_1 -> noi_dung_15
+                                                    echo '<div class="noi-dung-field">';
+                                                    echo '<strong>' . esc_html($field_object['label']) . ':</strong> '; // Hiển thị label
+                                                    echo '<p>' . esc_html($slide[$field_name]) . '</p>'; // Hiển thị giá trị của field
+                                                    echo '</div>';
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                ?>
                             </div>
 
                         <?php elseif (get_row_layout() == 'slide_2'): ?>
                             <div class="slide slide-2 swiper-slide">
-                                <?php if (have_rows('yeu_cau')): ?>
-                                    <?php while (have_rows('yeu_cau')): the_row(); ?>
-                                        <div class="mo-ta-item">
-                                            <h3><?php the_sub_field('tieu_de'); ?></h3>
-                                            <p><?php the_sub_field('noi_dung'); ?></p>
-                                        </div>
-                                    <?php endwhile; ?>
-                                <?php endif; ?>
+                                <?php
+                                // Lấy nội dung của Flexible Content
+                                $slides = get_field('job_info'); // 'job_info' là tên của Flexible Content field chứa các slide
+
+                                // Kiểm tra nếu có các slide
+                                if( $slides ) {
+                                    // Lặp qua các layout của Flexible Content
+                                    foreach( $slides as $slide ) {
+                                        // Kiểm tra nếu layout là slide_2
+                                        if( $slide['acf_fc_layout'] === 'slide_2' ) {
+                                            // Lặp qua các field từ noi_dung_1 đến noi_dung_15
+                                            for( $i = 1; $i <= 15; $i++ ) {
+                                                $field_name = 'noi_dung_' . $i;
+
+                                                // Lấy thông tin chi tiết của field (bao gồm cả label)
+                                                $field_object = get_sub_field_object($field_name);
+
+                                                if( !empty($slide[$field_name]) && $field_object ) {
+                                                    // Hiển thị label và value của các trường noi_dung_1 -> noi_dung_15
+                                                    echo '<div class="noi-dung-field">';
+                                                    echo '<strong>' . esc_html($field_object['label']) . ':</strong> '; // Hiển thị label
+                                                    echo '<p>' . esc_html($slide[$field_name]) . '</p>'; // Hiển thị giá trị của field
+                                                    echo '</div>';
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                ?>
+
+
                             </div>
 
                         <?php elseif (get_row_layout() == 'slide_3'): ?>
                             <div class="slide slide-3 swiper-slide">
 
-                                <div class="slideshow-container">
-                                    <!-- Slide 2 - Video YouTube -->
-                                    <div class="item_slide">
-                                        <?php if ($video = get_sub_field('video')): ?>
-                                            <?php
-                                            // Lấy URL của video YouTube từ iframe
-                                            preg_match("/embed\/([^\"]+)/", $video, $matches);
-                                            $video_id = $matches[1];
+                                <?php
+                                // Lấy nội dung của Flexible Content hoặc Repeater Field
+                                $slides = get_field('job_info'); // 'job_info' là tên field Flexible Content chứa các slide
 
-                                            // URL của ảnh thumbnail
-                                            $thumbnail_url = "https://img.youtube.com/vi/$video_id/maxresdefault.jpg";
-                                            ?>
+                                // Kiểm tra nếu có các slide
+                                if( $slides ) {
+                                    // Lặp qua các layout của Flexible Content
+                                    foreach( $slides as $slide ) {
+                                        // Kiểm tra nếu layout là slide_3
+                                        if( isset($slide['acf_fc_layout']) && $slide['acf_fc_layout'] === 'slide_3' ) {
+                                            // Lấy URL video từ slide_3
+                                            $video_url = isset($slide['video_url']) ? $slide['video_url'] : '';
 
-                                            <!-- Hiển thị ảnh preview và khi click vào thì hiện iframe -->
-                                            <div class="item_slide">
-                                                <div class="video-thumbnail" style="position: relative; cursor: pointer;">
-                                                    <img src="<?php echo esc_url($thumbnail_url); ?>" alt="Video Thumbnail" style="width: 100%; height: auto;">
-                                                    <!-- Nút Play (biểu tượng) trên ảnh preview -->
-                                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                                                        <img src="path_to_play_button_image.png" alt="Play Button" style="width: 64px; height: 64px;">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            // Nếu có URL video
+                                            if( !empty($video_url) ) {
+                                                // Sử dụng parse_url để phân tích cú pháp URL
+                                                $parsed_url = parse_url($video_url);
 
-                                            <!-- Nút Play sẽ thay đổi thành iframe khi người dùng click -->
-                                            <script>
-                                                document.querySelector('.video-thumbnail').addEventListener('click', function() {
-                                                    // Thay thế ảnh preview bằng iframe video YouTube
-                                                    this.innerHTML = '<?php echo addslashes($video); ?>';
-                                                });
-                                            </script>
-                                        <?php endif; ?>
+                                                // Kiểm tra nếu URL chứa tham số truy vấn (query) và có `v` (ID video)
+                                                if( isset($parsed_url['query']) ) {
+                                                    parse_str($parsed_url['query'], $query_params);
 
-                                        <?php if ($image_job = get_sub_field('image_job')): ?>
-                                            <?php foreach ($image_job as $image): ?>
-                                               <div class="item_slide">
-                                                   <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>"/>
-                                               </div>
-                                            <?php endforeach; ?>
-                                        <?php else: ?>
-                                            <p>No images found.</p>
-                                        <?php endif; ?>
-                                    </div>
+                                                    // Kiểm tra nếu `v` (video ID) tồn tại trong tham số truy vấn
+                                                    if( isset($query_params['v']) && !empty($query_params['v']) ) {
+                                                        // Lấy ID video
+                                                        $video_id = $query_params['v'];
 
-                                    <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
-                                    <a class="next" onclick="changeSlide(1)">&#10095;</a>
-                                </div>
-                                <div class="thumbnails">
-                                    <?php if ($image_job = get_sub_field('image_job')): ?>
-                                        <?php foreach ($image_job as $index => $image): // Sử dụng $index để lấy vị trí của từng hình ảnh ?>
-                                            <div class="thumbnail" onclick="showSlides(<?php echo $index; ?>)">
-                                                <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
-                                            </div>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <p>No images found.</p>
-                                    <?php endif; ?>
-                                </div>
+                                                        // Xây dựng URL nhúng
+                                                        $video_embed_url = 'https://www.youtube.com/embed/' . $video_id;
+
+                                                        // Hiển thị iframe video
+                                                        ?>
+                                                        <div class="video-container">
+                                                            <iframe width="560" height="315" src="<?php echo esc_url($video_embed_url); ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                        </div>
+                                                        <?php
+                                                    } else {
+                                                        // Trường hợp thiếu ID video, hiển thị thông báo lỗi
+                                                        echo '<p>URL không hợp lệ. Không tìm thấy ID video.</p>';
+                                                    }
+                                                } else {
+                                                    // Trường hợp URL không chứa tham số query
+                                                    echo '<p>URL không hợp lệ. Không chứa ID video.</p>';
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                ?>
+
                             </div>
 
 
@@ -178,32 +214,32 @@ if ($taxonomy) {
         });
 
     });
-    let currentSlide = 0;
-    showSlides(currentSlide);
+    // let currentSlide = 0;
+    // showSlides(currentSlide);
+    //
+    // function changeSlide(n) {
+    //     currentSlide += n;
+    //     const totalSlides = document.getElementsByClassName('item_slide').length;
+    //     if (currentSlide >= totalSlides) {
+    //         currentSlide = 0; // Quay lại slide đầu tiên
+    //     }
+    //     if (currentSlide < 0) {
+    //         currentSlide = totalSlides - 1; // Quay lại slide cuối cùng
+    //     }
+    //     showSlides(currentSlide);
+    // }
 
-    function changeSlide(n) {
-        currentSlide += n;
-        const totalSlides = document.getElementsByClassName('item_slide').length;
-        if (currentSlide >= totalSlides) {
-            currentSlide = 0; // Quay lại slide đầu tiên
-        }
-        if (currentSlide < 0) {
-            currentSlide = totalSlides - 1; // Quay lại slide cuối cùng
-        }
-        showSlides(currentSlide);
-    }
-
-    function showSlides(n) {
-        const slides = document.getElementsByClassName('item_slide');
-        const thumbnails = document.querySelectorAll('.thumbnail img');
-
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-            thumbnails[i].classList.remove('active');
-        }
-
-        slides[n].style.display = "block";
-        thumbnails[n].classList.add('active');
-    }
+    // function showSlides(n) {
+    //     const slides = document.getElementsByClassName('item_slide');
+    //     const thumbnails = document.querySelectorAll('.thumbnail img');
+    //
+    //     for (let i = 0; i < slides.length; i++) {
+    //         slides[i].style.display = "none";
+    //         thumbnails[i].classList.remove('active');
+    //     }
+    //
+    //     slides[n].style.display = "block";
+    //     thumbnails[n].classList.add('active');
+    // }
 
 </script>
