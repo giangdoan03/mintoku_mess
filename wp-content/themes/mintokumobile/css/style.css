@@ -1884,80 +1884,77 @@ button#search_button {
     height: 34px;
 }
 
-.slideshow-container {
-    position: relative;
-    max-width: 100%; /* Đảm bảo chiều rộng container không vượt quá kích thước màn hình */
-    margin: auto;
-    overflow: hidden; /* Ẩn bất kỳ nội dung nào vượt ra ngoài */
-}
-
-/* Đặt chiều cao cố định cho các slide và căn chỉnh đúng kích thước */
-.slides {
-    display: none;
-    width: 100%;
-    height: 300px; /* Chiều cao cố định cho tất cả slide */
-    object-fit: cover;
-}
-
-/* Đảm bảo iframe video không vượt ra ngoài container */
-.slides iframe {
-    width: 100%;
-    height: 100%;
-}
-
-.thumbnails {
+.gallery-container {
     display: flex;
-    justify-content: center;
-    margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.thumbnail {
-    cursor: pointer;
-    margin: 0 5px;
+.gallery-item {
+    flex-basis: calc(33.33% - 10px);
+    box-sizing: border-box;
 }
 
-.thumbnail img {
-    width: 100px;
+.gallery-item img {
+    width: 100%;
     height: auto;
-    opacity: 0.6;
+    display: block;
 }
 
-.thumbnail img.active {
-    opacity: 1;
-}
-
-.prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -22px;
-    color: white;
-    background-color: rgba(0,0,0,0.5);
-}
-
-.prev {
-    left: 0;
-}
-
-.next {
-    right: 0;
-}
-
-.noi-dung-field {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.video-container {
     margin-bottom: 20px;
 }
-.noi-dung-field strong {
-    width: 80%;
-}
-.noi-dung-field p {
+
+.main-slider, .thumbnail-slider {
     width: 100%;
-    margin: 0;
+    margin: 0 auto;
 }
+
+.slider-items {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.slider-item {
+    min-width: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.thumbnail-slider {
+    display: flex;
+    justify-content: center; /* Căn giữa các thumbnail */
+    align-items: center; /* Căn giữa theo trục dọc */
+    gap: 10px; /* Khoảng cách giữa các thumbnail */
+    overflow-x: auto; /* Cho phép cuộn ngang nếu nhiều thumbnail */
+    padding: 10px 0;
+}
+
+.thumbnail-items {
+    display: flex;
+    gap: 10px; /* Khoảng cách giữa các thumbnail */
+}
+
+.thumbnail-item {
+    cursor: pointer;
+    flex-shrink: 0; /* Đảm bảo mỗi thumbnail giữ kích thước cố định */
+}
+
+.thumbnail-item img {
+    width: 80px; /* Chiều rộng của mỗi thumbnail */
+    height: auto; /* Tự động điều chỉnh chiều cao */
+    opacity: 0.6; /* Hiển thị mờ các thumbnail khi chưa được chọn */
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail-item img:hover {
+    opacity: 1; /* Hiển thị rõ khi hover vào thumbnail */
+}
+
+.thumbnail-item.active img {
+    opacity: 1; /* Hiển thị rõ thumbnail đang được chọn */
+}
+
 
 /* Bố cục cho màn hình lớn (PC) */
 @media (min-width: 768px) {
