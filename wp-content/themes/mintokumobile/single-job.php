@@ -107,104 +107,111 @@ if ($taxonomy) {
 
                         <?php elseif (get_row_layout() == 'slide_3'): ?>
                             <div class="slide slide-3 swiper-slide">
-                                <div id="main-slider" class="main-slider">
-                                    <div class="slider-items">
-                                        <?php
-                                        // Lấy nội dung của Flexible Content hoặc Repeater Field
-                                        $slides = get_field('job_info'); // 'job_info' là tên field Flexible Content chứa các slide
+                                <div class="slide_mix">
+                                    <div id="main-slider" class="main-slider">
+                                        <div class="slider-items">
+                                            <?php
+                                            // Lấy nội dung của Flexible Content hoặc Repeater Field
+                                            $slides = get_field('job_info'); // 'job_info' là tên field Flexible Content chứa các slide
 
-                                        // Kiểm tra nếu có các slide
-                                        if( $slides ) {
-                                            // Lặp qua các layout của Flexible Content
-                                            foreach( $slides as $slide ) {
-                                                // Kiểm tra nếu layout là slide_3
-                                                if( isset($slide['acf_fc_layout']) && $slide['acf_fc_layout'] === 'slide_3' ) {
-                                                    // Lấy URL video từ slide_3
-                                                    $video_url = isset($slide['video_url']) ? $slide['video_url'] : '';
+                                            // Kiểm tra nếu có các slide
+                                            if( $slides ) {
+                                                $index = 0; // Bắt đầu từ 0
+                                                // Lặp qua các layout của Flexible Content
+                                                foreach( $slides as $slide ) {
+                                                    // Kiểm tra nếu layout là slide_3
+                                                    if( isset($slide['acf_fc_layout']) && $slide['acf_fc_layout'] === 'slide_3' ) {
+                                                        // Lấy URL video từ slide_3
+                                                        $video_url = isset($slide['video_url']) ? $slide['video_url'] : '';
 
-                                                    // Nếu có video, hiển thị video trong slider item đầu tiên
-                                                    if( !empty($video_url) ) {
-                                                        // Lấy ID video từ URL
-                                                        $parsed_url = parse_url($video_url);
-                                                        if( isset($parsed_url['query']) ) {
-                                                            parse_str($parsed_url['query'], $query_params);
-                                                            if( isset($query_params['v']) && !empty($query_params['v']) ) {
-                                                                $video_id = $query_params['v'];
-                                                                $video_embed_url = 'https://www.youtube.com/embed/' . $video_id;
+                                                        // Nếu có video, hiển thị video trong slider item đầu tiên
+                                                        if( !empty($video_url) ) {
+                                                            $parsed_url = parse_url($video_url);
+                                                            if( isset($parsed_url['query']) ) {
+                                                                parse_str($parsed_url['query'], $query_params);
+                                                                if( isset($query_params['v']) && !empty($query_params['v']) ) {
+                                                                    $video_id = $query_params['v'];
+                                                                    $video_embed_url = 'https://www.youtube.com/embed/' . $video_id;
+                                                                    ?>
+                                                                    <div class="slider-item" data-index="<?php echo $index; ?>">
+                                                                        <iframe width="100%" height="315" src="<?php echo esc_url($video_embed_url); ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                                    </div>
+                                                                    <?php
+                                                                    $index++;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        // Lấy gallery image array từ field image_job
+                                                        $gallery_images = isset($slide['image_job']) ? $slide['image_job'] : array();
+
+                                                        // Nếu có hình ảnh, hiển thị chúng trong slider
+                                                        if( !empty($gallery_images) ) {
+                                                            foreach( $gallery_images as $image ) {
+                                                                $image_url = $image['url'];
+                                                                $alt_text = $image['alt'];
                                                                 ?>
-                                                                <div class="slider-item">
-                                                                    <iframe width="100%" height="315" src="<?php echo esc_url($video_embed_url); ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                                <div class="slider-item" data-index="<?php echo $index; ?>">
+                                                                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($alt_text); ?>" />
                                                                 </div>
                                                                 <?php
+                                                                $index++;
                                                             }
                                                         }
                                                     }
-
-                                                    // Lấy gallery image array từ field image_job
-                                                    $gallery_images = isset($slide['image_job']) ? $slide['image_job'] : array();
-
-                                                    // Nếu có hình ảnh, hiển thị chúng trong slider
-                                                    if( !empty($gallery_images) ) {
-                                                        foreach( $gallery_images as $image ) {
-                                                            $image_url = $image['url'];
-                                                            $alt_text = $image['alt'];
-                                                            ?>
-                                                            <div class="slider-item">
-                                                                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($alt_text); ?>" />
-                                                            </div>
-                                                            <?php
-                                                        }
-                                                    }
                                                 }
                                             }
-                                        }
-                                        ?>
+                                            ?>
+                                        </div>
                                     </div>
-                                </div>
+                                    <!-- Thumbnail slider -->
+                                    <div id="thumbnail-slider" class="thumbnail-slider">
+                                        <div class="thumbnail-items-wrapper">
+                                            <div class="thumbnail-items">
+                                                <?php
+                                                // Tạo thumbnail cho video và hình ảnh
+                                                if( $slides ) {
+                                                    $index = 0; // Bắt đầu từ 0
+                                                    foreach( $slides as $slide ) {
+                                                        if( isset($slide['acf_fc_layout']) && $slide['acf_fc_layout'] === 'slide_3' ) {
+                                                            $video_url = isset($slide['video_url']) ? $slide['video_url'] : '';
 
-                                <!-- Thumbnail slider -->
-                                <div id="thumbnail-slider" class="thumbnail-slider">
-                                    <div class="thumbnail-items">
-                                        <?php
-                                        // Tạo thumbnail cho video và hình ảnh
-                                        if( $slides ) {
-                                            foreach( $slides as $slide ) {
-                                                if( isset($slide['acf_fc_layout']) && $slide['acf_fc_layout'] === 'slide_3' ) {
-                                                    $video_url = isset($slide['video_url']) ? $slide['video_url'] : '';
+                                                            // Tạo thumbnail cho video
+                                                            if( !empty($video_url) ) {
+                                                                $parsed_url = parse_url($video_url);
+                                                                if( isset($query_params['v']) && !empty($query_params['v']) ) {
+                                                                    $video_id = $query_params['v'];
+                                                                    // Lấy ảnh thumbnail YouTube
+                                                                    $video_thumb = 'https://img.youtube.com/vi/' . $video_id . '/0.jpg';
+                                                                    ?>
+                                                                    <div class="thumbnail-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
+                                                                        <img src="<?php echo esc_url($video_thumb); ?>" alt="Video thumbnail" />
+                                                                    </div>
+                                                                    <?php
+                                                                    $index++;
+                                                                }
+                                                            }
 
-                                                    // Tạo thumbnail cho video
-                                                    if( !empty($video_url) ) {
-                                                        $parsed_url = parse_url($video_url);
-                                                        if( isset($query_params['v']) && !empty($query_params['v']) ) {
-                                                            $video_id = $query_params['v'];
-                                                            // Lấy ảnh thumbnail YouTube
-                                                            $video_thumb = 'https://img.youtube.com/vi/' . $video_id . '/0.jpg';
-                                                            ?>
-                                                            <div class="thumbnail-item" data-index="0">
-                                                                <img src="<?php echo esc_url($video_thumb); ?>" alt="Video thumbnail" />
-                                                            </div>
-                                                            <?php
-                                                        }
-                                                    }
-
-                                                    // Tạo thumbnail cho gallery images
-                                                    $gallery_images = isset($slide['image_job']) ? $slide['image_job'] : array();
-                                                    $index = 1; // Video là item đầu tiên (index 0), ảnh bắt đầu từ 1
-                                                    if( !empty($gallery_images) ) {
-                                                        foreach( $gallery_images as $image ) {
-                                                            $image_thumb_url = $image['sizes']['thumbnail'];
-                                                            ?>
-                                                            <div class="thumbnail-item" data-index="<?php echo $index; ?>">
-                                                                <img src="<?php echo esc_url($image_thumb_url); ?>" alt="Image thumbnail" />
-                                                            </div>
-                                                            <?php
-                                                            $index++;
+                                                            // Tạo thumbnail cho gallery images
+                                                            $gallery_images = isset($slide['image_job']) ? $slide['image_job'] : array();
+                                                            if( !empty($gallery_images) ) {
+                                                                foreach( $gallery_images as $image ) {
+                                                                    $image_thumb_url = $image['sizes']['thumbnail'];
+                                                                    ?>
+                                                                    <div class="thumbnail-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
+                                                                        <img src="<?php echo esc_url($image_thumb_url); ?>" alt="Image thumbnail" />
+                                                                    </div>
+                                                                    <?php
+                                                                    $index++;
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            }
-                                        }
-                                        ?>
+                                                ?>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -267,54 +274,41 @@ if ($taxonomy) {
 
     });
 
-    jQuery(document).ready(function($) {
-        // Kiểm tra nếu có video và hiển thị video thay vì gallery
-        if ($('.video-container iframe').length) {
-            // Nếu có video thì hiển thị video và ẩn gallery
-            $('.video-container').show();
-            $('.gallery-container').hide();
-        } else {
-            // Nếu không có video thì hiển thị gallery
-            $('.gallery-container').show();
-            $('.video-container').hide();
-        }
-    });
-
 
     document.addEventListener("DOMContentLoaded", function() {
-        const sliderItems = document.querySelectorAll('.slider-item');
-        const thumbnailItems = document.querySelectorAll('.thumbnail-item');
+        const sliderItems = document.querySelectorAll('.slider-item'); // Các ảnh lớn
+        const thumbnailItems = document.querySelectorAll('.thumbnail-item'); // Các thumbnail
+        let currentPosition = 0;
 
-        // Set initial active slide
-        let activeIndex = 0;
-        sliderItems[activeIndex].style.transform = `translateX(0)`;
-        thumbnailItems[activeIndex].classList.add('active');
-
-        // Function to switch slides
-        function switchSlide(index) {
-            // Remove active class from all thumbnails
-            thumbnailItems.forEach(item => item.classList.remove('active'));
-
-            // Add active class to clicked thumbnail
-            thumbnailItems[index].classList.add('active');
-
-            // Move the slider to the correct slide
-            const offset = -index * 100; // 100% for each slide
-            sliderItems.forEach(item => {
-                item.style.transform = `translateX(${offset}%)`;
+        // Hàm cập nhật vị trí của slider chính khi nhấp vào thumbnail hoặc khi trang load
+        function updateSlider(index) {
+            // Ẩn tất cả các slider-item
+            sliderItems.forEach((item) => {
+                item.style.display = 'none'; // Ẩn tất cả ảnh lớn
             });
 
-            activeIndex = index; // Update active index
+            // Hiển thị ảnh lớn tương ứng với thumbnail
+            sliderItems[index].style.display = 'block';
+
+            // Làm nổi bật thumbnail tương ứng bằng cách thêm/lớp active
+            thumbnailItems.forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+
+            // Cập nhật vị trí hiện tại của slider
+            currentPosition = index;
         }
 
-        // Add click event to thumbnails
+        // Sự kiện click cho từng thumbnail
         thumbnailItems.forEach((item, index) => {
-            item.addEventListener('click', function() {
-                switchSlide(index);
+            item.addEventListener('click', () => {
+                updateSlider(index); // Cập nhật slider chính khi nhấp vào thumbnail
             });
         });
+
+        // Khi load trang, active item đầu tiên nếu chưa có class active
+        if (!document.querySelector('.thumbnail-item.active')) {
+            updateSlider(0); // Hiển thị và kích hoạt thumbnail đầu tiên nếu chưa có cái nào được active
+        }
     });
-
-
-
 </script>

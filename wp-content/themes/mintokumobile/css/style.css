@@ -1920,42 +1920,83 @@ button#search_button {
     min-width: 100%;
     transition: transform 0.5s ease-in-out;
 }
+.main-slider .slider-items {
+    display: flex;
+    overflow: hidden;
+}
+
+.slider-item {
+    min-width: 100%;
+    transition: transform 0.5s ease-in-out;
+}
 
 .thumbnail-slider {
     display: flex;
-    justify-content: center; /* Căn giữa các thumbnail */
-    align-items: center; /* Căn giữa theo trục dọc */
-    gap: 10px; /* Khoảng cách giữa các thumbnail */
-    overflow-x: auto; /* Cho phép cuộn ngang nếu nhiều thumbnail */
-    padding: 10px 0;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.thumbnail-items-wrapper {
+    width: 100%;
 }
 
 .thumbnail-items {
     display: flex;
-    gap: 10px; /* Khoảng cách giữa các thumbnail */
+    /* justify-content: center; */
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.thumbnail-item {
+    flex: 1 1 calc(33.33% - 10px); /* Hiển thị 3 thumbnail mỗi hàng */
+    max-width: calc(33.33% - 10px); /* Đảm bảo rằng mỗi thumbnail chiếm 1/3 hàng */
+    box-sizing: border-box;
+}
+
+.thumbnail-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail-item img:hover,
+.thumbnail-item.active img {
+    opacity: 1;
+}
+
+.slider-items {
+    position: relative;
+    width: 100%;
+}
+
+.slider-item {
+    display: none; /* Ẩn tất cả các ảnh lớn mặc định */
+    width: 100%;
+}
+
+.slider-item:first-child {
+    display: block; /* Hiển thị ảnh lớn đầu tiên */
 }
 
 .thumbnail-item {
     cursor: pointer;
-    flex-shrink: 0; /* Đảm bảo mỗi thumbnail giữ kích thước cố định */
-}
-
-.thumbnail-item img {
-    width: 80px; /* Chiều rộng của mỗi thumbnail */
-    height: auto; /* Tự động điều chỉnh chiều cao */
-    opacity: 0.6; /* Hiển thị mờ các thumbnail khi chưa được chọn */
+    opacity: 0.6; /* Mờ các thumbnail không được chọn */
     transition: opacity 0.3s ease;
 }
 
-.thumbnail-item img:hover {
-    opacity: 1; /* Hiển thị rõ khi hover vào thumbnail */
+.thumbnail-item.active {
+    opacity: 1; /* Làm nổi bật thumbnail đang được chọn */
+    border: 2px solid #000; /* Đặt viền để phân biệt thumbnail được chọn */
 }
-
-.thumbnail-item.active img {
-    opacity: 1; /* Hiển thị rõ thumbnail đang được chọn */
+.slider-item {
+    display: none; /* Ẩn tất cả các ảnh lớn mặc định */
+    width: 100%;
 }
-
-
+.slide_mix {
+    height: 100vh;
+}
 /* Bố cục cho màn hình lớn (PC) */
 @media (min-width: 768px) {
     .container .row {
