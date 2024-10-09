@@ -1,5 +1,4 @@
 <?php get_header(); ?>
-<div id="taxonomy-terms-container"></div>
 <?php
 // Get the current post type
 $post_type = get_post_type();
@@ -11,12 +10,6 @@ $terms_data = []; // Array to hold term data
 switch ($post_type) {
     case 'vietnam':
         $taxonomy = 'province_vietnam';
-        break;
-    case 'laos':
-        $taxonomy = 'province_laos';
-        break;
-    case 'cambodia':
-        $taxonomy = 'province_cambodia';
         break;
     default:
         $taxonomy = ''; // Set a default value if needed
@@ -37,34 +30,106 @@ if ($taxonomy) {
 
 ?>
 
-<div id="primary" class="content-area">
-    <?php
-    // Get the current language
-    $current_language = apply_filters('wpml_current_language', NULL);
-
-    // Determine the correct custom field names based on the language
-    $content_field = 'cong_viec'; // English field
-    $sub_field = 'chi_tiet'; // Sub-field for English content
-
-    // Check if the field has content
-    if (have_rows($content_field)): ?>
-
+<div id="page-single-job" class="page_single_job">
+    <div class="container">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab consequatur debitis delectus, earum et reprehenderit vel velit. Accusamus asperiores delectus dolores dolorum explicabo, ipsa iusto modi nam officiis rem temporibus.</h1>
-                </div>
-                <?php
-                // Loop through the rows of the selected field
-                while (have_rows($content_field)) : the_row();
+                <?php if (have_rows('job_info')): ?>
+                    <?php while (have_rows('job_info')): the_row(); ?>
 
-                    // Get the sub-field content
-                    $wysiwyg_content = get_sub_field($sub_field);
-                    ?>
-                    <div class="swiper-slide">
-                        <?php echo $wysiwyg_content; // Display the WYSIWYG content ?>
-                    </div>
-                <?php endwhile; ?>
+                        <?php if (get_row_layout() == 'slide_1'): ?>
+                            <div class="slide slide-1 swiper-slide">
+                                <?php if (have_rows('mo_ta')): ?>
+                                    <?php while (have_rows('mo_ta')): the_row(); ?>
+                                        <div class="mo-ta-item">
+                                            <h3><?php the_sub_field('tieu_de'); ?></h3>
+                                            <p><?php the_sub_field('noi_dung'); ?></p>
+                                        </div>
+                                    <?php endwhile; ?>
+                                <?php endif; ?>
+                            </div>
+
+                        <?php elseif (get_row_layout() == 'slide_2'): ?>
+                            <div class="slide slide-2 swiper-slide">
+                                <?php if (have_rows('yeu_cau')): ?>
+                                    <?php while (have_rows('yeu_cau')): the_row(); ?>
+                                        <div class="mo-ta-item">
+                                            <h3><?php the_sub_field('tieu_de'); ?></h3>
+                                            <p><?php the_sub_field('noi_dung'); ?></p>
+                                        </div>
+                                    <?php endwhile; ?>
+                                <?php endif; ?>
+                            </div>
+
+                        <?php elseif (get_row_layout() == 'slide_3'): ?>
+                            <div class="slide slide-3 swiper-slide">
+
+                                <div class="slideshow-container">
+                                    <!-- Slide 2 - Video YouTube -->
+                                    <div class="item_slide">
+                                        <?php if ($video = get_sub_field('video')): ?>
+                                            <?php
+                                            // Lấy URL của video YouTube từ iframe
+                                            preg_match("/embed\/([^\"]+)/", $video, $matches);
+                                            $video_id = $matches[1];
+
+                                            // URL của ảnh thumbnail
+                                            $thumbnail_url = "https://img.youtube.com/vi/$video_id/maxresdefault.jpg";
+                                            ?>
+
+                                            <!-- Hiển thị ảnh preview và khi click vào thì hiện iframe -->
+                                            <div class="item_slide">
+                                                <div class="video-thumbnail" style="position: relative; cursor: pointer;">
+                                                    <img src="<?php echo esc_url($thumbnail_url); ?>" alt="Video Thumbnail" style="width: 100%; height: auto;">
+                                                    <!-- Nút Play (biểu tượng) trên ảnh preview -->
+                                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                                        <img src="path_to_play_button_image.png" alt="Play Button" style="width: 64px; height: 64px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Nút Play sẽ thay đổi thành iframe khi người dùng click -->
+                                            <script>
+                                                document.querySelector('.video-thumbnail').addEventListener('click', function() {
+                                                    // Thay thế ảnh preview bằng iframe video YouTube
+                                                    this.innerHTML = '<?php echo addslashes($video); ?>';
+                                                });
+                                            </script>
+                                        <?php endif; ?>
+
+                                        <?php if ($image_job = get_sub_field('image_job')): ?>
+                                            <?php foreach ($image_job as $image): ?>
+                                               <div class="item_slide">
+                                                   <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>"/>
+                                               </div>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <p>No images found.</p>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+                                    <a class="next" onclick="changeSlide(1)">&#10095;</a>
+                                </div>
+                                <div class="thumbnails">
+                                    <?php if ($image_job = get_sub_field('image_job')): ?>
+                                        <?php foreach ($image_job as $index => $image): // Sử dụng $index để lấy vị trí của từng hình ảnh ?>
+                                            <div class="thumbnail" onclick="showSlides(<?php echo $index; ?>)">
+                                                <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <p>No images found.</p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+
+
+                        <?php endif; ?>
+
+                    <?php endwhile; ?>
+
+                <?php endif; ?>
             </div>
 
             <!-- Navigation buttons -->
@@ -78,54 +143,26 @@ if ($taxonomy) {
                 <div class="swiper-pagination"></div>
             </div>
         </div>
-        <div class="message_link">
-            <?php
-            $messenger_link = get_field('messenger_link_facebook', 'option');
-            if ($messenger_link) {
-                echo '<a target="_blank" href="' . esc_url($messenger_link) . '"><i class="fab fa-facebook-messenger"></i>Ứng tuyển qua Messenger</a>';
-            }
-            ?>
-        </div>
-
-    <?php else: ?>
-        <p>No content available</p>
-    <?php endif; ?>
-<!--    --><?php //if( have_rows('your_flexible_content_field') ): ?>
-<!--        --><?php //while( have_rows('your_flexible_content_field') ): the_row(); ?>
-<!--            --><?php //if( get_row_layout() == 'item_dac_biet' ): // Layout cho item đầu tiên ?>
-<!--                --><?php
-//                $sub_field_1 = get_sub_field('1');
-//                $sub_field_2 = get_sub_field('2');
-//                $sub_field_3 = get_sub_field('3');
-//                ?>
-<!--                <div class="custom-item item_f">-->
-<!--                    <h2>--><?php //echo $sub_field_1; ?><!--</h2>-->
-<!--                    <p>--><?php //echo $sub_field_2; ?><!--</p>-->
-<!--                    <p>--><?php //echo $sub_field_3; ?><!--</p>-->
-<!--                </div>-->
-<!---->
-<!--            --><?php //elseif( get_row_layout() == 'item_binh_thuong' ): // Layout cho các item khác ?>
-<!--                --><?php
-//                $sub_field_1 = get_sub_field('binh_thuong');
-//                ?>
-<!--                <div class="item_f">-->
-<!--                    <h2>--><?php //echo $sub_field_1; ?><!--</h2>-->
-<!--                </div>-->
-<!--            --><?php //endif; ?>
-<!--        --><?php //endwhile; ?>
-<!--    --><?php //endif; ?>
-<!---->
-<!--</div>-->
+    </div>
+    <div class="message_link">
+        <?php
+        $messenger_link = get_field('messenger_link_facebook', 'option');
+        if ($messenger_link) {
+            echo '<a target="_blank" href="' . esc_url($messenger_link) . '"><i class="fab fa-facebook-messenger"></i>Ứng tuyển qua Messenger</a>';
+        }
+        ?>
+    </div>
+</div>
 
 <?php get_footer(); ?>
 
-<!--<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>-->
 <script>
 
     var taxonomyTerms = <?php echo json_encode($terms_data); ?>;
     var previousPage = document.referrer;
 
     document.addEventListener('DOMContentLoaded', function () {
+        // Khởi tạo slider chính (swiper)
         var swiperP = new Swiper('.swiper-container', {
             loop: true,
             navigation: {
@@ -140,18 +177,33 @@ if ($taxonomy) {
             slidesPerView: 1,
         });
 
-        // Đảm bảo rằng Swiper cập nhật chiều cao sau khi tải xong nội dung
-        // swiperP.on('slideChange', function () {
-        //     swiperP.updateAutoHeight();
-        // });
-
-        // Check URL hash and navigate to the appropriate slide
-        const hash = window.location.hash;
-        if (hash) {
-            const slideIndex = parseInt(hash.replace('#', '')) - 1;
-            if (!isNaN(slideIndex) && slideIndex >= 0 && slideIndex < swiperP.slides.length) {
-                swiperP.slideTo(slideIndex);
-            }
-        }
     });
+    let currentSlide = 0;
+    showSlides(currentSlide);
+
+    function changeSlide(n) {
+        currentSlide += n;
+        const totalSlides = document.getElementsByClassName('item_slide').length;
+        if (currentSlide >= totalSlides) {
+            currentSlide = 0; // Quay lại slide đầu tiên
+        }
+        if (currentSlide < 0) {
+            currentSlide = totalSlides - 1; // Quay lại slide cuối cùng
+        }
+        showSlides(currentSlide);
+    }
+
+    function showSlides(n) {
+        const slides = document.getElementsByClassName('item_slide');
+        const thumbnails = document.querySelectorAll('.thumbnail img');
+
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+            thumbnails[i].classList.remove('active');
+        }
+
+        slides[n].style.display = "block";
+        thumbnails[n].classList.add('active');
+    }
+
 </script>

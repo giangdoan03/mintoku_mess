@@ -1884,6 +1884,67 @@ button#search_button {
     height: 34px;
 }
 
+.slideshow-container {
+    position: relative;
+    max-width: 100%; /* Đảm bảo chiều rộng container không vượt quá kích thước màn hình */
+    margin: auto;
+    overflow: hidden; /* Ẩn bất kỳ nội dung nào vượt ra ngoài */
+}
+
+/* Đặt chiều cao cố định cho các slide và căn chỉnh đúng kích thước */
+.slides {
+    display: none;
+    width: 100%;
+    height: 300px; /* Chiều cao cố định cho tất cả slide */
+    object-fit: cover;
+}
+
+/* Đảm bảo iframe video không vượt ra ngoài container */
+.slides iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.thumbnails {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.thumbnail {
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.thumbnail img {
+    width: 100px;
+    height: auto;
+    opacity: 0.6;
+}
+
+.thumbnail img.active {
+    opacity: 1;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
+}
+
 /* Bố cục cho màn hình lớn (PC) */
 @media (min-width: 768px) {
     .container .row {
