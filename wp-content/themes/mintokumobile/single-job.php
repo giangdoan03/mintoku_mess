@@ -282,20 +282,32 @@ if ($taxonomy) {
 
         // Hàm cập nhật vị trí của slider chính khi nhấp vào thumbnail hoặc khi trang load
         function updateSlider(index) {
-            // Ẩn tất cả các slider-item
+            // Check if sliderItems is defined and contains elements
+            if (!sliderItems || sliderItems.length === 0) {
+                console.error("sliderItems is not defined or empty");
+                return;
+            }
+
+            // Ensure the index is within bounds
+            if (index < 0 || index >= sliderItems.length) {
+                console.error("Invalid index:", index);
+                return;
+            }
+
+            // Hide all slider items
             sliderItems.forEach((item) => {
-                item.style.display = 'none'; // Ẩn tất cả ảnh lớn
+                item.style.display = 'none';
             });
 
-            // Hiển thị ảnh lớn tương ứng với thumbnail
+            // Show the corresponding large image
             sliderItems[index].style.display = 'block';
 
-            // Làm nổi bật thumbnail tương ứng bằng cách thêm/lớp active
+            // Highlight the corresponding thumbnail
             thumbnailItems.forEach((item, i) => {
                 item.classList.toggle('active', i === index);
             });
 
-            // Cập nhật vị trí hiện tại của slider
+            // Update the current position of the slider
             currentPosition = index;
         }
 

@@ -36,6 +36,9 @@ if ($post_type === 'vietnam') {
 $args = array(
     'post_type' => $post_type,
     'posts_per_page' => -1,
+    'meta_key' => '_last_viewed', // Thêm điều kiện sắp xếp theo _last_viewed
+    'orderby' => 'meta_value', // Sắp xếp theo giá trị của meta key
+    'order' => 'DESC', // Sắp xếp giảm dần (bài viết được xem gần đây nhất trước)
     'tax_query' => array('relation' => 'AND'),
 );
 
@@ -53,14 +56,22 @@ foreach ($taxonomies as $taxonomy => $term) {
 // Truy vấn tất cả các bài viết theo điều kiện tìm kiếm
 $query = new WP_Query($args);
 
-// Truy vấn các bài viết recommended_work
 $args_recommended = array(
     'post_type' => $post_type,
+    'meta_key' => '_last_viewed',
+    'orderby' => 'meta_value',
+    'order' => 'DESC',
     'posts_per_page' => 3,
     'meta_query' => array(
+        'relation' => 'AND',
         array(
             'key' => 'recommended_work',
-            'compare' => 'EXISTS',
+            'value' => 'recommended', // Giá trị của checkbox
+            'compare' => 'LIKE', // Sử dụng LIKE để tìm chính xác giá trị
+        ),
+        array(
+            'key' => '_last_viewed',
+            'compare' => 'EXISTS', // Đảm bảo bài viết có _last_viewed
         )
     ),
 );
@@ -196,15 +207,15 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
         <?php endif; ?>
 
 
-        <!-- Hiển thị các bài viết không trùng recommended_work -->
-        <?php if (!empty($final_posts)) : ?>
+        <!-- Hiển thị bài viết non recommended_work -->
+        <?php if ($query->have_posts()) : ?>
             <div class="content_list_job_filter">
                 <ul>
-                    <?php foreach ($final_posts as $post) : display_job_item($post, false, false); endforeach; ?>
+                    <?php while ($query->have_posts()) : $query->the_post(); ?>
+                        <?php display_job_item(get_post(), false, false); // true: Hiển thị nhãn "おすすめ求人" ?>
+                    <?php endwhile; ?>
                 </ul>
             </div>
-        <?php else : ?>
-            <p>Không có công việc nào phù hợp.</p>
         <?php endif; ?>
 
     </div>
