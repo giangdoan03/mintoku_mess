@@ -37,7 +37,10 @@ $args = array(
     'post_type' => $post_type,
     'posts_per_page' => -1,
     'meta_key' => '_last_viewed', // Thêm điều kiện sắp xếp theo _last_viewed
-    'orderby' => 'meta_value', // Sắp xếp theo giá trị của meta key
+    'orderby' => array(
+        'meta_value' => 'DESC',  // Sắp xếp theo giá trị của _last_viewed trước
+        'date' => 'DESC'         // Nếu không có _last_viewed, sắp xếp theo ngày đăng
+    ),
     'order' => 'DESC', // Sắp xếp giảm dần (bài viết được xem gần đây nhất trước)
     'tax_query' => array('relation' => 'AND'),
 );
