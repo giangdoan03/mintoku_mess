@@ -190,12 +190,17 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
                     <?php endif; ?>
                     <!-- Hiển thị ảnh đại diện bài viết -->
                     <div class="text_desc">
-                        <div class="summary_job">
-                            <p>金属を溶かして自動車の部品を作ります。ダイカストの機械に金型を取りつけます。
-                                機械に、部品の材料となる金属を入れ、溶かします。溶けた金属を型に入れます。
-                                金属を冷やして、自動車の部品をつくります。その他、マシニングやNC旋盤を使う仕事もあります。説明文説明文説明文説明文説明文。
-                                説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文</p>
-                        </div>
+                        <?php
+                        // Lấy giá trị của custom field ACF
+                        $short_job_description = get_field('short_job_description');
+
+                        // Kiểm tra nếu trường này có giá trị
+                        if (!empty($short_job_description)) : ?>
+                            <div class="summary_job">
+                                <p><?php echo esc_html($short_job_description); ?></p>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
                 </div>
                 <p class="avatar_job">
