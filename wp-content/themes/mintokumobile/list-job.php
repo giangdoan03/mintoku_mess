@@ -12,10 +12,11 @@ $province_slug = isset($_GET['province']) ? sanitize_text_field($_GET['province'
 $university_slug = isset($_GET['university']) ? sanitize_text_field($_GET['university']) : '';
 $company_slug = isset($_GET['company']) ? sanitize_text_field($_GET['company']) : '';
 
-// Kiểm tra và thiết lập taxonomy tương ứng với post_type
+// Khởi tạo biến $taxonomies và $university_name
 $taxonomies = array();
 $university_name = '';
 
+// Thiết lập điều kiện cho từng post_type
 if ($post_type === 'vietnam') {
     $taxonomies = array(
         'year_vietnam' => $year,
@@ -24,6 +25,7 @@ if ($post_type === 'vietnam') {
         'company_vietnam' => $company_slug
     );
 
+    // Lấy tên của trường đại học nếu có university_slug
     if (!empty($university_slug)) {
         $university_term = get_term_by('slug', $university_slug, 'university_vietnam');
         if ($university_term) {
@@ -32,20 +34,14 @@ if ($post_type === 'vietnam') {
     }
 }
 
-// Tạo mảng args cho WP_Query
+// Tạo mảng args cho WP_Query với điều kiện post_type
 $args = array(
     'post_type' => $post_type,
-    'posts_per_page' => -1,
-    'meta_key' => '_last_viewed', // Thêm điều kiện sắp xếp theo _last_viewed
-    'orderby' => array(
-        'meta_value' => 'DESC',  // Sắp xếp theo giá trị của _last_viewed trước
-        'date' => 'DESC'         // Nếu không có _last_viewed, sắp xếp theo ngày đăng
-    ),
-    'order' => 'DESC', // Sắp xếp giảm dần (bài viết được xem gần đây nhất trước)
-    'tax_query' => array('relation' => 'AND'),
+    'posts_per_page' => -1, // Hiển thị tất cả bài viết
+    'tax_query' => array('relation' => 'AND'), // Sử dụng AND để yêu cầu tất cả các điều kiện
 );
 
-// Thêm các taxonomy vào tax_query nếu có
+// Thêm các taxonomy vào tax_query nếu có giá trị
 foreach ($taxonomies as $taxonomy => $term) {
     if (!empty($term)) {
         $args['tax_query'][] = array(
@@ -56,8 +52,36 @@ foreach ($taxonomies as $taxonomy => $term) {
     }
 }
 
-// Truy vấn tất cả các bài viết theo điều kiện tìm kiếm
+// Truy vấn tất cả bài viết theo điều kiện tìm kiếm
 $query = new WP_Query($args);
+
+// Khởi tạo mảng lưu trữ bài viết có và không có _last_viewed
+$posts_with_last_viewed = array();
+$posts_without_last_viewed = array();
+
+// Phân loại bài viết sau khi truy vấn
+if ($query->have_posts()) {
+    while ($query->have_posts()) {
+        $query->the_post();
+
+        // Kiểm tra xem bài viết có _last_viewed hay không
+        $last_viewed = get_post_meta(get_the_ID(), '_last_viewed', true);
+
+        if (!empty($last_viewed)) {
+            // Nếu có _last_viewed, đẩy vào mảng có _last_viewed
+            $posts_with_last_viewed[] = $post;
+        } else {
+            // Nếu không có _last_viewed, đẩy vào mảng không có _last_viewed
+            $posts_without_last_viewed[] = $post;
+        }
+    }
+}
+
+// Gộp hai mảng lại, đưa bài viết có _last_viewed lên đầu
+$final_posts = array_merge($posts_with_last_viewed, $posts_without_last_viewed);
+
+// Reset post data sau truy vấn
+wp_reset_postdata();
 
 $args_recommended = array(
     'post_type' => $post_type,
@@ -83,17 +107,17 @@ $args_recommended = array(
 $recommended_query = new WP_Query($args_recommended);
 
 // Lưu trữ ID các bài recommended_work
-$recommended_ids = wp_list_pluck($recommended_query->posts, 'ID');
-
-// Tạo danh sách bài viết từ điều kiện tìm kiếm nhưng loại trừ bài recommended_work
-$final_posts = array();
-if ($query->have_posts()) {
-    foreach ($query->posts as $post) {
-        if (!in_array($post->ID, $recommended_ids)) {
-            $final_posts[] = $post;
-        }
-    }
-}
+//$recommended_ids = wp_list_pluck($recommended_query->posts, 'ID');
+//
+//// Tạo danh sách bài viết từ điều kiện tìm kiếm nhưng loại trừ bài recommended_work
+//$final_posts = array();
+//if ($query->have_posts()) {
+//    foreach ($query->posts as $post) {
+//        if (!in_array($post->ID, $recommended_ids)) {
+//            $final_posts[] = $post;
+//        }
+//    }
+//}
 
 // Hàm hiển thị bài viết
 function display_job_item($post, $block_post = false, $block_post_recommended = false) {
@@ -209,17 +233,23 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
             </div>
         <?php endif; ?>
 
-
-        <!-- Hiển thị bài viết non recommended_work -->
-        <?php if ($query->have_posts()) : ?>
+        <?php if (!empty($final_posts)) : ?>
             <div class="content_list_job_filter">
                 <ul>
-                    <?php while ($query->have_posts()) : $query->the_post(); ?>
-                        <?php display_job_item(get_post(), false, false); // true: Hiển thị nhãn "おすすめ求人" ?>
-                    <?php endwhile; ?>
+                    <?php foreach ($final_posts as $post) : ?>
+                        <?php
+                        setup_postdata($post);
+                        // Sử dụng hàm `display_job_item` để hiển thị bài viết
+                        display_job_item(get_post(), false, false); // true: Hiển thị nhãn "おすすめ求人"
+                        ?>
+                    <?php endforeach; ?>
                 </ul>
             </div>
+            <?php wp_reset_postdata(); ?>
+        <?php else : ?>
+            <p>Không tìm thấy bài viết nào.</p>
         <?php endif; ?>
+
 
     </div>
 
