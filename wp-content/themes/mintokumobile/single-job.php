@@ -180,7 +180,7 @@ if ($taxonomy) {
                                                         // Hiển thị label và value của các trường noi_dung_1 -> noi_dung_15
                                                         echo '<div class="noi-dung-field">';
                                                         echo '<strong>' . esc_html($field_object['label']) . ':</strong> '; // Hiển thị label
-                                                        echo '<p>' . esc_html($slide[$field_name]) . '</p>'; // Hiển thị giá trị của field
+                                                        echo '<p class="custom-textarea-content">' . esc_html($slide[$field_name]) . '</p>'; // Hiển thị giá trị của field
                                                         echo '</div>';
                                                     }
                                                 }

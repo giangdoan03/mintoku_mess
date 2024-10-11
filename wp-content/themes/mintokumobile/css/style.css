@@ -1960,6 +1960,10 @@ button#search_button {
     opacity: 0.6;
     transition: opacity 0.3s ease;
 }
+.custom-textarea-content {
+    white-space: pre-wrap;
+}
+
 
 .thumbnail-item img:hover,
 .thumbnail-item.active img {
