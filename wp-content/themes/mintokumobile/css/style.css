@@ -513,9 +513,11 @@ ul li a:hover {
 .swiper-button-prev {;
     left: 0;
 }
+
 .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
     background-size: 20px 20px;
 }
+
 .swiper-button-prev, .swiper-container-rtl .swiper-button-next {
     background-size: 20px 20px;
 }
@@ -715,7 +717,6 @@ footer {
 }
 
 
-
 /* CSS cho container của loading spinner */
 #loading-spinner {
     position: fixed;
@@ -820,7 +821,6 @@ span.label_year {
 .post-category {
     display: none; /* Ẩn phần hiển thị danh mục nếu không muốn hiển thị */
 }
-
 
 
 /* CSS cho toàn bộ phần taxonomy year */
@@ -2418,17 +2418,19 @@ button#search_button {
     }
 
     .message_link {
-       background-image: url("../images/bt_ac_1.png");
-        background-repeat: repeat;
-        background-size: cover;
+        background-image: url("../images/bt_ac_1.png");
+        background-repeat: no-repeat;
+        background-size: 100%;
         padding: 10px 54px;
     }
-    .back_page{
+
+    .back_page {
         background-image: url("../images/bt_ac_2.png");
-        background-repeat: repeat;
-        background-size: cover;
+        background-repeat: no-repeat;
+        background-size: 100%;
         padding: 10px 54px;
     }
+
     .back_page a {
         text-decoration: none;
         color: #ffffff;
@@ -2447,15 +2449,18 @@ button#search_button {
             width: 100%;
             background: #ffffff;
         }
+
         .btn_action_fixed .btn_action {
             display: flex;
             justify-content: space-around;
         }
+
         .btn_action_fixed .chk_ {
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         .chk_ {
             display: flex;
             align-items: center;
