@@ -31,7 +31,7 @@ if ($taxonomy) {
 ?>
 
 <div id="page-single-job" class="page_single_job">
-    <div class="container">
+    <div class="">
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <?php if (have_rows('job_info')): ?>
@@ -39,6 +39,91 @@ if ($taxonomy) {
 
                         <?php if (get_row_layout() == 'slide_1'): ?>
                             <div class="slide slide-1 swiper-slide">
+                                <div class="logo_mintoku_mess">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/logo_slide_1.png" alt="company mintoku mess">
+                                </div>
+                                <?php
+                                // Lấy URL ảnh đại diện
+                                $thumbnail_url = get_the_post_thumbnail_url($post->ID, 'medium');
+                                if (!$thumbnail_url) {
+                                    $thumbnail_url = 'https://placehold.co/600x400';
+                                }
+
+                                // Lấy các term của taxonomy company_vietnam
+                                $company_terms = wp_get_post_terms($post->ID, 'company_vietnam', array('fields' => 'all'));
+                                $company_image_url = '';
+                                $company_name = '';
+
+                                if (!empty($company_terms)) {
+                                    $company_term_id = $company_terms[0]->term_id;
+                                    $company_name = $company_terms[0]->name;
+
+                                    $company_image_id = get_term_meta($company_term_id, 'company_image', true);
+                                    if (!empty($company_image_id)) {
+                                        $company_image_url = wp_get_attachment_url($company_image_id);
+                                    }
+                                    if (!$company_image_url) {
+                                        $company_image_url = 'https://placehold.co/100x100';
+                                    }
+                                }
+
+                                ?>
+                                <div class="avatar_job">
+                                    <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
+                                </div>
+
+                                <div class="job_info_slide_1">
+                                    <div class="job-item">
+                                        <p class="title_job">
+                                            <?php the_title(); ?>
+                                        </p>
+                                        <div class="job_content">
+                                            <div class="container">
+                                                <div class="text_info_job">
+                                                    <?php if ($company_image_url) : ?>
+                                                        <div class="company-info ">
+                                                            <div class="bl_logo">
+                                                                <p class="logo_company">
+                                                                    <img src="<?php echo esc_url($company_image_url); ?>" alt="Company Image">
+                                                                </p>
+                                                                <!-- Hiển thị tên công ty -->
+                                                                <?php if ($company_name) : ?>
+                                                                    <p class="company_name"><?php echo esc_html($company_name); ?></p>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                            <div class="box_w">
+                                                                <div class="hashtag">
+                                                                    <span class="tag_item">土日祝休み</span>
+                                                                    <span class="tag_item">昇給賞与あり</span>
+                                                                    <span class="tag_item">個室あり</span>
+                                                                    <span class="tag_item">夜勤あり</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="salary">
+                                                            <span class="label_text">時給</span> <span class="salary_text">1200 円</span>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                    <!-- Hiển thị ảnh đại diện bài viết -->
+                                                    <div class="text_desc">
+                                                        <?php
+                                                        // Lấy giá trị của custom field ACF
+                                                        $short_job_description = get_field('short_job_description');
+
+                                                        // Kiểm tra nếu trường này có giá trị
+                                                        if (!empty($short_job_description)) : ?>
+                                                            <div class="summary_job">
+                                                                <p><?php echo esc_html($short_job_description); ?></p>
+                                                            </div>
+                                                        <?php endif; ?>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <?php
                                 // Lấy nội dung của Flexible Content
                                 $slides = get_field('job_info'); // 'job_info' là tên của Flexible Content field chứa các slide
@@ -55,7 +140,7 @@ if ($taxonomy) {
 
                                                 // Lấy thông tin chi tiết của field (bao gồm cả label)
                                                 $field_object = get_sub_field_object($field_name);
-
+                                                echo '<div class="container">';
                                                 if( !empty($slide[$field_name]) && $field_object ) {
                                                     // Hiển thị label và value của các trường noi_dung_1 -> noi_dung_15
                                                     echo '<div class="noi-dung-field">';
@@ -63,6 +148,7 @@ if ($taxonomy) {
                                                     echo '<p>' . esc_html($slide[$field_name]) . '</p>'; // Hiển thị giá trị của field
                                                     echo '</div>';
                                                 }
+                                                echo '</div>';
                                             }
                                         }
                                     }
@@ -72,37 +158,37 @@ if ($taxonomy) {
 
                         <?php elseif (get_row_layout() == 'slide_2'): ?>
                             <div class="slide slide-2 swiper-slide">
-                                <?php
-                                // Lấy nội dung của Flexible Content
-                                $slides = get_field('job_info'); // 'job_info' là tên của Flexible Content field chứa các slide
+                                <div class="container">
+                                    <?php
+                                    // Lấy nội dung của Flexible Content
+                                    $slides = get_field('job_info'); // 'job_info' là tên của Flexible Content field chứa các slide
 
-                                // Kiểm tra nếu có các slide
-                                if( $slides ) {
-                                    // Lặp qua các layout của Flexible Content
-                                    foreach( $slides as $slide ) {
-                                        // Kiểm tra nếu layout là slide_2
-                                        if( $slide['acf_fc_layout'] === 'slide_2' ) {
-                                            // Lặp qua các field từ noi_dung_1 đến noi_dung_15
-                                            for( $i = 1; $i <= 15; $i++ ) {
-                                                $field_name = 'noi_dung_' . $i;
+                                    // Kiểm tra nếu có các slide
+                                    if( $slides ) {
+                                        // Lặp qua các layout của Flexible Content
+                                        foreach( $slides as $slide ) {
+                                            // Kiểm tra nếu layout là slide_2
+                                            if( $slide['acf_fc_layout'] === 'slide_2' ) {
+                                                // Lặp qua các field từ noi_dung_1 đến noi_dung_15
+                                                for( $i = 1; $i <= 15; $i++ ) {
+                                                    $field_name = 'noi_dung_' . $i;
 
-                                                // Lấy thông tin chi tiết của field (bao gồm cả label)
-                                                $field_object = get_sub_field_object($field_name);
+                                                    // Lấy thông tin chi tiết của field (bao gồm cả label)
+                                                    $field_object = get_sub_field_object($field_name);
 
-                                                if( !empty($slide[$field_name]) && $field_object ) {
-                                                    // Hiển thị label và value của các trường noi_dung_1 -> noi_dung_15
-                                                    echo '<div class="noi-dung-field">';
-                                                    echo '<strong>' . esc_html($field_object['label']) . ':</strong> '; // Hiển thị label
-                                                    echo '<p>' . esc_html($slide[$field_name]) . '</p>'; // Hiển thị giá trị của field
-                                                    echo '</div>';
+                                                    if( !empty($slide[$field_name]) && $field_object ) {
+                                                        // Hiển thị label và value của các trường noi_dung_1 -> noi_dung_15
+                                                        echo '<div class="noi-dung-field">';
+                                                        echo '<strong>' . esc_html($field_object['label']) . ':</strong> '; // Hiển thị label
+                                                        echo '<p>' . esc_html($slide[$field_name]) . '</p>'; // Hiển thị giá trị của field
+                                                        echo '</div>';
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                                ?>
-
-
+                                    ?>
+                                </div>
                             </div>
 
                         <?php elseif (get_row_layout() == 'slide_3'): ?>
@@ -166,51 +252,53 @@ if ($taxonomy) {
                                     </div>
                                     <!-- Thumbnail slider -->
                                     <div id="thumbnail-slider" class="thumbnail-slider">
-                                        <div class="thumbnail-items-wrapper">
-                                            <div class="thumbnail-items">
-                                                <?php
-                                                // Tạo thumbnail cho video và hình ảnh
-                                                if( $slides ) {
-                                                    $index = 0; // Bắt đầu từ 0
-                                                    foreach( $slides as $slide ) {
-                                                        if( isset($slide['acf_fc_layout']) && $slide['acf_fc_layout'] === 'slide_3' ) {
-                                                            $video_url = isset($slide['video_url']) ? $slide['video_url'] : '';
+                                        <div class="container">
+                                            <div class="thumbnail-items-wrapper">
+                                                <div class="thumbnail-items">
+                                                    <?php
+                                                    // Tạo thumbnail cho video và hình ảnh
+                                                    if( $slides ) {
+                                                        $index = 0; // Bắt đầu từ 0
+                                                        foreach( $slides as $slide ) {
+                                                            if( isset($slide['acf_fc_layout']) && $slide['acf_fc_layout'] === 'slide_3' ) {
+                                                                $video_url = isset($slide['video_url']) ? $slide['video_url'] : '';
 
-                                                            // Tạo thumbnail cho video
-                                                            if( !empty($video_url) ) {
-                                                                $parsed_url = parse_url($video_url);
-                                                                if( isset($query_params['v']) && !empty($query_params['v']) ) {
-                                                                    $video_id = $query_params['v'];
-                                                                    // Lấy ảnh thumbnail YouTube
-                                                                    $video_thumb = 'https://img.youtube.com/vi/' . $video_id . '/0.jpg';
-                                                                    ?>
-                                                                    <div class="thumbnail-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
-                                                                        <img src="<?php echo esc_url($video_thumb); ?>" alt="Video thumbnail" />
-                                                                    </div>
-                                                                    <?php
-                                                                    $index++;
+                                                                // Tạo thumbnail cho video
+                                                                if( !empty($video_url) ) {
+                                                                    $parsed_url = parse_url($video_url);
+                                                                    if( isset($query_params['v']) && !empty($query_params['v']) ) {
+                                                                        $video_id = $query_params['v'];
+                                                                        // Lấy ảnh thumbnail YouTube
+                                                                        $video_thumb = 'https://img.youtube.com/vi/' . $video_id . '/0.jpg';
+                                                                        ?>
+                                                                        <div class="thumbnail-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
+                                                                            <img src="<?php echo esc_url($video_thumb); ?>" alt="Video thumbnail" />
+                                                                        </div>
+                                                                        <?php
+                                                                        $index++;
+                                                                    }
                                                                 }
-                                                            }
 
-                                                            // Tạo thumbnail cho gallery images
-                                                            $gallery_images = isset($slide['image_job']) ? $slide['image_job'] : array();
-                                                            if( !empty($gallery_images) ) {
-                                                                foreach( $gallery_images as $image ) {
-                                                                    $image_thumb_url = $image['sizes']['thumbnail'];
-                                                                    ?>
-                                                                    <div class="thumbnail-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
-                                                                        <img src="<?php echo esc_url($image_thumb_url); ?>" alt="Image thumbnail" />
-                                                                    </div>
-                                                                    <?php
-                                                                    $index++;
+                                                                // Tạo thumbnail cho gallery images
+                                                                $gallery_images = isset($slide['image_job']) ? $slide['image_job'] : array();
+                                                                if( !empty($gallery_images) ) {
+                                                                    foreach( $gallery_images as $image ) {
+                                                                        $image_thumb_url = $image['sizes']['thumbnail'];
+                                                                        ?>
+                                                                        <div class="thumbnail-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
+                                                                            <img src="<?php echo esc_url($image_thumb_url); ?>" alt="Image thumbnail" />
+                                                                        </div>
+                                                                        <?php
+                                                                        $index++;
+                                                                    }
                                                                 }
                                                             }
                                                         }
                                                     }
-                                                }
-                                                ?>
-                                            </div>
+                                                    ?>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

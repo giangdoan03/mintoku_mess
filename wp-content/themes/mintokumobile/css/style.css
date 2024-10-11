@@ -1997,6 +1997,48 @@ button#search_button {
 .slide_mix {
     height: 100vh;
 }
+.page_single_job .avatar_job img {
+    width: 100%;
+}
+.job_info_slide_1 .company-info {
+    flex-direction: initial;
+    align-items: center;
+    margin-top: 10px;
+}
+.job_info_slide_1 .title_job {
+    font-size: 16px;
+    color: #ffffff;
+    background: #29abe2;
+    padding-left: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 4px;
+    padding-bottom: 5px;
+}
+.job_info_slide_1 p {
+    margin: 0;
+}
+.page_single_job .slide-1 .avatar_job img {
+    display: block;
+}
+.page_single_job .logo_mintoku_mess {
+    display: flex;
+    justify-content: center;
+    background: #f0ffff;
+    padding: 0 60px;
+    padding-bottom: 13px;
+}
+.page_single_job .company_name {
+    font-size: 10px;
+}
+.page_single_job .text_info_job .company-info .box_w {
+    width: 60%;
+}
+.page_single_job .text_info_job .company-info .tag_item {
+    font-size: 2vw;
+}
+
 /* Bố cục cho màn hình lớn (PC) */
 @media (min-width: 768px) {
     .container .row {
@@ -2008,6 +2050,13 @@ button#search_button {
         width: calc(33.333% - 20px);
         margin-right: 10px;
         margin-left: 10px;
+    }
+    .hashtag {
+         line-height: normal;
+    }
+    .tag_item {
+        margin: 3px;
+        margin-left: 0;
     }
 }
 
