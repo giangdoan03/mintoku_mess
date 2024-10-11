@@ -2071,6 +2071,15 @@ button#search_button {
         margin: 3px;
         margin-left: 0;
     }
+    .page-list-job-filter p {
+        font-size: 1.2vw;
+    }
+    .salary {
+        font-size: 1.4vw;
+    }
+    .content_list_job_filter .job_content .summary_job p {
+        font-size: 1.5vw;
+    }
 }
 
 /* Bố cục cho mobile (1 cột) */
