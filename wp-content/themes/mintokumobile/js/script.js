@@ -302,6 +302,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function() {
         subMenu.style.display = 'none';
     });
+
+    // Lấy tất cả các phần tử có class 'thumbnail-item'
+    var thumbnailItems = document.querySelectorAll('.thumbnail-item');
+
+    // Lặp qua tất cả các phần tử
+    thumbnailItems.forEach(function(item) {
+        // Kiểm tra nếu phần tử không chứa nội dung
+        if (!item.innerHTML.trim()) {
+            // Ẩn phần tử rỗng
+            item.style.display = 'none';
+        }
+    });
 });
 
 

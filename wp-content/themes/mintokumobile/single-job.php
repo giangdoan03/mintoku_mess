@@ -292,7 +292,6 @@ if ($taxonomy) {
                                     ?>
                                 </div>
                             </div>
-
                         <?php elseif (get_row_layout() == 'slide_3'): ?>
                             <div class="slide slide-3 swiper-slide">
                                 <div class="slide_mix">
@@ -311,29 +310,9 @@ if ($taxonomy) {
                                                     if (isset($slide['acf_fc_layout']) && $slide['acf_fc_layout'] === 'slide_3') {
                                                         // Lấy URL video từ slide_3
                                                         $video_url = isset($slide['video_url']) ? $slide['video_url'] : '';
+                                                        ?>
 
-                                                        // Nếu có video, hiển thị video trong slider item đầu tiên
-                                                        if (!empty($video_url)) {
-                                                            $parsed_url = parse_url($video_url);
-                                                            if (isset($parsed_url['query'])) {
-                                                                parse_str($parsed_url['query'], $query_params);
-                                                                if (isset($query_params['v']) && !empty($query_params['v'])) {
-                                                                    $video_id = $query_params['v'];
-                                                                    $video_embed_url = 'https://www.youtube.com/embed/' . $video_id;
-                                                                    ?>
-                                                                    <div class="slider-item"
-                                                                         data-index="<?php echo $index; ?>">
-                                                                        <iframe width="100%" height="315"
-                                                                                src="<?php echo esc_url($video_embed_url); ?>"
-                                                                                frameborder="0"
-                                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                                allowfullscreen></iframe>
-                                                                    </div>
-                                                                    <?php
-                                                                    $index++;
-                                                                }
-                                                            }
-                                                        }
+                                                        <?php
 
                                                         // Lấy gallery image array từ field image_job
                                                         $gallery_images = isset($slide['image_job']) ? $slide['image_job'] : array();
@@ -344,13 +323,23 @@ if ($taxonomy) {
                                                                 $image_url = $image['url'];
                                                                 $alt_text = $image['alt'];
                                                                 ?>
-                                                                <div class="slider-item"
-                                                                     data-index="<?php echo $index; ?>">
-                                                                    <img src="<?php echo esc_url($image_url); ?>"
-                                                                         alt="<?php echo esc_attr($alt_text); ?>"/>
+                                                                <div class="slider-item">
+                                                                    <?php
+                                                                    // Nếu tìm thấy 'video_url', thay thế vào script
+                                                                    if (isset($video_url) && !empty($video_url)) { ?>
+                                                                        <script type="text/javascript">
+                                                                            var Eviry = Eviry || {};
+                                                                            Eviry.Player || (Eviry.Player = {});
+                                                                            Eviry.Player.embedkey = "<?php echo esc_js($video_url); ?>";
+                                                                        </script>
+                                                                        <script type="text/javascript" src="https://d1euehvbqdc1n9.cloudfront.net/001/eviry/js/eviry.player.min.js"></script>
+                                                                        <?php
+                                                                    } ?>
                                                                 </div>
-                                                                <?php
-                                                                $index++;
+                                                                <div class="slider-item" data-index="<?php echo $index; ?>">
+                                                                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($alt_text); ?>"/>
+                                                                </div>
+                                                                <?php $index++;
                                                             }
                                                         }
                                                     }
@@ -366,29 +355,12 @@ if ($taxonomy) {
                                                 <div class="thumbnail-items">
                                                     <?php
                                                     // Tạo thumbnail cho video và hình ảnh
+                                                    $video_shown = false; // Biến để kiểm tra xem video đã được hiển thị chưa
                                                     if ($slides) {
                                                         $index = 0; // Bắt đầu từ 0
                                                         foreach ($slides as $slide) {
                                                             if (isset($slide['acf_fc_layout']) && $slide['acf_fc_layout'] === 'slide_3') {
                                                                 $video_url = isset($slide['video_url']) ? $slide['video_url'] : '';
-
-                                                                // Tạo thumbnail cho video
-                                                                if (!empty($video_url)) {
-                                                                    $parsed_url = parse_url($video_url);
-                                                                    if (isset($query_params['v']) && !empty($query_params['v'])) {
-                                                                        $video_id = $query_params['v'];
-                                                                        // Lấy ảnh thumbnail YouTube
-                                                                        $video_thumb = 'https://img.youtube.com/vi/' . $video_id . '/0.jpg';
-                                                                        ?>
-                                                                        <div class="thumbnail-item <?php echo $index === 0 ? 'active' : ''; ?>"
-                                                                             data-index="<?php echo $index; ?>">
-                                                                            <img src="<?php echo esc_url($video_thumb); ?>"
-                                                                                 alt="Video thumbnail"/>
-                                                                        </div>
-                                                                        <?php
-                                                                        $index++;
-                                                                    }
-                                                                }
 
                                                                 // Tạo thumbnail cho gallery images
                                                                 $gallery_images = isset($slide['image_job']) ? $slide['image_job'] : array();
@@ -396,10 +368,25 @@ if ($taxonomy) {
                                                                     foreach ($gallery_images as $image) {
                                                                         $image_thumb_url = $image['sizes']['thumbnail'];
                                                                         ?>
+                                                                        <div class="thumbnail-item">
+                                                                            <?php
+                                                                            // Nếu video chưa được hiển thị và có video_url, hiển thị video và đặt $video_shown thành true
+                                                                            if (!$video_shown && !empty($video_url)) {
+                                                                                ?>
+                                                                                <script type="text/javascript">
+                                                                                    var Eviry = Eviry || {};
+                                                                                    Eviry.Player || (Eviry.Player = {});
+                                                                                    Eviry.Player.embedkey = "<?php echo esc_js($video_url); ?>";
+                                                                                </script>
+                                                                                <script type="text/javascript" src="https://d1euehvbqdc1n9.cloudfront.net/001/eviry/js/eviry.player.min.js"></script>
+                                                                                <?php
+                                                                                $video_shown = true; // Đánh dấu rằng video đã được hiển thị
+                                                                            }
+                                                                            ?>
+                                                                        </div>
                                                                         <div class="thumbnail-item <?php echo $index === 0 ? 'active' : ''; ?>"
                                                                              data-index="<?php echo $index; ?>">
-                                                                            <img src="<?php echo esc_url($image_thumb_url); ?>"
-                                                                                 alt="Image thumbnail"/>
+                                                                            <img src="<?php echo esc_url($image_thumb_url); ?>" alt="Image thumbnail"/>
                                                                         </div>
                                                                         <?php
                                                                         $index++;
@@ -430,16 +417,9 @@ if ($taxonomy) {
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-
-            <!-- Pagination -->
-<!--            <div class="box_btn_pagination">-->
-<!--                <div class="swiper-pagination"></div>-->
-<!--            </div>-->
-
-
         </div>
     </div>
-<!--    <i class="fab fa-facebook-messenger">-->
+    <!--    <i class="fab fa-facebook-messenger">-->
     <div class="btn_action_fixed">
         <div class="chk_">
             <input type="checkbox" id="agree" name="agree" value="Bike">
@@ -537,12 +517,12 @@ if ($taxonomy) {
         }
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Khi trang tải, disable link
         $('.message_link a').addClass('disabled-link');
 
         // Bắt sự kiện khi checkbox được click
-        $('#agree').on('change', function() {
+        $('#agree').on('change', function () {
             if ($(this).is(':checked')) {
                 // Nếu checkbox được chọn, enable link
                 $('.message_link a').removeClass('disabled-link');
