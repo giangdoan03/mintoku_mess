@@ -1039,19 +1039,6 @@ p {
 }
 
 
-/* General Styling */
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    color: #333;
-}
-
-main {
-    padding: 20px;
-    background-color: #f4f4f4;
-}
 
 .search-form {
     max-width: 800px;
@@ -1238,10 +1225,6 @@ button:hover {
     transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
 }
 
-.page-list-job-filter li:hover {
-    background-color: #f0f0f0; /* Màu nền khi di chuột qua */
-    transform: translateY(-2px); /* Nâng nhẹ lên khi di chuột qua */
-}
 
 /* Liên kết */
 .page-list-job-filter a {
@@ -1330,9 +1313,6 @@ span.salary_text {
     position: relative; /* Để tiêu đề có thể cố định */
 }
 
-/*.box_slider {*/
-/*    margin-bottom: 50px;*/
-/*}*/
 /* Tiêu đề */
 .title_list_job_filter {
     position: sticky;
@@ -1367,10 +1347,6 @@ span.salary_text {
     transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
 }
 
-.content_list_job_filter li:hover {
-    background-color: #f0f0f0; /* Màu nền khi di chuột qua */
-    transform: translateY(-2px); /* Nâng nhẹ lên khi di chuột qua */
-}
 
 /* Liên kết */
 .content_list_job_filter a {
@@ -1635,7 +1611,6 @@ span.label_job_recommended {
 
 img.avatar_job.avatar_job_not_recommended {
     position: relative;
-    top: -28px;
 }
 
 .content_list_job_filter .job_content .summary_job p {
@@ -1665,15 +1640,29 @@ img.avatar_job.avatar_job_not_recommended {
     /*margin: 10px 0;*/
 }
 
-.job-item:hover {
-    background-color: #f8f8f8; /* Thêm hiệu ứng hover */
-    transition: background-color 0.3s ease;
-    border-radius: 10px;
-    padding: 10px;
+
+.btn_detail .btn_content {
+    background: url('../images/btn_detail.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 150px;
+    text-align: center;
+    padding: 11px 1px;
+    background-position: center;
+
 }
 
+.btn_detail .btn_content a {
+    color: #ffffff;
+    font-size: 3.2vw;
+    line-height: 2;
+}
 
-/* Nút Back to Top */
+.btn_detail {
+    padding-left: 10px;
+}
+
+    /* Nút Back to Top */
 #back-to-top {
     position: fixed;
     bottom: 100px; /* Cách dưới màn hình 100px */
@@ -1922,17 +1911,10 @@ button#search_button {
     box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.5);
 }
 
-.message_link {
-    /*position: fixed;*/
-    /*bottom: 110px;*/
-    /*width: 100%;*/
-    /*text-align: center;*/
-}
 
 .bl_logo {
     display: flex;
     align-items: center;
-    height: 34px;
 }
 
 .gallery-container {

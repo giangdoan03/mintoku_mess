@@ -155,7 +155,7 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
     // Hiển thị HTML của bài viết
     ?>
     <li>
-        <a href="<?php the_permalink(); ?>" class="job-item">
+        <div class="job-item">
             <p class="title_job">
                 <?php if ($block_post_recommended) : ?>
                     <span class="label_job_recommended">おすすめ求人</span>
@@ -207,7 +207,14 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
                     <img class="<?php echo esc_attr($avatar_job); ?>" src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
                 </p>
             </div>
-        </a>
+            <div class="btn_detail">
+                <div class="btn_content">
+                    <a href="<?php the_permalink(); ?>">
+                        Xem chi tiết
+                    </a>
+                </div>
+            </div>
+        </div>
     </li>
     <?php
 }

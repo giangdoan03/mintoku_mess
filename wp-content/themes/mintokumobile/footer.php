@@ -10,7 +10,8 @@
  */
 
 ?>
-
+<div class="b_footer">
+</div>
 <footer id="footer_s">
     <!-- Nút Back to Top -->
     <a href="#" id="back-to-top" title="Back to Top">&uarr;</a>
