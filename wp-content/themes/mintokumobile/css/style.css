@@ -1649,7 +1649,21 @@ img.avatar_job.avatar_job_not_recommended {
     text-align: center;
     padding: 11px 1px;
     background-position: center;
+    position: relative;
 
+}
+.btn_detail .btn_content:after {
+    content: '';
+    background: url('../images/icon_right_db.png');
+    background-repeat: no-repeat;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-size: 100%;
+    position: absolute;
+    right: 15%;
+    bottom: 19px;
+    z-index: 9;
 }
 
 .btn_detail .btn_content a {
@@ -2243,6 +2257,13 @@ button#search_button {
 
     .company-description {
         font-size: 0.85rem;
+    }
+}
+
+@media (min-width: 500px) {
+    .btn_detail .btn_content a {
+        font-size: 2.2vw;
+        line-height: 2;
     }
 }
 
