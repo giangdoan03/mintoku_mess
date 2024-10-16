@@ -2572,6 +2572,16 @@ button#search_button {
 }
 
 
+@media (min-width: 1080px) {
+    .block_jobs_recommended .noi-dung-field-ab_1 p{
+        font-size: 1vw;
+    }
+    .block_jobs_recommended .noi-dung-field-ab_2 p {
+        font-size: 1vw;
+    }
+}
+
+
 
 
 
