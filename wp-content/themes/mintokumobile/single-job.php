@@ -368,7 +368,7 @@ if ($taxonomy) {
                 ?>
             </div>
             <div class="back_page">
-                <a href="#">Quay lại</a>
+                <a href="#" id="backButton">Quay lại</a>
             </div>
         </div>
     </div>
@@ -465,5 +465,9 @@ if ($taxonomy) {
     //         }
     //     });
     // });
+
+    document.getElementById('backButton').addEventListener('click', function() {
+        window.history.go(-2); // Quay lại 2 trang trong lịch sử
+    });
 
 </script>

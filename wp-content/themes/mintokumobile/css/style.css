@@ -2446,20 +2446,22 @@ button#search_button {
     .message_link {
         background-image: url("../images/bt_ac_1.png");
         background-repeat: no-repeat;
-        background-size: 100%;
+        background-size: 100% 100%;
         padding: 10px 54px;
     }
 
     .back_page {
         background-image: url("../images/bt_ac_2.png");
         background-repeat: no-repeat;
-        background-size: 100%;
+        background-size: 100% 100%;
         padding: 10px 54px;
     }
 
     .back_page a {
         text-decoration: none;
         color: #ffffff;
+        font-weight: bold;
+        font-size: 14px;
     }
 
     /* Đảm bảo nút nằm chính giữa màn hình di động */
@@ -2552,6 +2554,21 @@ button#search_button {
 
     }
 
+}
+
+@media (max-width: 345px) {
+    .message_link {
+        padding: 10px 30px;
+        background-position: center center;
+    }
+    .back_page {
+        padding: 10px 30px;
+        background-position: center center;
+    }
+    .back_page a {
+        font-size: 14px;
+        font-weight: bold;
+    }
 }
 
 

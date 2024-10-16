@@ -17,9 +17,6 @@
     <a href="#" id="back-to-top" title="Back to Top">&uarr;</a>
 
     <!-- Nút Back chỉ hiển thị nếu không phải trang chủ -->
-    <?php if (!is_front_page()) : ?>
-        <a href="javascript:history.back()" id="back-button" title="Back">&larr;</a>
-    <?php endif; ?>
 </footer><!-- #footer_s -->
 </div><!-- #page -->
 
