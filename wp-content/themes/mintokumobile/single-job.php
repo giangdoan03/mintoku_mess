@@ -70,74 +70,7 @@ if ($taxonomy) {
 
                                 ?>
                                 <div class="avatar_job">
-                                    <img src="<?php echo esc_url($thumbnail_url); ?>"
-                                         alt="<?php the_title_attribute(); ?>">
-                                    <?php
-                                    // Lấy nội dung của Flexible Content
-                                    $slides_ = get_field('job_info'); // 'job_info' là tên của Flexible Content field chứa các slide
-
-                                    // Kiểm tra nếu có các slide
-                                    if ($slides_) {
-                                        // Lặp qua các layout của Flexible Content
-                                        foreach ($slides_ as $slide) {
-                                            // Kiểm tra nếu layout là slide_1
-                                            if ($slide['acf_fc_layout'] === 'slide_1') {
-
-                                                // Lấy thông tin chi tiết cho từng trường noi_dung_1 đến noi_dung_5 không dùng vòng lặp
-                                                $noi_dung_1 = get_sub_field_object('noi_dung_1');
-                                                $noi_dung_2 = get_sub_field_object('noi_dung_2');
-
-                                                // Xác định class cho noi_dung_1 dựa trên giá trị
-                                                $class_1 = '';
-                                                if (!empty($slide['noi_dung_1'])) {
-                                                    switch ($slide['noi_dung_1']) {
-                                                        case 'Thực tập sinh':
-                                                            $class_1 = 'color_1';
-                                                            break;
-                                                        case 'Kỹ năng đặc định':
-                                                            $class_1 = 'color_2';
-                                                            break;
-                                                        case 'Kỹ sư, Nhân văn, Quốc tế':
-                                                            $class_1 = 'color_3';
-                                                            break;
-                                                    }
-                                                }
-
-                                                // Xác định class cho noi_dung_2 dựa trên giá trị
-                                                $class_2 = '';
-                                                if (!empty($slide['noi_dung_2'])) {
-                                                    switch ($slide['noi_dung_2']) {
-                                                        case 'Việc làm tại Việt Nam':
-                                                            $class_2 = 'red1';
-                                                            break;
-                                                        case 'Việc làm tại Nhật Bản':
-                                                            $class_2 = 'red2';
-                                                            break;
-                                                    }
-                                                }
-
-                                                echo '<div class="container">';
-
-                                                // Hiển thị từng nội dung với class tùy thuộc vào giá trị
-                                                if (!empty($slide['noi_dung_1']) && $noi_dung_1) {
-                                                    echo '<div class="noi-dung-field-ab_1 ' . esc_attr($class_1) . '">'; // Thêm class động
-                                                    echo '<p>' . esc_html($slide['noi_dung_1']) . '</p>'; // Hiển thị giá trị của field
-                                                    echo '</div>';
-                                                }
-
-                                                if (!empty($slide['noi_dung_2']) && $noi_dung_2) {
-                                                    echo '<div class="noi-dung-field-ab_2 ' . esc_attr($class_2) . '">'; // Thêm class động
-                                                    echo '<p>' . esc_html($slide['noi_dung_2']) . '</p>'; // Hiển thị giá trị của field
-                                                    echo '</div>';
-                                                }
-
-                                                echo '</div>'; // Đóng container
-                                            }
-                                        }
-                                    }
-                                    ?>
-
-
+                                    <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
                                 </div>
 
                                 <div class="job_info_slide_1">
@@ -421,10 +354,10 @@ if ($taxonomy) {
     </div>
     <!--    <i class="fab fa-facebook-messenger">-->
     <div class="btn_action_fixed">
-        <div class="chk_">
-            <input type="checkbox" id="agree" name="agree" value="Bike">
-            <label for="agree">利用規約に同意する</label><br>
-        </div>
+<!--        <div class="chk_">-->
+<!--            <input type="checkbox" id="agree" name="agree" value="Bike">-->
+<!--            <label for="agree">利用規約に同意する</label><br>-->
+<!--        </div>-->
         <div class="btn_action">
             <div class="message_link">
                 <?php
@@ -517,20 +450,20 @@ if ($taxonomy) {
         }
     });
 
-    $(document).ready(function () {
-        // Khi trang tải, disable link
-        $('.message_link a').addClass('disabled-link');
-
-        // Bắt sự kiện khi checkbox được click
-        $('#agree').on('change', function () {
-            if ($(this).is(':checked')) {
-                // Nếu checkbox được chọn, enable link
-                $('.message_link a').removeClass('disabled-link');
-            } else {
-                // Nếu checkbox không được chọn, disable link
-                $('.message_link a').addClass('disabled-link');
-            }
-        });
-    });
+    // $(document).ready(function () {
+    //     // Khi trang tải, disable link
+    //     $('.message_link a').addClass('disabled-link');
+    //
+    //     // Bắt sự kiện khi checkbox được click
+    //     $('#agree').on('change', function () {
+    //         if ($(this).is(':checked')) {
+    //             // Nếu checkbox được chọn, enable link
+    //             $('.message_link a').removeClass('disabled-link');
+    //         } else {
+    //             // Nếu checkbox không được chọn, disable link
+    //             $('.message_link a').addClass('disabled-link');
+    //         }
+    //     });
+    // });
 
 </script>

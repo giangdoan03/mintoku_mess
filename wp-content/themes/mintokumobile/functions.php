@@ -782,6 +782,71 @@ function get_universities_by_province()
     }
 }
 
+// Function to display noi_dung_1 and noi_dung_2 from slide_1 in Flexible Content field
+function display_job_info_fields($post_id) {
+    // Lấy nội dung của Flexible Content
+    $slides_ = get_field('job_info', $post_id); // 'job_info' là tên của Flexible Content field chứa các slide
+
+    // Kiểm tra nếu có các slide
+    if ($slides_) {
+        // Lặp qua các layout của Flexible Content
+        foreach ($slides_ as $slide) {
+            // Kiểm tra nếu layout là slide_1
+            if ($slide['acf_fc_layout'] === 'slide_1') {
+
+                // Lấy thông tin chi tiết cho từng trường noi_dung_1 và noi_dung_2
+                $noi_dung_1 = isset($slide['noi_dung_1']) ? $slide['noi_dung_1'] : '';
+                $noi_dung_2 = isset($slide['noi_dung_2']) ? $slide['noi_dung_2'] : '';
+
+                // Xác định class cho noi_dung_1 dựa trên giá trị
+                $class_1 = '';
+                if (!empty($noi_dung_1)) {
+                    switch ($noi_dung_1) {
+                        case 'Thực tập sinh':
+                            $class_1 = 'color_1';
+                            break;
+                        case 'Kỹ năng đặc định':
+                            $class_1 = 'color_2';
+                            break;
+                        case 'Kỹ sư, Nhân văn, Quốc tế':
+                            $class_1 = 'color_3';
+                            break;
+                    }
+                }
+
+                // Xác định class cho noi_dung_2 dựa trên giá trị
+                $class_2 = '';
+                if (!empty($noi_dung_2)) {
+                    switch ($noi_dung_2) {
+                        case 'Việc làm tại Việt Nam':
+                            $class_2 = 'red1';
+                            break;
+                        case 'Việc làm tại Nhật Bản':
+                            $class_2 = 'red2';
+                            break;
+                    }
+                }
+
+
+                // Hiển thị nội dung noi_dung_1 với class
+                if (!empty($noi_dung_1)) {
+                    echo '<div class="noi-dung-field-ab_1 ' . esc_attr($class_1) . '">'; // Thêm class động
+                    echo '<p>' . esc_html($noi_dung_1) . '</p>'; // Hiển thị giá trị của field
+                    echo '</div>';
+                }
+
+                // Hiển thị nội dung noi_dung_2 với class
+                if (!empty($noi_dung_2)) {
+                    echo '<div class="noi-dung-field-ab_2 ' . esc_attr($class_2) . '">'; // Thêm class động
+                    echo '<p>' . esc_html($noi_dung_2) . '</p>'; // Hiển thị giá trị của field
+                    echo '</div>';
+                }
+            }
+        }
+    }
+}
+
+
 function display_acf_recommended_work_slider($atts)
 {
     // Lấy giá trị 'region' từ URL
@@ -850,6 +915,8 @@ function display_acf_recommended_work_slider($atts)
                                 if (has_post_thumbnail()) {
                                     // Hiển thị ảnh đại diện của bài viết
                                     the_post_thumbnail('medium');
+                                    $post_id = get_the_ID();
+                                    display_job_info_fields($post_id);
                                 } else {
                                     // Hiển thị ảnh mặc định nếu không có ảnh đại diện
                                     echo '<img src="https://placehold.co/600x300" alt="Placeholder">';

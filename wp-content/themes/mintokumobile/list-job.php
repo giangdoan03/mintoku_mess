@@ -216,6 +216,9 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
     <div id="content" class="page-list-job-filter">
         <div class="logo_mintoku_mess">
             <img src="<?php echo get_template_directory_uri(); ?>/images/logo_mintoku_mess.png" alt="company mintoku mess">
+            <div class="title_job_area">
+                <p><?php echo $university_name; ?></p>
+            </div>
         </div>
         <div class="block_jobs_recommended">
             <div class="container">
