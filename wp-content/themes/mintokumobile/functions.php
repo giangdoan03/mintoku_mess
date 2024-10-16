@@ -1296,6 +1296,92 @@ function sort_recommended_work_column($query) {
 }
 add_action('pre_get_posts', 'sort_recommended_work_column');
 
+function add_province_vietnam_column( $columns ) {
+    $new_columns = array();
+
+    // Giữ lại cột đầu tiên và cột thứ hai
+    foreach ( $columns as $key => $value ) {
+        $new_columns[$key] = $value; // Giữ nguyên cột
+        if ( $key === 'title' ) { // Sau cột 'title' (thường là cột thứ 2)
+            $new_columns['province_vietnam'] = __( 'Province', 'textdomain' ); // Thêm cột 'Province' vào vị trí thứ 3
+        }
+    }
+
+    return $new_columns;
+}
+add_filter( 'manage_vietnam_posts_columns', 'add_province_vietnam_column' );
+
+
+
+function show_province_vietnam_column( $column, $post_id ) {
+    if ( 'province_vietnam' === $column ) {
+        $terms = get_the_terms( $post_id, 'province_vietnam' );
+        if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+            $province_list = array();
+            foreach ( $terms as $term ) {
+                $province_list[] = $term->name;
+            }
+            echo implode( ', ', $province_list );
+        } else {
+            echo __( 'No province', 'textdomain' );
+        }
+    }
+}
+add_action( 'manage_vietnam_posts_custom_column', 'show_province_vietnam_column', 10, 2 );
+
+
+function province_vietnam_sortable_columns( $columns ) {
+    $columns['province_vietnam'] = 'province_vietnam';
+    return $columns;
+}
+add_filter( 'manage_edit-vietnam_sortable_columns', 'province_vietnam_sortable_columns' );
+
+
+
+function show_company_vietnam_column( $column, $post_id ) {
+    if ( 'company_vietnam' === $column ) {
+        $terms = get_the_terms( $post_id, 'company_vietnam' );
+        if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+            $company_list = array();
+            foreach ( $terms as $term ) {
+                $company_list[] = $term->name;
+            }
+            echo implode( ', ', $company_list );
+        } else {
+            echo __( 'No company', 'textdomain' );
+        }
+    }
+}
+add_action( 'manage_vietnam_posts_custom_column', 'show_company_vietnam_column', 10, 2 );
+
+
+function add_company_vietnam_column( $columns ) {
+    $new_columns = array();
+
+    // Giữ lại các cột ban đầu và thêm cột 'Company' ở vị trí thứ 4
+    foreach ( $columns as $key => $value ) {
+        $new_columns[$key] = $value;
+        if ( $key === 'title' ) { // Sau cột 'title' (cột thứ 2)
+            $new_columns['province_vietnam'] = __( 'Province', 'textdomain' ); // Thêm cột Province ở vị trí thứ 3
+        }
+        if ( $key === 'province_vietnam' ) { // Sau cột 'Province' (cột thứ 3)
+            $new_columns['company_vietnam'] = __( 'Company', 'textdomain' ); // Thêm cột Company ở vị trí thứ 4
+        }
+    }
+
+    return $new_columns;
+}
+add_filter( 'manage_vietnam_posts_columns', 'add_company_vietnam_column' );
+
+
+function company_vietnam_sortable_columns( $columns ) {
+    $columns['company_vietnam'] = 'company_vietnam';
+    return $columns;
+}
+add_filter( 'manage_edit-vietnam_sortable_columns', 'company_vietnam_sortable_columns' );
+
+
+
 
 function update_post_view_time() {
     if (is_single()) {
