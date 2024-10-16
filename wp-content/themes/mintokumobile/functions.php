@@ -920,6 +920,8 @@ function display_acf_recommended_work_slider($atts)
                                 } else {
                                     // Hiển thị ảnh mặc định nếu không có ảnh đại diện
                                     echo '<img src="https://placehold.co/600x300" alt="Placeholder">';
+                                    $post_id = get_the_ID();
+                                    display_job_info_fields($post_id);
                                 }
                                 echo '</div>';
                                 ?>
