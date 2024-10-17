@@ -1670,6 +1670,8 @@ img.avatar_job.avatar_job_not_recommended {
     color: #ffffff;
     font-size: 3.2vw;
     line-height: 2;
+    display: block;
+    width: 100%;
 }
 
 .btn_detail {
@@ -1892,29 +1894,10 @@ button#search_button {
 }
 
 
-.message_link a {
-    /*background-color: #0084ff; !* Màu xanh Messenger *!*/
-    /*color: white;*/
-    /*text-decoration: none;*/
-    /*padding: 15px 30px;*/
-    /*border-radius: 50px;*/
-    /*font-size: 16px;*/
-    /*font-weight: bold;*/
-    /*display: inline-flex;*/
-    /*align-items: center;*/
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
-    /*transition: background-color 0.3s ease, transform 0.3s ease;*/
-    /*text-align: center;*/
-}
-
 .message_link i {
     margin-right: 10px;
 }
 
-.message_link a:hover {
-    background-color: #006bbd;
-    transform: translateY(-3px);
-}
 
 .message_link a:active {
     transform: translateY(0);
@@ -2414,25 +2397,22 @@ button#search_button {
         /*background-color: #0084ff;*/
         color: #ffffff;
         text-decoration: none;
-        border-radius: 50px;
         font-size: 14px;
         font-weight: bold;
-        display: inline-flex;
         align-items: center;
         /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
         transition: background-color 0.3s ease, transform 0.3s ease;
         text-align: center;
         /*padding: 14px 8px;*/
+        display: block;
+        width: 100%;
+        padding: 10px 54px;
     }
 
     .message_link i {
         margin-right: 10px;
     }
 
-    .message_link a:hover {
-        background-color: #006bbd;
-        transform: translateY(-3px);
-    }
 
     .message_link a:active {
         transform: translateY(0);
@@ -2440,21 +2420,18 @@ button#search_button {
 
     .message_link a:focus {
         outline: none;
-        box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.5);
     }
 
     .message_link {
         background-image: url("../images/bt_ac_1.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        padding: 10px 54px;
     }
 
     .back_page {
         background-image: url("../images/bt_ac_2.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        padding: 10px 54px;
     }
 
     .back_page a {
@@ -2462,6 +2439,9 @@ button#search_button {
         color: #ffffff;
         font-weight: bold;
         font-size: 14px;
+        padding: 10px 54px;
+        display: block;
+        width: 100%;
     }
 
     /* Đảm bảo nút nằm chính giữa màn hình di động */
@@ -2559,16 +2539,29 @@ button#search_button {
 @media (max-width: 345px) {
     .message_link {
         padding: 10px 30px;
-        background-position: center center;
+        background-size: 100%;
+        width: 130px;
+        height: 40px;
+        background-position: center;
     }
     .back_page {
         padding: 10px 30px;
-        background-position: center center;
+        background-size: 100%;
+        width: 130px;
+        height: 40px;
+        background-position: center;
     }
     .back_page a {
         font-size: 14px;
         font-weight: bold;
     }
+    .message_link a {
+        padding: 0;
+    }
+    .back_page a {
+        padding: 0;
+    }
+
 }
 
 
