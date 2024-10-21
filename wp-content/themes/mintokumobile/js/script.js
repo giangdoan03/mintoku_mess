@@ -318,6 +318,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    // Khởi tạo slider chính (main slider)
+    var mainSlider = new Swiper('.main-slider', {
+        spaceBetween: 10,
+        nextButton: '.swiper-button-prev-1',
+        prevButton: '.swiper-button-next-1',
+        nested: true, // Cho phép Swiper lồng nhau
+    });
+
+    // Khởi tạo thumbnail slider (slider cho thumnail)
+    var thumbnailSlider = new Swiper('.thumbnail-slider', {
+        spaceBetween: 10,
+        slidesPerView: 4,
+        freeMode: true,
+        watchSlidesProgress: true,
+        slideToClickedSlide: true, // Tính năng để click vào thumbnail sẽ hiển thị slide tương ứng
+        nested: true, // Cho phép Swiper lồng nhau
+    });
+
+    // Đồng bộ giữa slider chính và thumbnail slider
+    mainSlider.controller.control = thumbnailSlider;
+    thumbnailSlider.controller.control = mainSlider;
+
+    // Ngăn chặn sự kiện click trong thumbnail slider ảnh hưởng đến slider cha
+    document.querySelectorAll('.thumbnail-slider .swiper-slide').forEach(function (thumbnailSlide) {
+        thumbnailSlide.addEventListener('click', function (event) {
+            event.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
+        });
+    });
+});
+
+
+
+
+
+
 
 
 

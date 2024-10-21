@@ -2343,6 +2343,25 @@ button#search_button {
 .page-form-search {
     height: 100vh;
 }
+
+.video-icon-thumbnail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.video-icon-thumbnail i {
+    font-size: 36px;
+}
+
+
+
 /* Bố cục cho màn hình lớn (PC) */
 @media (min-width: 768px) {
     .container .row {
