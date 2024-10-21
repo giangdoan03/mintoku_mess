@@ -2564,6 +2564,13 @@ button#search_button {
 
 }
 
+@media (max-width: 370px) {
+    .btn_detail .btn_content:after {
+        bottom: 17px;
+    }
+
+}
+
 
 @media (min-width: 1080px) {
     .block_jobs_recommended .noi-dung-field-ab_1 p{
