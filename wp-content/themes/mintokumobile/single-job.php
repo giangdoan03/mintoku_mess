@@ -103,8 +103,16 @@ if ($taxonomy) {
                                                             </div>
                                                         </div>
                                                         <div class="salary">
-                                                            <span class="label_text">時給</span> <span
-                                                                    class="salary_text">1200 円</span>
+                                                            <span class="label_text">Lương</span>
+                                                            <span class="salary_text">
+                                                                <?php
+                                                                // Lấy giá trị của custom field ACF
+                                                                $salary_job = get_field('salary');
+                                                                // Kiểm tra nếu trường này có giá trị
+                                                                if (!empty($salary_job)) : ?>
+                                                                    <?php echo esc_html($salary_job); ?>
+                                                                <?php endif; ?>
+                                                            </span>
                                                         </div>
                                                     <?php endif; ?>
                                                     <!-- Hiển thị ảnh đại diện bài viết -->
@@ -467,8 +475,8 @@ if ($taxonomy) {
     // });
 
     document.getElementById('backButton').addEventListener('click', function() {
-        if (window.history.length > 2) {
-            window.history.go(-2); // Quay lại 2 trang trong lịch sử
+        if (window.history.length > 1) {
+            window.history.go(-1); // Quay lại 2 trang trong lịch sử
             var baseURL = window.location.origin;
         } else {
             // Lấy URL gốc từ domain hiện tại (bao gồm cả localhost và hosting)

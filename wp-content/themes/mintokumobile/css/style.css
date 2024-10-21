@@ -2187,6 +2187,116 @@ button#search_button {
     color: #cf1400;
 }
 
+
+
+
+
+.has_label {
+    position: relative;
+}
+
+.bl_list_qr .has_label {
+    max-width: 170px;
+}
+
+.has_label .noi-dung-field-ab_1 {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 9px 40px;
+}
+
+.has_label .noi-dung-field-ab_2 {
+    position: absolute !important;
+    left: 24px;
+    bottom: 14px;
+    border-radius: 20px !important;
+    padding: 3px 15px !important;
+    background: #FF0000;
+}
+
+.has_label .noi-dung-field-ab_1 {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.has_label .noi-dung-field-ab_1.color_1 {
+    background-image: url('../images/icon_bg_1.png');
+    width: 117px;
+    padding: 5px 29px;
+}
+
+.has_label .noi-dung-field-ab_1.color_2 {
+    background-image: url('../images/icon_bg_2.png');
+    width: 132px;
+    padding: 6px 25px;
+    text-align: center;
+}
+
+.has_label .noi-dung-field-ab_1.color_3 {
+    background-image: url('../images/icon_bg_3.png');
+}
+
+.has_label .noi-dung-field-ab_1 p {
+    color: #ffffff;
+    margin: 0;
+    font-size: 2.5vw;
+}
+
+.has_label .noi-dung-field-ab_2 p {
+    color: #ffffff;
+    margin: 0;
+    font-size: 2.5vw;
+}
+
+.has_label .noi-dung-field-ab_2.red2 {
+    background: #FF0000;
+    border-radius: 20px;
+    padding: 3px 25px;
+}
+
+.has_label .noi-dung-field-ab_2.red1 {
+    background: #ffffff;
+    border-radius: 20px;
+    position: relative;
+    left: 20px;
+    bottom: 14px;
+}
+
+.has_label .noi-dung-field-ab_2.red1:before {
+    content: '';
+    background: url('../images/icon_vi.png');
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: -17px;
+    top: -5px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.has_label .noi-dung-field-ab_2.red2:before {
+    content: '';
+    background: url('../images/icon_ja.png');
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: -21px;
+    top: -6px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.has_label .noi-dung-field-ab_2.red1 p {
+    color: #cf1400;
+}
+
+
+
+
+
+
+
 .page_single_job .logo_company img {
     width: 60px;
     object-fit: contain;

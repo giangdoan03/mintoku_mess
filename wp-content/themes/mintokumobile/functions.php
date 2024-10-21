@@ -937,7 +937,16 @@ function display_acf_recommended_work_slider($atts)
                                             <a class="tag_item" href="#">夜勤あり</a>
                                         </div>
                                         <div class="salary">
-                                            <span class="label_text">時給</span> <span class="salary_text">1200 円</span>
+                                            <span class="label_text">Lương</span>
+                                            <span class="salary_text">
+                                             <?php
+                                             // Lấy giá trị của custom field ACF
+                                             $salary_job = get_field('salary');
+                                             // Kiểm tra nếu trường này có giá trị
+                                             if (!empty($salary_job)) : ?>
+                                                 <?php echo esc_html($salary_job); ?>
+                                             <?php endif; ?>
+                                            </span>
                                         </div>
                                     </div>
                                     <?php
