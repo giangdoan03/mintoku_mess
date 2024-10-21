@@ -2255,7 +2255,7 @@ button#search_button {
     }
 }
 
-@media (max-width: 376px) {
+@media (max-width: 500px) {
     .page_single_job .salary {
         font-size: 5.2vw;
     }
