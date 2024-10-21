@@ -467,7 +467,23 @@ if ($taxonomy) {
     // });
 
     document.getElementById('backButton').addEventListener('click', function() {
-        window.history.go(-2); // Quay lại 2 trang trong lịch sử
+        if (window.history.length > 2) {
+            window.history.go(-2); // Quay lại 2 trang trong lịch sử
+            var baseURL = window.location.origin;
+        } else {
+            // Lấy URL gốc từ domain hiện tại (bao gồm cả localhost và hosting)
+            var baseURL = window.location.origin;
+
+            // Kiểm tra xem bạn đang ở localhost hay trên hosting
+            if (baseURL.includes('localhost')) {
+                // Nếu đang ở localhost, sử dụng đường dẫn tương ứng với localhost
+                window.location.href = baseURL + "/mintoku_mobile/list-job/";
+            } else {
+                // Nếu không phải localhost, sử dụng đường dẫn cho hosting
+                window.location.href = baseURL + "/list-job/";
+            }
+        }
     });
+
 
 </script>
