@@ -316,7 +316,7 @@ if ($taxonomy) {
                         <?php elseif (get_row_layout() == 'slide_4'): ?>
                             <div class="slide slide-4 swiper-slide">
                                 <div class="container">
-                                    <div style="height: 100vh;display: flex; align-items: center;">
+                                    <div style="height: 100vh;display: flex; align-items: center; position: relative; bottom: 150px;">
                                         <?php
                                         // Lấy nội dung của Flexible Content hoặc Repeater Field
                                         $job_field = get_field('job_info'); // 'job_info' là tên field Flexible Content chứa các slide
