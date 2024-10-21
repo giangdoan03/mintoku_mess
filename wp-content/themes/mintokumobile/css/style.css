@@ -2187,6 +2187,11 @@ button#search_button {
     color: #cf1400;
 }
 
+.page_single_job .logo_company img {
+    width: 60px;
+    object-fit: contain;
+}
+
 /* Bố cục cho màn hình lớn (PC) */
 @media (min-width: 768px) {
     .container .row {
@@ -2247,6 +2252,12 @@ button#search_button {
     .btn_detail .btn_content a {
         font-size: 2.2vw;
         line-height: 2;
+    }
+}
+
+@media (max-width: 376px) {
+    .page_single_job .salary {
+        font-size: 5.2vw;
     }
 }
 
