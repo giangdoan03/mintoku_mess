@@ -592,6 +592,7 @@ ul li a:hover {
 
 .home #page_content {
     padding: 15px !important;
+    height: 100vh;
 }
 
 .title_list_job_province {
