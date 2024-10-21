@@ -939,13 +939,17 @@ function display_acf_recommended_work_slider($atts)
                                         <div class="salary">
                                             <span class="label_text">Lương</span>
                                             <span class="salary_text">
-                                             <?php
-                                             // Lấy giá trị của custom field ACF
-                                             $salary_job = get_field('salary');
-                                             // Kiểm tra nếu trường này có giá trị
-                                             if (!empty($salary_job)) : ?>
-                                                 <?php echo esc_html($salary_job); ?>
-                                             <?php endif; ?>
+                                            <?php
+                                            // Lấy nội dung của Flexible Content
+                                            $slides = get_field('job_info'); // 'job_info' là tên của Flexible Content field chứa các slide
+
+                                            // Gọi hàm và truyền tên field cần lấy
+                                            $noi_dung_1 = lay_noi_dung_field($slides, 'noi_dung_1');
+
+                                            // In ra nội dung của noi_dung_1
+                                            echo $noi_dung_1;
+                                            ?>
+
                                             </span>
                                         </div>
                                     </div>
@@ -1402,6 +1406,25 @@ function update_post_view_time() {
     }
 }
 add_action('wp_head', 'update_post_view_time');
+
+
+// Hàm chung để lấy giá trị của bất kỳ trường nào từ layout
+function lay_noi_dung_field($slides, $field_name) {
+    // Kiểm tra nếu có các slide
+    if ($slides) {
+        // Lặp qua các layout của Flexible Content
+        foreach ($slides as $slide) {
+            // Kiểm tra nếu layout là slide_2 (hoặc điều chỉnh theo nhu cầu)
+            if ($slide['acf_fc_layout'] === 'slide_2') {
+                // Trả về giá trị của field nếu tồn tại
+                if (isset($slide[$field_name]) && !empty($slide[$field_name])) {
+                    return $slide[$field_name]; // Trả về giá trị của field
+                }
+            }
+        }
+    }
+    return ''; // Trả về chuỗi rỗng nếu không tìm thấy giá trị
+}
 
 
 

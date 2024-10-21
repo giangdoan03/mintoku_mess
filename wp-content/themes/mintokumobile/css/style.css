@@ -8,7 +8,6 @@ html {
 header,
 footer {
     text-align: center;
-    padding: 10px;
     /*position: fixed;*/
     width: 100%;
     z-index: 1000;
@@ -2222,19 +2221,26 @@ button#search_button {
 
 .has_label .noi-dung-field-ab_1.color_1 {
     background-image: url('../images/icon_bg_1.png');
-    width: 117px;
-    padding: 5px 29px;
+    width: 110px;
+    padding: 6px 19px;
+    text-align: center;
+    padding-right: 3px;
 }
 
 .has_label .noi-dung-field-ab_1.color_2 {
     background-image: url('../images/icon_bg_2.png');
-    width: 132px;
+    width: 115px;
     padding: 6px 25px;
     text-align: center;
+    padding-right: 5px;
 }
 
 .has_label .noi-dung-field-ab_1.color_3 {
     background-image: url('../images/icon_bg_3.png');
+    width: 150px;
+    padding: 6px 25px;
+    text-align: center;
+    padding-right: 5px;
 }
 
 .has_label .noi-dung-field-ab_1 p {
@@ -2302,6 +2308,36 @@ button#search_button {
     object-fit: contain;
 }
 
+.b_footer {
+    display: flex;
+}
+.footer_left {
+    display: flex;
+}
+
+.b_footer p {
+    display: flex;
+    font-size: 2.7vw;
+    color: #ffffff;
+}
+
+.b_footer {
+    display: flex;
+    justify-content: space-between;
+    background: #2E3192;
+    padding: 0 10px;
+}
+.b_footer p a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.footer_left p:nth-child(2) {
+    margin-left: 15px;
+}
+.page-form-search {
+    height: 100vh;
+}
 /* Bố cục cho màn hình lớn (PC) */
 @media (min-width: 768px) {
     .container .row {
@@ -2569,7 +2605,7 @@ button#search_button {
     @media (max-width: 768px) {
         .btn_action_fixed {
             position: fixed;
-            bottom: 0;
+            bottom: 50px;
             text-align: center;
             left: 50%;
             transform: translateX(-50%);
@@ -2688,6 +2724,15 @@ button#search_button {
 @media (max-width: 370px) {
     .btn_detail .btn_content:after {
         bottom: 17px;
+    }
+
+}
+@media (min-width: 431px) {
+    .has_label .noi-dung-field-ab_1.color_3 {
+        width: 177px;
+    }
+    .has_label .noi-dung-field-ab_1.color_2 {
+        width: 130px;
     }
 
 }

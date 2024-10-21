@@ -105,13 +105,17 @@ if ($taxonomy) {
                                                         <div class="salary">
                                                             <span class="label_text">Lương</span>
                                                             <span class="salary_text">
-                                                                <?php
-                                                                // Lấy giá trị của custom field ACF
-                                                                $salary_job = get_field('salary');
-                                                                // Kiểm tra nếu trường này có giá trị
-                                                                if (!empty($salary_job)) : ?>
-                                                                    <?php echo esc_html($salary_job); ?>
-                                                                <?php endif; ?>
+                                                             <?php
+                                                             // Lấy nội dung của Flexible Content
+                                                             $slides = get_field('job_info'); // 'job_info' là tên của Flexible Content field chứa các slide
+
+                                                             // Gọi hàm và truyền tên field cần lấy
+                                                             $noi_dung_1 = lay_noi_dung_field($slides, 'noi_dung_1');
+
+                                                             // In ra nội dung của noi_dung_1
+                                                             echo $noi_dung_1;
+                                                             ?>
+
                                                             </span>
                                                         </div>
                                                     <?php endif; ?>

@@ -11,6 +11,13 @@
 
 ?>
 <div class="b_footer">
+    <div class="footer_left">
+        <p><a href="#">利用規約</a></p>
+        <p><a href="https://biz.ca-m.co.jp/privacypolicy_vn">プライバシーポリシー</a></p>
+    </div>
+    <div class="footer_right">
+        <p>© CAMTECH Inc. All Rights Reserved.</p>
+    </div>
 </div>
 <footer id="footer_s">
     <!-- Nút Back to Top -->
