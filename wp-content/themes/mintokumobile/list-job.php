@@ -222,12 +222,12 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
 
                 </div>
                 <p class="avatar_job">
-                    <div class="has_label">
-                    <img class="<?php echo esc_attr($avatar_job); ?>" src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
-                    <?php
-                    $post_id = get_the_ID();
-                    display_job_info_fields($post_id);
-                    ?>
+                    <div class="has_label label_jobs_recommended">
+                        <img class="<?php echo esc_attr($avatar_job); ?>" src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
+                        <?php
+                        $post_id = get_the_ID();
+                        display_job_info_fields($post_id);
+                        ?>
                     </div>
                 </p>
             </div>

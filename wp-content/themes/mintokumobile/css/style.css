@@ -613,6 +613,10 @@ ul li a:hover {
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
+.label_jobs_recommended {
+    width: 240px;
+}
+
 
 footer {
     display: block;
