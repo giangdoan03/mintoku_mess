@@ -363,7 +363,7 @@ if ($taxonomy) {
         </div>
     </div>
     <!--    <i class="fab fa-facebook-messenger">-->
-    <div class="btn_action_fixed">
+    <div class="btn_action_fixed" id="btn_action_fixed">
 <!--        <div class="chk_">-->
 <!--            <input type="checkbox" id="agree" name="agree" value="Bike">-->
 <!--            <label for="agree">利用規約に同意する</label><br>-->
@@ -459,22 +459,6 @@ if ($taxonomy) {
             updateSlider(0); // Hiển thị và kích hoạt thumbnail đầu tiên nếu chưa có cái nào được active
         }
     });
-
-    // $(document).ready(function () {
-    //     // Khi trang tải, disable link
-    //     $('.message_link a').addClass('disabled-link');
-    //
-    //     // Bắt sự kiện khi checkbox được click
-    //     $('#agree').on('change', function () {
-    //         if ($(this).is(':checked')) {
-    //             // Nếu checkbox được chọn, enable link
-    //             $('.message_link a').removeClass('disabled-link');
-    //         } else {
-    //             // Nếu checkbox không được chọn, disable link
-    //             $('.message_link a').addClass('disabled-link');
-    //         }
-    //     });
-    // });
 
     document.getElementById('backButton').addEventListener('click', function() {
         if (window.history.length > 1) {

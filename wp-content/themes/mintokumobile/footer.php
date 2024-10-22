@@ -11,12 +11,15 @@
 
 ?>
 <div class="b_footer">
-    <div class="footer_left">
-        <p><a href="#">利用規約</a></p>
-        <p><a href="https://biz.ca-m.co.jp/privacypolicy_vn">プライバシーポリシー</a></p>
-    </div>
-    <div class="footer_right">
-        <p>© CAMTECH Inc. All Rights Reserved.</p>
+    <div class="f-top">
+        <div class="footer_left">
+            <p><a href="https://biz.ca-m.co.jp/privacypolicy_vn">Thỏa thuận sử dụng</a></p>
+            <p><a href="https://vietnam-camcom.com/vi/privacy/">Quy định, Bảo mật</a></p>
+            <p><a href="https://vietnam-camcom.com/vi/about/">Công ty</a></p>
+        </div>
+        <div class="footer_right">
+            <p>© VIETNAM CAMCOM Co., Ltd</p>
+        </div>
     </div>
 </div>
 <footer id="footer_s">
@@ -31,6 +34,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const backToTopButton = document.getElementById('back-to-top');
+        const btn_action_fixed = document.getElementById('btn_action_fixed');
 
         // Hiển thị hoặc ẩn nút khi cuộn
         window.addEventListener('scroll', function() {
@@ -38,6 +42,22 @@
                 backToTopButton.classList.add('show');
             } else {
                 backToTopButton.classList.remove('show');
+            }
+        });
+
+        window.addEventListener('scroll', function() {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            var windowHeight = window.innerHeight;
+            var documentHeight = document.documentElement.scrollHeight;
+            var distanceToBottom = documentHeight - (scrollTop + windowHeight);
+
+            var btnActionFixed = document.querySelector('.btn_action_fixed');
+
+            // Kiểm tra nếu cách đáy trang 60px
+            if (distanceToBottom <= 40) {
+                btnActionFixed.classList.add('fixed-bottom-class'); // Thêm class khi gần đáy
+            } else {
+                btnActionFixed.classList.remove('fixed-bottom-class'); // Xóa class khi không còn gần đáy
             }
         });
 

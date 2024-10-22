@@ -158,7 +158,7 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
         <div class="job-item">
             <p class="title_job">
                 <?php if ($block_post_recommended) : ?>
-                    <span class="label_job_recommended">おすすめ求人</span>
+                    <span class="label_job_recommended">Đề xuất</span>
                 <?php endif; ?>
                 <span class="text"><?php the_title(); ?></span>
             </p>
@@ -217,9 +217,6 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
                         <?php endif; ?>
 
                     </div>
-                </div>
-                <div class="">
-
                 </div>
                 <p class="avatar_job">
                     <div class="has_label label_jobs_recommended">
