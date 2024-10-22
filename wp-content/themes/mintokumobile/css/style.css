@@ -2640,7 +2640,7 @@ button#search_button {
         position: fixed;
         text-align: center;
         left: 50%;
-        bottom: 10px;
+        bottom: 0;
         transform: translateX(-50%);
         z-index: 9;
         padding: 0;
