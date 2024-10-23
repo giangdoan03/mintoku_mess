@@ -53,11 +53,13 @@
 
             var btnActionFixed = document.querySelector('.btn_action_fixed');
 
-            // Kiểm tra nếu cách đáy trang 60px
-            if (distanceToBottom <= 40) {
-                btnActionFixed.classList.add('fixed-bottom-class'); // Thêm class khi gần đáy
-            } else {
-                btnActionFixed.classList.remove('fixed-bottom-class'); // Xóa class khi không còn gần đáy
+            if (btnActionFixed) { // Check if the element exists
+                // Kiểm tra nếu cách đáy trang 60px
+                if (distanceToBottom <= 40) {
+                    btnActionFixed.classList.add('fixed-bottom-class'); // Thêm class khi gần đáy
+                } else {
+                    btnActionFixed.classList.remove('fixed-bottom-class'); // Xóa class khi không còn gần đáy
+                }
             }
         });
 

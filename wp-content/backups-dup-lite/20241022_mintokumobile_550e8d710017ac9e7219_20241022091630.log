@@ -1,0 +1,73 @@
+********************************************************************************
+DUPLICATOR-LITE PACKAGE-LOG: October 22, 2024 9:17 am
+NOTICE: Do NOT post to public sites or forums 
+********************************************************************************
+VERSION:	1.5.11.1
+WORDPRESS:	6.6.2
+PHP INFO:	8.1.17 | SAPI: apache2handler
+SERVER:		Apache/2.4.56 (Win64) OpenSSL/1.1.1t PHP/8.1.17 
+PHP TIME LIMIT: (0) no time limit imposed 
+PHP MAX MEMORY: 4294967296 (512M default) 
+MEMORY STACK: 46MB
+
+********************************************************************************
+DATABASE:
+********************************************************************************
+BUILD MODE:   MYSQLDUMP
+MYSQLTIMEOUT: 5000
+MYSQLDUMP:    Is Supported
+SQL CREATED: 20241022_mintokumobile_550e8d710017ac9e7219_20241022091630_database.sql
+SQL FILE SIZE: 1.88MB (1975535)
+SQL FILE TIME: 2024-10-22 09:17:14
+SQL RUNTIME: 11.40 sec.
+
+********************************************************************************
+ARCHIVE (ZIP):
+********************************************************************************
+ARCHIVE DIR:  C:/xampp81/htdocs/mintoku_mobile
+ARCHIVE FILE: 20241022_mintokumobile_550e8d710017ac9e7219_20241022091630_archive.zip
+FILTERS: *OFF*
+DIRS:
+	not set
+FILES:
+	not set
+EXTS:  not set
+----------------------------------------
+COMPRESSING
+SIZE:	302.21MB
+STATS:	Dirs 1,623 | Files 9,194
+SQL ADDED: 20241022_mintokumobile_550e8d710017ac9e7219_20241022091630_database.sql
+ZipArchive Object
+(
+    [lastId] => 10816
+    [status] => 0
+    [statusSys] => 0
+    [numFiles] => 10817
+    [filename] => C:\xampp81\htdocs\mintoku_mobile\wp-content\backups-dup-lite\tmp\20241022_mintokumobile_550e8d710017ac9e7219_20241022091630_archive.zip
+    [comment] => 
+)
+
+FILE ADDED TO ZIP: 10816
+COMPRESSION RESULT: '1'
+COMPRESSED SIZE: 210.23MB
+ARCHIVE RUNTIME: 49.97 sec.
+MEMORY STACK: 50MB
+building installer
+ARCHIVE CONSISTENCY TEST: PASS
+
+********************************************************************************
+INTEGRITY CHECKS:
+********************************************************************************
+SQL FILE: 1.88MB
+INSTALLER FILE: 73.48KB
+ARCHIVE FILE: 212.2MB 
+EXPECTED FILE/DIRECTORY COUNT: 10,817
+ACTUAL FILE/DIRECTORY COUNT: 10,816
+ARCHIVE CONSISTENCY TEST: Pass
+
+********************************************************************************
+RECORD ID:[1]
+TOTAL PROCESS RUNTIME: 64.03 sec.
+PEAK PHP MEMORY USED: 52MB
+DONE PROCESSING => 20241022_mintokumobile October 22, 2024 9:18 am
+
