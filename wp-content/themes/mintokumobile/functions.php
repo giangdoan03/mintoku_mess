@@ -972,9 +972,13 @@ function display_acf_recommended_work_slider($atts)
                                     ?>
                                 </div>
                                 <div class="summary_job">
-                                    <p>賞与昇給あり♪人気の土日祝休み♪ワンルーム社宅完備！インドネシアの先輩が活躍中！
-                                        体力に自信のある先輩スタッフが活躍しています。
-                                        手に職をつけたい方や、塗装の技術を磨きたい方が活躍しています。</p>
+                                    <?php
+                                    // Lấy giá trị của custom field ACF
+                                    $short_job_description = get_field('short_job_description');
+                                    // Kiểm tra nếu trường này có giá trị
+                                    if (!empty($short_job_description)) : ?>
+                                        <p><?php echo esc_html($short_job_description); ?></p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

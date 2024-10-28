@@ -182,9 +182,6 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
                                     <span class="tag_item">個室あり</span>
                                     <span class="tag_item">夜勤あり</span>
                                 </div>
-<!--                                <div class="salary">-->
-<!--                                    <span class="label_text">時給</span> <span class="salary_text">1200 円</span>-->
-<!--                                </div>-->
                                 <div class="salary">
                                     <span class="label_text">Lương</span>
                                     <span class="salary_text">
@@ -217,22 +214,20 @@ function display_job_item($post, $block_post = false, $block_post_recommended = 
                         <?php endif; ?>
 
                     </div>
-                </div>
-                <p class="avatar_job">
-                    <div class="has_label label_jobs_recommended">
-                        <img class="<?php echo esc_attr($avatar_job); ?>" src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
-                        <?php
-                        $post_id = get_the_ID();
-                        display_job_info_fields($post_id);
-                        ?>
+                    <div class="btn_detail">
+                        <div class="btn_content">
+                            <a href="<?php the_permalink(); ?>">
+                                Xem chi tiết
+                            </a>
+                        </div>
                     </div>
-                </p>
-            </div>
-            <div class="btn_detail">
-                <div class="btn_content">
-                    <a href="<?php the_permalink(); ?>">
-                        Xem chi tiết
-                    </a>
+                </div>
+                <div class="has_label label_jobs_recommended">
+                    <img class="<?php echo esc_attr($avatar_job); ?>" src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
+                    <?php
+                    $post_id = get_the_ID();
+                    display_job_info_fields($post_id);
+                    ?>
                 </div>
             </div>
         </div>

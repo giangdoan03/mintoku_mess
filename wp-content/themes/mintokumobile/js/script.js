@@ -148,15 +148,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Gửi URL mới tới trang cha khi URL thay đổi
-window.addEventListener('popstate', function () {
-    window.parent.postMessage(window.location.href, 'https://mintoku.vn'); // Thay thế 'https://your-main-domain.com' bằng URL của trang cha
-});
-
-// Hoặc gửi ngay khi trang tải
-window.parent.postMessage(window.location.href, 'https://mintoku.vn');
-
-
 
 
 

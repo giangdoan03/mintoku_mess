@@ -1607,6 +1607,9 @@ span.label_job_recommended {
 .content_list_job_filter .job_content .text_info_job {
     width: 82%;
     padding-right: 10px;
+    row-gap: 7px;
+    display: flex;
+    flex-direction: column;
 }
 
 .text_info_job.text_info_job_recommended {
@@ -1615,6 +1618,14 @@ span.label_job_recommended {
 
 img.avatar_job.avatar_job_not_recommended {
     position: relative;
+    height: 100%;
+    object-fit: cover;
+}
+
+.has_label.label_jobs_recommended .avatar_job {
+    position: relative;
+    height: 100%;
+    object-fit: cover;
 }
 
 .content_list_job_filter .job_content .summary_job p {
@@ -1651,7 +1662,6 @@ img.avatar_job.avatar_job_not_recommended {
     background-size: 100%;
     width: 150px;
     text-align: center;
-    padding: 11px 1px;
     background-position: center;
     position: relative;
 
@@ -1666,7 +1676,7 @@ img.avatar_job.avatar_job_not_recommended {
     background-size: 100%;
     position: absolute;
     right: 15%;
-    bottom: 19px;
+    bottom: 6px;
     z-index: 9;
 }
 
@@ -1678,9 +1688,6 @@ img.avatar_job.avatar_job_not_recommended {
     width: 100%;
 }
 
-.btn_detail {
-    padding-left: 10px;
-}
 
     /* Nút Back to Top */
 #back-to-top {
@@ -2213,7 +2220,7 @@ button#search_button {
 .has_label .noi-dung-field-ab_2 {
     position: absolute !important;
     left: 24px;
-    bottom: 14px;
+    bottom: 13px;
     border-radius: 20px !important;
     padding: 3px 15px !important;
     background: #FF0000;
