@@ -22,12 +22,35 @@ $placeholder_image = get_stylesheet_directory_uri() . '/images/mintokumesse_logo
             <div class="page-content">
                 <?php the_content(); ?> <!-- Display the page content -->
             </div>
+            <div class="back_page">
+                <a href="#" id="backButton">Quay lại</a>
+            </div>
 
         <?php
         endwhile; // End of the loop.
         ?>
     </div>
 </div><!-- #main -->
+<script>
+    document.getElementById('backButton').addEventListener('click', function() {
+        if (window.history.length > 1) {
+            window.history.go(-2); // Quay lại 2 trang trong lịch sử
+            var baseURL = window.location.origin;
+        } else {
+            // Lấy URL gốc từ domain hiện tại (bao gồm cả localhost và hosting)
+            var baseURL = window.location.origin;
+
+            // Kiểm tra xem bạn đang ở localhost hay trên hosting
+            if (baseURL.includes('localhost')) {
+                // Nếu đang ở localhost, sử dụng đường dẫn tương ứng với localhost
+                window.location.href = baseURL + "/mintoku_mobile/list-job/";
+            } else {
+                // Nếu không phải localhost, sử dụng đường dẫn cho hosting
+                window.location.href = baseURL + "/list-job/";
+            }
+        }
+    });
+</script>
 <?php
 // Include WordPress footer
 get_footer();

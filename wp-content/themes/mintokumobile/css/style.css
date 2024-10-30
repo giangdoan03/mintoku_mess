@@ -2828,6 +2828,12 @@ button#search_button {
 .page-template-term-of-use-page p {
     color: #000000;
 }
+.page-term .back_page {
+    max-width: 200px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    text-align: center;
+}
 @media (min-width: 1080px) {
     .block_jobs_recommended .noi-dung-field-ab_1 p{
         font-size: 1vw;
