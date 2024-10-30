@@ -2329,7 +2329,7 @@ button#search_button {
     width: 100%;
     margin: 0;
     font-size: 3.3vw;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 .b_footer .f-top {
@@ -2784,13 +2784,62 @@ button#search_button {
 
 }
 
-
+.title_term_page {
+    background: #0071BC;
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 17px;
+    padding: 10px 0;
+    padding-left: 15px;
+}
+.logo_job_term_page {
+    max-width: 300px;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+.page-template-term-of-use-page .flex.items-center {
+    display: flex;
+    align-items: baseline;
+}
+.page-template-term-of-use-page .list-decimal {
+    list-style-type: decimal;
+    margin-left: 30px;
+}
+.page-template-term-of-use-page .list-decimal li ul li {
+    position: relative;
+}
+.page-template-term-of-use-page .list-decimal li ul {
+    margin-left: 0;
+}
+.page-template-term-of-use-page .list-decimal li ul li:before {
+    content: '-';
+}
+.page-template-term-of-use-page .flex.items-center img {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 2px
+}
+.page-template-term-of-use-page .flex.items-center p {
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 5px;
+}
+.page-template-term-of-use-page p {
+    color: #000000;
+}
 @media (min-width: 1080px) {
     .block_jobs_recommended .noi-dung-field-ab_1 p{
         font-size: 1vw;
     }
     .block_jobs_recommended .noi-dung-field-ab_2 p {
         font-size: 1vw;
+    }
+    .b_footer .f-top .footer_left p {
+        font-size: 1.3vw;
+    }
+    .footer_right p {
+        font-size: 1.3vw;
     }
 }
 

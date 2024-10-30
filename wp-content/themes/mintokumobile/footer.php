@@ -13,7 +13,7 @@
 <div class="b_footer">
     <div class="f-top">
         <div class="footer_left">
-            <p><a href="https://biz.ca-m.co.jp/privacypolicy_vn">Thỏa thuận sử dụng</a></p>
+            <p><a href="<?php echo get_permalink(get_page_by_path('term-of-use')); ?>">Thỏa thuận sử dụng</a></p>
             <p><a href="https://vietnam-camcom.com/vi/privacy/">Quy định, Bảo mật</a></p>
             <p><a href="https://vietnam-camcom.com/vi/about/">Công ty</a></p>
         </div>
