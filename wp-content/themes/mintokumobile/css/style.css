@@ -2901,6 +2901,17 @@ body {
         right: 11%;
         bottom: 8px;
     }
+    .has_label .noi-dung-field-ab_2.red2:before {
+        left: -16px;
+        top: -3px;
+    }
+    .box_slider .avatar_job {
+        padding: 0;
+    }
+    .block_jobs_recommended .avatar_job .noi-dung-field-ab_1 {
+        right: 0;
+        top: 0;
+    }
 }
 
 @media (min-width: 1080px) {
