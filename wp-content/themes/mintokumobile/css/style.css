@@ -1043,7 +1043,6 @@ p {
 }
 
 
-
 .search-form {
     max-width: 800px;
     margin: 0 auto;
@@ -1151,7 +1150,7 @@ button:hover {
 .menu_item {
     background-color: #007BFF;
     border-radius: 10px;
-    padding: 15px 25px;
+    padding: 10px;
     transition: all 0.3s ease;
 }
 
@@ -1434,6 +1433,7 @@ span.salary_text {
     background: #f0ffff;
     position: relative;
 }
+
 .title_job_area {
     position: absolute;
     top: 71%;
@@ -1445,11 +1445,13 @@ span.salary_text {
     padding: 8px;
     z-index: 1;
 }
+
 .title_job_area p {
     font-size: 3.5vw;
     color: #ffffff;
     font-weight: 700;
 }
+
 .block_jobs_recommended {
     background: #f0ffff;
     padding-bottom: 120px;
@@ -1666,6 +1668,7 @@ img.avatar_job.avatar_job_not_recommended {
     position: relative;
 
 }
+
 .btn_detail .btn_content:after {
     content: '';
     background: url('../images/icon_right_db.png');
@@ -1689,7 +1692,7 @@ img.avatar_job.avatar_job_not_recommended {
 }
 
 
-    /* Nút Back to Top */
+/* Nút Back to Top */
 #back-to-top {
     position: fixed;
     bottom: 130px;
@@ -2199,9 +2202,6 @@ button#search_button {
 }
 
 
-
-
-
 .has_label {
     position: relative;
 }
@@ -2310,11 +2310,6 @@ button#search_button {
 }
 
 
-
-
-
-
-
 .page_single_job .logo_company img {
     width: 60px;
     object-fit: contain;
@@ -2343,10 +2338,12 @@ button#search_button {
     padding: 0 10px;
     margin-bottom: 10px;
 }
+
 .b_footer .f-top .footer_left p {
     margin: 0;
     font-size: 3.3vw;
 }
+
 .b_footer p a {
     text-decoration: none;
     color: #ffffff;
@@ -2355,6 +2352,7 @@ button#search_button {
 .footer_left p:nth-child(2) {
     margin-left: 15px;
 }
+
 .page-form-search {
     height: 100vh;
 }
@@ -2374,7 +2372,6 @@ button#search_button {
 .video-icon-thumbnail i {
     font-size: 36px;
 }
-
 
 
 /* Bố cục cho màn hình lớn (PC) */
@@ -2640,6 +2637,7 @@ button#search_button {
         width: 100%;
     }
 }
+
 /* Đảm bảo nút nằm chính giữa màn hình di động */
 @media (max-width: 768px) {
 
@@ -2748,6 +2746,7 @@ button#search_button {
         height: 40px;
         background-position: center;
     }
+
     .back_page {
         padding: 10px 30px;
         background-size: 100%;
@@ -2755,13 +2754,16 @@ button#search_button {
         height: 40px;
         background-position: center;
     }
+
     .back_page a {
         font-size: 14px;
         font-weight: bold;
     }
+
     .message_link a {
         padding: 0;
     }
+
     .back_page a {
         padding: 0;
     }
@@ -2774,10 +2776,12 @@ button#search_button {
     }
 
 }
+
 @media (min-width: 431px) {
     .has_label .noi-dung-field-ab_1.color_3 {
         width: 177px;
     }
+
     .has_label .noi-dung-field-ab_1.color_2 {
         width: 130px;
     }
@@ -2792,58 +2796,116 @@ button#search_button {
     padding: 10px 0;
     padding-left: 15px;
 }
+
 .logo_job_term_page {
     max-width: 300px;
     padding-top: 20px;
     padding-left: 20px;
 }
+
 .page-template-term-of-use-page .flex.items-center {
     display: flex;
     align-items: baseline;
 }
+
 .page-template-term-of-use-page .list-decimal {
     list-style-type: decimal;
     margin-left: 30px;
 }
+
 .page-template-term-of-use-page .list-decimal li ul li {
     position: relative;
 }
+
 .page-template-term-of-use-page .list-decimal li ul {
     margin-left: 0;
 }
+
 .page-template-term-of-use-page .list-decimal li ul li:before {
     content: '-';
 }
+
 .page-template-term-of-use-page .flex.items-center img {
     width: 16px;
     height: 16px;
     position: relative;
     top: 2px
 }
+
 .page-template-term-of-use-page .flex.items-center p {
     font-weight: bold;
     font-size: 18px;
     margin-left: 5px;
 }
+
 .page-template-term-of-use-page p {
     color: #000000;
 }
+
 .page-term .back_page {
     max-width: 200px;
     margin: 0 auto;
     margin-bottom: 20px;
     text-align: center;
 }
+
+body {
+    max-width: 767px;
+    margin: 0 auto !important;
+}
+
+@media (min-width: 768px) {
+    .has_label .noi-dung-field-ab_1 p {
+        font-size: 13px;
+    }
+
+    .has_label .noi-dung-field-ab_2 p {
+        font-size: 12px;
+    }
+
+    .content_list_job_filter .job_content .summary_job p {
+        font-size: 15px;
+    }
+    .btn_detail .btn_content a {
+        font-size: 15px;
+    }
+    .content_p .summary_job p {
+        display: -webkit-box;
+        max-width: 200px;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .block_jobs_recommended .noi-dung-field-ab_1 p {
+        font-size: 11px !important;
+    }
+    .block_jobs_recommended .noi-dung-field-ab_2 p {
+        font-size: 11px !important;
+    }
+    .salary {
+        font-size: 15px;
+    }
+    .content_p .summary_job p {
+        font-size: 15px;
+    }
+    .logo_company p {
+        font-size: 15px;
+    }
+}
+
 @media (min-width: 1080px) {
-    .block_jobs_recommended .noi-dung-field-ab_1 p{
+    .block_jobs_recommended .noi-dung-field-ab_1 p {
         font-size: 1vw;
     }
+
     .block_jobs_recommended .noi-dung-field-ab_2 p {
         font-size: 1vw;
     }
+
     .b_footer .f-top .footer_left p {
         font-size: 1.3vw;
     }
+
     .footer_right p {
         font-size: 1.3vw;
     }
