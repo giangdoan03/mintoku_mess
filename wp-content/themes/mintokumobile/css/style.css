@@ -2778,6 +2778,12 @@ button#search_button {
 }
 
 @media (min-width: 431px) {
+    .has_label .noi-dung-field-ab_1 p {
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 431px) {
     .has_label .noi-dung-field-ab_1.color_3 {
         width: 177px;
     }

@@ -1430,6 +1430,13 @@ function lay_noi_dung_field($slides, $field_name) {
     return ''; // Trả về chuỗi rỗng nếu không tìm thấy giá trị
 }
 
+function custom_page_title($title) {
+    if (is_page(250)) { // Thay 123 bằng ID của trang bạn muốn thay đổi
+        $title = "Job Fair Đại Học Mở Thành Phố Hồ Chí Minh 2024-11";
+    }
+    return $title;
+}
+add_filter('pre_get_document_title', 'custom_page_title');
 
 
 

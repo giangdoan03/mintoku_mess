@@ -314,44 +314,48 @@ if ($taxonomy) {
                                 </div>
                             </div>
                         <?php elseif (get_row_layout() == 'slide_4'): ?>
-                            <div class="slide slide-4 swiper-slide">
-                                <div class="container">
-                                    <div style="height: 100vh;display: flex; align-items: center; position: relative; bottom: 150px;">
-                                        <?php
-                                        // Lấy nội dung của Flexible Content hoặc Repeater Field
-                                        $job_field = get_field('job_info'); // 'job_info' là tên field Flexible Content chứa các slide
+                            <?php
+                            // Lấy nội dung của Flexible Content hoặc Repeater Field
+                            $job_field = get_field('job_info'); // 'job_info' là tên field Flexible Content chứa các slide
 
-                                        // Kiểm tra nếu có job_field và layout 'slide_4' tồn tại
-                                        if ($job_field) {
-                                            // Tìm layout 'slide_4'
-                                            foreach ($job_field as $slide) {
-                                                if ($slide['acf_fc_layout'] === 'slide_4') {
-                                                    // Kiểm tra và lấy 'video_url' từ 'slide_4'
-                                                    if (!empty($slide['video_url'])) {
-                                                        $video_url = esc_js($slide['video_url']); // Thoát URL video an toàn
-                                                        ?>
-                                                        <script type="text/javascript">
-                                                            var Eviry = Eviry || {};
-                                                            Eviry.Player || (Eviry.Player = {});
-                                                            Eviry.Player.embedkey = "<?php echo $video_url; ?>";
-                                                        </script>
-                                                        <script type="text/javascript" src="https://d1euehvbqdc1n9.cloudfront.net/001/eviry/js/eviry.player.min.js"></script>
-                                                        <?php
-                                                        break; // Dừng vòng lặp khi đã tìm thấy và hiển thị video_url
-                                                    }
-                                                }
-                                            }
-                                        }
+                            // Kiểm tra nếu có job_field và layout 'slide_4' tồn tại
+                            if ($job_field) {
+                                // Tạo mảng để chứa tất cả các video_url
+                                $video_urls = [];
+                                $slide_count = 4; // Khởi tạo đếm từ slide-4
+
+                                // Tìm tất cả layout 'slide_4' và lấy 'video_url'
+                                foreach ($job_field as $slide) {
+                                    if ($slide['acf_fc_layout'] === 'slide_4' && !empty($slide['video_url'])) {
+                                        // Thoát URL video an toàn và thêm vào mảng
+                                        $video_urls[] = esc_js($slide['video_url']);
+                                    }
+                                }
+
+                                // Hiển thị từng video_url nếu có
+                                if (!empty($video_urls)) {
+                                    foreach ($video_urls as $video_url) {
                                         ?>
-                                    </div>
-                                </div>
-                            </div>
-
-
+                                        <div class="slide slide-<?php echo $slide_count; ?> swiper-slide">
+                                            <div class="container">
+                                                <div style="height: 100vh; display: flex; align-items: center; position: relative; bottom: 150px;">
+                                                    <script type="text/javascript">
+                                                        var Eviry = Eviry || {};
+                                                        Eviry.Player || (Eviry.Player = {});
+                                                        Eviry.Player.embedkey = "<?php echo $video_url; ?>";
+                                                    </script>
+                                                    <script type="text/javascript" src="https://d1euehvbqdc1n9.cloudfront.net/001/eviry/js/eviry.player.min.js"></script>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $slide_count++; // Tăng số đếm để tạo lớp slide tiếp theo
+                                    }
+                                }
+                            }
+                            ?>
                         <?php endif; ?>
-
                     <?php endwhile; ?>
-
                 <?php endif; ?>
             </div>
 
