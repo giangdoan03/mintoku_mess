@@ -2860,6 +2860,10 @@ body {
     margin: 0 auto !important;
 }
 
+.box_slider .summary_job {
+    margin-top: 10px;
+}
+
 @media (min-width: 768px) {
     .has_label .noi-dung-field-ab_1 p {
         font-size: 13px;
